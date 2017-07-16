@@ -5,7 +5,7 @@ public class MembersSubscribe implements Serializable {
 	/*회원 넘버 정보 */
 	private int memberNo;
 	/*회원 게시판 넘버 정보 */
-	private int memberBoardNo;
+	private int boardNo;
 	
 	/**
 	 * 
@@ -18,38 +18,27 @@ public class MembersSubscribe implements Serializable {
 	 * @param memberNo
 	 * @param memberBoardNo
 	 */
-	public MembersSubscribe(int memberNo, int memberBoardNo) {
+	public MembersSubscribe(int memberNo, int boardNo) {
 		super();
 		this.memberNo = memberNo;
-		this.memberBoardNo = memberBoardNo;
+		this.boardNo = boardNo;
 	}
 
-	/**
-	 * @return the memberNo
-	 */
 	public int getMemberNo() {
 		return memberNo;
 	}
-	
-	/**
-	 * @param memberNo the memberNo to set
-	 */
+
 	public void setMemberNo(int memberNo) {
 		this.memberNo = memberNo;
 	}
+
+	public int getBoardNo() {
+		return boardNo;
+	}
+
+	public void setBoardNo(int boardNo) {
+		this.boardNo = boardNo;
+	}
+
 	
-	/**
-	 * @return the memberBoardNo
-	 */
-	public int getMemberBoardNo() {
-		return memberBoardNo;
-	}
-
-	/**
-	 * @param memberBoardNo the memberBoardNo to set
-	 */
-	public void setMemberBoardNo(int memberBoardNo) {
-		this.memberBoardNo = memberBoardNo;
-	}
-
 }

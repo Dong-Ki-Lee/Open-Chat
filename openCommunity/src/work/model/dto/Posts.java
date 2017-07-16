@@ -36,7 +36,17 @@ public class Posts implements Serializable{
 		this.createTime = createTime;
 		this.postViews = postViews;
 	}
-
+	
+	// 게시글 조회시 필요한 생성자
+	public Posts(int postNo, String postTitle, String postContent, String createTime,int postViews) {
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.postContent = postContent;
+		this.createTime = createTime;
+		this.postViews = postViews;
+	}
+	
+	
 	public int getMemberNo() {
 		return memberNo;
 	}
