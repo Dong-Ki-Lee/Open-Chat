@@ -24,6 +24,23 @@ public class Posts implements Serializable{
 		this.postViews = postViews;
 	}
 	
+	/**
+	 * 게시물 조회 데이터 생성자
+	 * @param postNo
+	 * @param postTitle
+	 * @param postContent
+	 * @param createTime
+	 * @param postViews
+	 */
+	public Posts(int postNo, String postTitle, String postContent, String createTime, int postViews) {
+		super();
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.postContent = postContent;
+		this.createTime = createTime;
+		this.postViews = postViews;
+	}
+
 	// 전체 생성자
 	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String postContent, String createTime,
 			int postViews) {
@@ -36,17 +53,7 @@ public class Posts implements Serializable{
 		this.createTime = createTime;
 		this.postViews = postViews;
 	}
-	
-	// 게시글 조회시 필요한 생성자
-	public Posts(int postNo, String postTitle, String postContent, String createTime,int postViews) {
-		this.postNo = postNo;
-		this.postTitle = postTitle;
-		this.postContent = postContent;
-		this.createTime = createTime;
-		this.postViews = postViews;
-	}
-	
-	
+
 	public int getMemberNo() {
 		return memberNo;
 	}
