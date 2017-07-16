@@ -13,15 +13,25 @@ public class Members implements Serializable {
 	/** 회원 비밀번호 */
 	private String memberPw;
 	
-	public Members() {}
+	/** 기본 생성자 */
+	public Members() {
+		
+	}
 	
-	// 전체 조회 관련
-	 public Members(int memberNo, String memberEmail, String memberNickname){
-		 this.memberNo = memberNo;
-		 this.memberEmail = memberEmail;
-		 this.memberNickname = memberNickname;
-	 }
-	// 전체 생성자
+	/**
+	 * 회원 필수 데이터 생성자
+	 * @param memberNo
+	 * @param memberEmail
+	 * @param memberNickname
+	 */
+	public Members(int memberNo, String memberEmail, String memberNickname) {
+		super();
+		this.memberNo = memberNo;
+		this.memberEmail = memberEmail;
+		this.memberNickname = memberNickname;
+	}
+
+	/** 회원 전체 데이터 생성자 */
 	public Members(int memberNo, String memberEmail, String memberNickname, String memberPw) {
 		super();
 		this.memberNo = memberNo;
@@ -30,6 +40,7 @@ public class Members implements Serializable {
 		this.memberPw = memberPw;
 	}
 
+	
 	public int getMemberNo() {
 		return memberNo;
 	}

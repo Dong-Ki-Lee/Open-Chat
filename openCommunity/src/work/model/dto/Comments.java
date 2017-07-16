@@ -13,20 +13,23 @@ public class Comments implements Serializable{
 
 	/** 회원 번호 */
 	private int memberNo;
-	
+
 	/** 게시판 번호 */
 	private int boardNo;
-	
+
 	/** 게시글 번호 */
 	private int postNo;
-	
+
+	/** 댓글 번호 */  
+	private int commentNo; 
+
 	/** 댓글 내용 */
 	private String content;
-	
+
 	/** 댓글 작성 시간 */
 	private String createTime;
 
-	
+
 	/**
 	 * 기본 생성자
 	 */
@@ -34,18 +37,28 @@ public class Comments implements Serializable{
 		super();
 	}
 
+	/** 댓글 조회시 필요한 생성자  */
+	public Comments(int commentNo, String content, String createTime) {  
+		this.commentNo = commentNo;  
+		this.content = content;  
+		this.createTime = createTime;  
+	} 
+
 	/**
+	 * 전체 댓글 데이터 생성자
 	 * @param memberNo
 	 * @param boardNo
 	 * @param postNo
+	 * @param commentNo
 	 * @param content
 	 * @param createTime
 	 */
-	public Comments(int memberNo, int boardNo, int postNo, String content, String createTime) {
+	public Comments(int memberNo, int boardNo, int postNo, int commentNo, String content, String createTime) {
 		super();
 		this.memberNo = memberNo;
 		this.boardNo = boardNo;
 		this.postNo = postNo;
+		this.commentNo = commentNo;
 		this.content = content;
 		this.createTime = createTime;
 	}
@@ -76,6 +89,20 @@ public class Comments implements Serializable{
 	 */
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+
+	/**
+	 * @return the commentNo
+	 */
+	public int getCommentNo() {
+		return commentNo;
+	}
+
+	/**
+	 * @param commentNo the commentNo to set
+	 */
+	public void setCommentNo(int commentNo) {
+		this.commentNo = commentNo;
 	}
 
 	/**
@@ -120,7 +147,7 @@ public class Comments implements Serializable{
 		this.createTime = createTime;
 	}
 
-	
+
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -129,5 +156,5 @@ public class Comments implements Serializable{
 		return "Comments [memberNo=" + memberNo + ", boardNo=" + boardNo + ", postNo=" + postNo + ", content=" + content
 				+ ", createTime=" + createTime + "]";
 	}
-	
+
 }
