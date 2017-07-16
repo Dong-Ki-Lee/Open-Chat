@@ -15,6 +15,12 @@ public class Members implements Serializable {
 	
 	public Members() {}
 	
+	// 전체 조회 관련
+	 public Members(int memberNo, String memberEmail, String memberNickname){
+		 this.memberNo = memberNo;
+		 this.memberEmail = memberEmail;
+		 this.memberNickname = memberNickname;
+	 }
 	// 전체 생성자
 	public Members(int memberNo, String memberEmail, String memberNickname, String memberPw) {
 		super();
