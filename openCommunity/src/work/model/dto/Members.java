@@ -15,6 +15,7 @@ public class Members implements Serializable {
 	
 	public Members() {}
 	
+	// 穿端 持失切
 	public Members(int memberNo, String memberEmail, String memberNickname, String memberPw) {
 		super();
 		this.memberNo = memberNo;

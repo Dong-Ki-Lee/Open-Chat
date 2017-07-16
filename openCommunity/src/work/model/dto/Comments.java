@@ -3,11 +3,13 @@
  */
 package work.model.dto;
 
+import java.io.Serializable;
+
 /**
  * @author limjinha
  *
  */
-public class Comments {
+public class Comments implements Serializable{
 
 	/** 회원 번호 */
 	private int memberNo;

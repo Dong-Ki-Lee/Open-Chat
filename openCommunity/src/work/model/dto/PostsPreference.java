@@ -1,6 +1,8 @@
 package work.model.dto;
 
-public class PostsPreference {
+import java.io.Serializable;
+
+public class PostsPreference implements Serializable{
 	
 	/** 회원 번호 */
 	private int memberNo;
@@ -14,7 +16,8 @@ public class PostsPreference {
 	private int recommend;
 	
 	public PostsPreference () {}
-
+	
+	// 전체 생성자
 	public PostsPreference(int memberNo, int boardNo, int postNo, int recommend) {
 		super();
 		this.memberNo = memberNo;

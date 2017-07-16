@@ -13,6 +13,14 @@ public class SearchHistory implements Serializable {
 			super();
 			// TODO Auto-generated constructor stub
 		}
+		
+		
+		public SearchHistory(int memberNo) {
+			super();
+			this.memberNo = memberNo;
+		}
+
+
 		/**
 		 * @param memberNo
 		 * @param searchWord
