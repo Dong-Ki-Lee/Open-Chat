@@ -20,9 +20,9 @@
             <nav id="ThemeGnb">
                 <h2 class="screen_out">홈</h2>
                 <ul id="gnb_1dul">
-                    <li class="gnb_2dli"><a href="noticeBoard.html">공지사항</a></li>
-                    <li class="gnb_2dli"><a href="postBoard.html">게시판</a></li>
-                    <li class="gnb_2dli"><a href="faqBoard.html">FAQ</a></li>
+                    <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
+                    <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>
+                    <li class="gnb_2dli"><a href="adminNotice.jsp">FAQ</a></li>
                 </ul>
             </nav>
         </div>

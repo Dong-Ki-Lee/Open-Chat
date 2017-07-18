@@ -11,6 +11,7 @@
     href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/template.css">
+<link rel="stylesheet" type="text/css" href="css/admin.css">
 </head>
 <body>
 
@@ -20,9 +21,9 @@
             <nav id="ThemeGnb">
                 <h2 class="screen_out">홈</h2>
                 <ul id="gnb_1dul">
-                    <li class="gnb_2dli"><a href="adminMember.html">회원관리</a></li>
-                    <li class="gnb_2dli"><a href="adminNotice.html">게시판관리</a></li>
-                    <li class="gnb_2dli"><a href="adminChart.html">통계</a></li>
+                    <li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
+                    <li class="gnb_2dli"><a href="adminNotice.jsp">게시판관리</a></li>
+                    <li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
                 </ul>
             </nav>
         </div>
