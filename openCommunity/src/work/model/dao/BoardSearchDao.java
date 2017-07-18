@@ -26,17 +26,20 @@ public class BoardSearchDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from notice_boards_tb where board_title like %?%";
+		StringBuilder sql = new StringBuilder();
+		sql.append("update members set ");
+		sql.append("member_pw=?, member_name=?, mobile=?, email=? ");
+		sql.append("where member_id=?");
 		
 		String[] tagArray = input.split("#");
 		
-		try {
+		try  {
 			conn = getConnection();
-			stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql.toString());
 			
 			for (int i = 0; i < tagArray.length; i++) {
 				stmt.setString(1, tagArray[i]);
-				rs = stmt.executeQuery(sql);
+				rs = stmt.executeQuery();
 
 				int boardNo = 0;
 				String boardTitle = null;
@@ -53,9 +56,6 @@ public class BoardSearchDao {
 					list.add(dto);
 				}
 			}
-			
-			DescendingObj descending = new DescendingObj();
-			Collections.sort(list, descending);
 			
 			HashSet hs = new HashSet(list);
 			returnList = new ArrayList<NoticeBoards>(hs);
@@ -75,15 +75,3 @@ public class BoardSearchDao {
 }
 
 
-class DescendingObj implements Comparator<NoticeBoards> {
-	 
-    @Override
-    public int compare(NoticeBoards first, NoticeBoards second) {
-    	
-    	int firstCount = 0;
-    	int secondCount = 0;
-    	//우선순위 구현
-        return 0;
-    }
- 
-}
