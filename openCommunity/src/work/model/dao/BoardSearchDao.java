@@ -74,7 +74,7 @@ public class BoardSearchDao {
 			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Error(게시판 조회 오류) : " + e.getMessage());
+			System.out.println("Error(..) : " + e.getMessage());
 		} finally {
 			factory.close(rs, stmt, conn);
 		}
@@ -84,5 +84,3 @@ public class BoardSearchDao {
 
 
 }
-
-

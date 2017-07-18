@@ -132,11 +132,11 @@ public class MembersDao {
 	}
 	
 	// 로그인
-	public String loginCheck(String memberEmail, String memberPw) {
+	public int loginCheck(String memberEmail, String memberPw) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select member_nickname from members where member_email=? and member_pw=?";
+		String sql = "select member_no from members where member_email=? and member_pw=?";
 		
 		try {
 			conn = getConnection();
@@ -145,7 +145,7 @@ public class MembersDao {
 			stmt.setString(2, memberPw);
 			rs = stmt.executeQuery();
 			if(rs.next()) {
-				return rs.getString("member_nickname");
+				return rs.getInt("member_no");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -153,7 +153,7 @@ public class MembersDao {
 		} finally {
 			factory.close(rs, stmt, conn);
 		}
-		return null;
+		return 0;
 	}
 	// 암호찾기 -> 찾앗을경우 임시비밀번호 발송
 	// 
