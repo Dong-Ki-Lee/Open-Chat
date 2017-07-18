@@ -1,0 +1,60 @@
+@charset "utf-8";
+
+/* 초기화 */
+html {overflow-y:scroll}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, textarea, p, blockquote, th, td, input, select, textarea, button {margin:0;padding:0}
+body, th, td, input, select, textarea, button {font-size:12px;line-height:1.5;font-family:'Malgun Gothic','맑은 고딕',"돋움",dotum,sans-serif;color:#333}
+html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
+h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
+
+#hd ul, nav ul, #ft ul {margin:0;padding:0;list-style:none}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+label, input, button, select, img {vertical-align:middle}
+input, button {margin:0;padding:0;font-family:dotum;font-size:1em}
+button {cursor:pointer}
+
+textarea, select {font-family:dotum;font-size:1em}
+select {margin:0}
+p {margin:0;padding:0;word-break:break-all}
+hr {display:none}
+pre {overflow-x:scroll;font-size:1.1em}
+a:link, a:visited {color:#000;text-decoration:none}
+a:hover, a:focus, a:active {color:#000;text-decoration:underline}
+
+address, caption, cite, code, dfn, em, var {font-style:normal;font-weight:normal}
+
+/* 테마 레이아웃 */
+html {height:100%}
+body {height:100%;background-color:#f1f1f1}
+
+#ThemeWrap {position:relative;min-height:100%;width:100%}
+#ThemeHeader {border-right:5px solid #0064b7;position:absolute;left:0;top:0;z-index:10;width:220px;padding-left:27px;min-height:100%;background-color:#fff}
+#ThemeHeader img {width: 170px; height: 85px; margin-top: 25px;}
+#ThemeGnb {padding-top:50px; margin-left: 20px}
+#ThemeGnb h2 {color:#0064b7;font-size: 25px;}
+#gnb_1dul li {padding:25px 0 0 0}
+.gnb_2dli {font-size:17px}
+
+#ThemeHeader .link_banner {padding-top:33px;position:absolute;left:42px;width:150px}
+#ThemeContent {height:100%;padding-bottom:120px;margin-left:240px}
+.info_utility {float:right;padding:20px 120px 0 0}
+.info_utility ul {list-style:none;margin:0;padding:0}
+.info_utility li {float:right;position:relative;}
+.site_sch {position:absolute;right:0;top:18px;width:1055px}
+.site_sch form {width:820px;height:38px;padding:5px 39px 11px 20px;background-color:#fff;border-radius:55px}
+.site_sch form input[type="text"] {display:block;width:95%;height:30px;border:0 none;font-size:18px;line-height:20px;color:#666;}
+.site_sch form .btn_search {position:absolute;top:0;right:5px;width:558px;height:38px;border:0 none;background-color:transparent;cursor:pointer}
+.site_sch form .btn_search i {margin-top:3px; font-size:22px;color:#0064b7}
+#tnb img {width:25px; height:25px; margin: 3px 15px 0 0;}
+#ThemeContent #mArticle {min-height:100%; }
+#ThemeContent #container {position:relative;z-index:10;width:925px;display:inline-block;}
+#ThemeContent #container:after{display:block;clear:both;content:''}
+
+/* 메인 내용 */
+.main_contents {overflow:hidden;width:945px}
+
+#ThemeFooter {position:absolute;left:0;bottom:0;z-index:10;width:100%}
+#ThemeFooter .inner_footer {width:1000px;padding:10px 0 10px;margin-left:240px;border-top:1px solid #e7e7e7;font-size:10px;line-height:13px;font-family:dotum,sans-serif;color:#919191;text-align:center}
+
+
