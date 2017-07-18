@@ -51,19 +51,27 @@
 
                     <section id="sbn_idx" class="sbn">
                     
+                    	<div class="row">
+                    		<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
+                    			<input type="button" class="btn btn-primary" value="추천 게시판">
+                    		</form>
+                    		<br></br>
+                    	</div>
 				        <div class="row">
 				
 				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
-				                    <img src="http://placehold.it/320x150" alt="">
+				                    <img src="http://placehold.it/320x150" alt="게시판 사진"/>
 				                    <div class="caption">
-				                        <h4 class="pull-right">$24.99</h4>
-				                        <h4><a href="#">First Product</a>
+				                        <h4 class="pull-right">총 110개의 게시글</h4>
+				                        <h4><a href="#">첫번째 게시판</a>
 				                        </h4>
-				                        <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+				                        <p>태그가 들어가는 부분 #산 #여행 #바다</p>
+				                        <p>가장 최신글 제목을 넣는다거나</p>
+				                        
 				                    </div>
 				                    <div class="ratings">
-				                        <p class="pull-right">15 reviews</p>
+				                        <p class="pull-right">새글 3개</p>
 				                    </div>
 				                </div>
 				            </div>
@@ -97,8 +105,16 @@
 				                    </div>
 				                </div>
 				            </div>
-				
-				
+						</div>
+						
+						<div class="row">
+                    		<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
+                    			<input type="button" class="btn btn-primary" value="구독 게시판">
+                    		</form>
+                    		<br></br>
+                    	</div>
+						
+						<div class='row'>
 				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
@@ -143,6 +159,7 @@
 				                    </div>
 				                </div>
 				            </div>
+				            
 				        </div>
                     </section>
 
