@@ -38,15 +38,15 @@ body {height:100%;background-color:#f1f1f1}
 
 #ThemeHeader .link_banner {padding-top:33px;position:absolute;left:42px;width:150px}
 #ThemeContent {height:100%;padding-bottom:120px;margin-left:240px}
-.info_utility {float:right;padding:20px 120px 0 0}
+.info_utility {float:right;padding:20px 40px 0 0}
 .info_utility ul {list-style:none;margin:0;padding:0}
 .info_utility li {float:right;position:relative;}
 .site_sch {position:absolute;right:0;top:18px;width:1055px}
-.site_sch form {width:820px;height:38px;padding:5px 39px 11px 20px;background-color:#fff;border-radius:55px}
+.site_sch form {margin-left:70px;width:820px;height:38px;padding:5px 39px 11px 20px;background-color:#fff;border-radius:55px}
 .site_sch form input[type="text"] {display:block;width:95%;height:30px;border:0 none;font-size:18px;line-height:20px;color:#666;}
 .site_sch form .btn_search {position:absolute;top:0;right:5px;width:558px;height:38px;border:0 none;background-color:transparent;cursor:pointer}
-.site_sch form .btn_search i {margin-top:3px; font-size:22px;color:#0064b7}
-#tnb img {width:25px; height:25px; margin: 3px 15px 0 0;}
+.site_sch form .btn_search i {margin-left:150px;margin-top:3px; font-size:22px;color:#0064b7}
+#tnb img {width:25px; height:25px; align:right; margin: 3px 0 0 20px}
 #ThemeContent #mArticle {min-height:100%; }
 #ThemeContent #container {position:relative;z-index:10;width:925px;display:inline-block;}
 #ThemeContent #container:after{display:block;clear:both;content:''}
