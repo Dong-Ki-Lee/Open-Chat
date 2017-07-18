@@ -53,7 +53,7 @@
                     
 				        <div class="row">
 				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -68,7 +68,7 @@
 				                </div>
 				            </div>
 				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -83,7 +83,7 @@
 				                </div>
 				            </div>
 				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -98,11 +98,8 @@
 				                </div>
 				            </div>
 				
-				            <div class="col-sm-2 col-lg-2 col-md-2">
-				            </div>
 				
-				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -117,7 +114,7 @@
 				                </div>
 				            </div>
 				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -132,7 +129,7 @@
 				                </div>
 				            </div>
 				
-				            <div class="col-sm-3 col-lg-3 col-md-3">
+				            <div class="col-sm-4 col-lg-4 col-md-4">
 				                <div class="thumbnail">
 				                    <img src="http://placehold.it/320x150" alt="">
 				                    <div class="caption">
@@ -146,7 +143,6 @@
 				                    </div>
 				                </div>
 				            </div>
-				
 				        </div>
                     </section>
 
