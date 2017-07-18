@@ -22,27 +22,44 @@ public class BoardSearchDao {
 	
 	public ArrayList<NoticeBoards> searchBoardWithTag(String input) {
 		ArrayList<NoticeBoards> list = new ArrayList<NoticeBoards>();
-		ArrayList<NoticeBoards> returnList = null;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from notice_boards_tb where board_title like %?%";
+		StringBuilder sql = new StringBuilder();
+		sql.append("select tag_match, search_end.board_no, board_title, board_tag ");
+		sql.append("from ");
+		sql.append("(select count(*) tag_match, board_no ");
+		sql.append("from ");
+		sql.append("(");
 		
 		String[] tagArray = input.split("#");
 		
-		try {
+		for (int i = 0; i < tagArray.length; i++) {
+			sql.append("select * from notice_boards_tb ");
+			sql.append("where board_tag like '%?%' ");
+			if(i != tagArray.length-1) {
+				sql.append("union all");
+			}
+		}
+		sql.append(") notice");
+		sql.append("group by board_no ");
+		sql.append("order by tag_match ");
+		sql.append("desc) search_end, ");
+		sql.append("notice_boards_tb boards ");
+		sql.append("where search_end.board_no = boards.board_no;");
+		
+		try  {
 			conn = getConnection();
-			stmt = conn.prepareStatement(sql);
+			stmt = conn.prepareStatement(sql.toString());
 			
 			for (int i = 0; i < tagArray.length; i++) {
-				stmt.setString(1, tagArray[i]);
-				rs = stmt.executeQuery(sql);
+				stmt.setString(i+1, tagArray[i]);
+				rs = stmt.executeQuery();
 
 				int boardNo = 0;
 				String boardTitle = null;
 				String boardTag = null;
 				NoticeBoards dto = null;
-				
 				
 				while(rs.next()) {
 					boardNo = rs.getInt("board_no");
@@ -54,20 +71,14 @@ public class BoardSearchDao {
 				}
 			}
 			
-			DescendingObj descending = new DescendingObj();
-			Collections.sort(list, descending);
-			
-			HashSet hs = new HashSet(list);
-			returnList = new ArrayList<NoticeBoards>(hs);
-			
+			return list;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error(게시판 조회 오류) : " + e.getMessage());
 		} finally {
 			factory.close(rs, stmt, conn);
 		}
-		
-		return returnList;
+		return null;
 	}
 	
 
@@ -75,15 +86,3 @@ public class BoardSearchDao {
 }
 
 
-class DescendingObj implements Comparator<NoticeBoards> {
-	 
-    @Override
-    public int compare(NoticeBoards first, NoticeBoards second) {
-    	
-    	int firstCount = 0;
-    	int secondCount = 0;
-    	//우선순위 구현
-        return 0;
-    }
- 
-}
