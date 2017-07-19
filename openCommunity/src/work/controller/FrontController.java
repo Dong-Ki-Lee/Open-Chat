@@ -15,6 +15,9 @@ import work.model.dao.MembersDao;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
+import work.model.dto.Posts;
+import work.model.dto.PostsPreference;
+import work.model.dao.NoticesDao;
 import work.model.service.AdminService;
 
 /**
@@ -24,7 +27,8 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private AdminService adminsv = new AdminService();
-	private MembersDao memDao = new MembersDao();
+	private MembersDao membersDao = new MembersDao();
+	private NoticesDao noticesDao = new NoticesDao();
        
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. ¿äÃ»ÆÄ¾Ç : action=0000 : getParameter("key") : String
@@ -106,7 +110,7 @@ public class FrontController extends HttpServlet {
    	   			session.setAttribute("memberNo", memberNo);
    	   			
    	   			if (memberNo >= 1 && memberNo <= 1000) {
-   	   				ArrayList<MembersInfo> list = memDao.selectList();
+   	   				ArrayList<MembersInfo> list = membersDao.selectList();
    	   				request.setAttribute("memInfolist", list);
    	   				RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
    	   				dispatcher.forward(request, response);
