@@ -15,4 +15,16 @@
     <servlet-name>FrontController</servlet-name>
     <url-pattern>/controller</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>SearchController</display-name>
+    <servlet-name>SearchController</servlet-name>
+    <servlet-class>work.model.controll.SearchController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SearchController</servlet-name>
+    <url-pattern>/SearchController</url-pattern>
+  </servlet-mapping>
+  
 </web-app>

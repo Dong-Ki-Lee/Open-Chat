@@ -1,13 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width-device-with", initial-scale="1">
 <link rel="stylesheet" href="css/bootstrap.css">
 <link rel="stylesheet" href="css/custom.css">
-<title>����Ŀ�´�Ƽ�Դϴ�.</title>
+<title>오픈커뮤니티입니다.</title>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -19,10 +19,10 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-taggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">�α���/ȸ������</a>
+						aria-expanded="false">로그인/회원가입</a>
 					<ul class="dropdown-menu">
-						<li class "active"><a href="login.jsp">�α���</a></li>
-						<li><a href="join.jsp">ȸ������</a></li>					
+						<li class "active"><a href="login.jsp">로그인</a></li>
+						<li><a href="join.jsp">회원가입</a></li>					
 					</ul>
 				</li>
 			</ul>	
@@ -33,15 +33,15 @@
 		<div class="col-lg-6">
 			<div class="jumbotron" style="padding-top: 8px;">
 				<form method="post" action="controller?action=login">
-					<h3 style="text-align : center;"> �α��� </h3>
+					<h3 style="text-align : center;"> 로그인 </h3>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="�̸���" name="memberEmail" maxlength="20">			
+						<input type="text" class="form-control" placeholder="이메일" name="memberEmail" maxlength="20">			
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="��й�ȣ" name="memberPw" maxlength="20">			
+						<input type="password" class="form-control" placeholder="비밀번호" name="memberPw" maxlength="20">			
 					</div>
-					<input type="submit" class="btn btn-primary form-control" value="�α���">
-					<input type="submit" class="btn btn-primary form-control" value="��й�ȣã��">				 
+					<input type="submit" class="btn btn-primary form-control" value="로그인">
+					<input type="submit" class="btn btn-primary form-control" value="비밀번호찾기">				 
 
 				</form>
 			</div>
