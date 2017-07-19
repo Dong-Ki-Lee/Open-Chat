@@ -75,6 +75,7 @@
 						<td>활동랭킹</td>	
 					</tr>
 				</table>
+
 		    <br/>
 				<table class="mypage_intro">
 					<th>
@@ -90,37 +91,104 @@
 						</td>
 					</tr>
 					<tr height="50">
-						<th style="text-align:center" colspan="2">	
-						<button type="button" class="btn btn-default btn-center">회원정보변경</button>
-						</br>
-						</br>
-							<div class="container">
-								<div class="col-lg-3"></div>
-								<div class="col-lg-6">
-									<div class="jumbotron" style="padding-top: 8px;">
-										<form method="post" action="joinAction.jsp">
-											<div class="form-group">
-												<input type="text" class="form-control" placeholder="이메일" name="memberEmail" maxlength="50">						
-											</div>
-											<div class="form-group">
-												<input type="text" class="form-control" placeholder="닉네임" name="MemberNickname" maxlength="50">			
-											</div>
-											<div class="form-group">
-												<input type="password" class="form-control" placeholder="비밀번호" name="memberPw" maxlength="20">			
-											</div>
-											<div class="form-group">
-												<input type="password" class="form-control" placeholder="비밀번호 확인" name="memberPw" maxlength="20">			
-											</div>
-											<div class="form-group">
-											<input type="submit" class="btn btn-primary btn-sm form-control" value="수정">					 
-											</div>
-											<input type="submit" class="btn btn-primary btn-sm form-control" value="취소">
-										</form>
-									</div>
-								</div>        		
+						<th style="text-align:left" colspan="2">	
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default">게시물조회</button>
+							<div id="container">
+								</br>
+								<table class="table table-bordered">
+									<th>번호
+									<td>게시판제목</td>
+									<td>조회수</td>
+									<td>조회날짜</td>
+									</th>
+									<tr>
+										<td>1</td>
+										<td>해외여행</td>
+										<td>129</td>
+										<td>2017-01-01</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>바다</td>
+										<td>521</td>
+										<td>2017-01-02</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>오버워치</td>
+										<td>894</td>
+										<td>2017-01-03</td>
+									</tr>
+								</table>       
+								<div class="jb-center">
+									<ul id="newMemberPag" class="pagination">
+										<li class="disabled"><a href="#"><span
+												class="glyphicon glyphicon-chevron-left"></span></a></li>
+										<li><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li class="active"><a href="#">5</a></li>
+										<li><a href="#">6</a></li>
+										<li><a href="#">7</a></li>
+										<li><a href="#">8</a></li>
+										<li><a href="#">9</a></li>
+										<li><a href="#">10</a></li>
+										<li><a href="#"><span
+												class="glyphicon glyphicon-chevron-right"></span></a></li>
+									</ul>
+								</div>	      				
 						    </div>																
 						</th>
-					</tr>		
+					</tr>
+
+					<tr height="50">
+						<th style="text-align:left" colspan="2">	
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-default">댓글조회　</button>
+							<div id="container">
+								</br>
+								<table class="table table-bordered">
+									<th>댓글번호
+									<td>댓글제목</td>
+									<td>댓글게시날짜</td>
+									</th>
+									<tr>
+										<td>1</td>
+										<td>아이참</td>
+										<td>2017-01-01</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>에이참</td>
+										<td>2017-01-02</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>어이참</td>
+										<td>2017-01-03</td>
+									</tr>
+								</table> 
+								<div class="jb-center">
+									<ul id="newMemberPag" class="pagination">
+										<li class="disabled"><a href="#"><span
+												class="glyphicon glyphicon-chevron-left"></span></a></li>
+										<li><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li class="active"><a href="#">5</a></li>
+										<li><a href="#">6</a></li>
+										<li><a href="#">7</a></li>
+										<li><a href="#">8</a></li>
+										<li><a href="#">9</a></li>
+										<li><a href="#">10</a></li>
+										<li><a href="#"><span
+												class="glyphicon glyphicon-chevron-right"></span></a></li>
+									</ul>
+								</div>	      		
+						    </div>																
+						</th>
+					</tr>
 				</table>    
         <div id="ThemeFooter">
             <div class="inner_footer">
