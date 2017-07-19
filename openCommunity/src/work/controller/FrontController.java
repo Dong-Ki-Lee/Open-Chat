@@ -32,6 +32,10 @@ public class FrontController extends HttpServlet {
 		System.out.println("\n## action : " + action);
 		
 		switch(action) {
+			case "selectPost": // 게시글 조회
+				selectPost(request,response);
+			case "selectInternalPost":
+				selectInternalPost(request, response);
 			case "login":	// 1. 로그인 서비스
 				login(request, response);
 				break;
@@ -240,7 +244,59 @@ public class FrontController extends HttpServlet {
 	protected void adminBoardPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 	
-	
+	// 게시글 전체 보기
+    private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+    	HttpSession session = request.getSession(false);
+    	if(session != null && session.getAttribute("member_no") != null &&
+    			session.getAttribute("board_no") != null) {
+    		int memberNo = (int) session.getAttribute("member_no");
+    		int boardNo = (int) session.getAttribute("board_no");
+    		
+    		ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
+    		ArrayList<PostsPreference> recommend = noticesDao.selectRecommend(boardNo);
+    		ArrayList<Members> memberNickname = membersDao.selectNickname();
+    		if (posts != null && recommend != null && memberNickname != null) {
+    			request.setAttribute("posts", posts);
+    			request.setAttribute("recommend", recommend);
+    			request.setAttribute("memberNickname", memberNickname);
+				request.getRequestDispatcher("/postsView.jsp").forward(request, response);
+    		} else {
+//    			response.sendRedirect("result.jsp");
+    		}
+    	}
+    	else {
+    		// 인증되지 않은 사용자 처리
+//    		request.setAttribute("message", "회원전용 서비스 입니다. 로그인 후 사용하시기 바랍니다.");
+//			request.getRequestDispatcher("/error.jsp").forward(request, response);
+    	}
+	}
+    
+    // 게시글 내부 보기
+    private void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+    	HttpSession session = request.getSession(false);
+    	String postTitle = (String)session.getAttribute("postTitle");
+    	String memberNickname = (String)session.getAttribute("memberNickname");
+    	int postViews = (int)session.getAttribute("postViews");
+    	String createTime = (String)session.getAttribute("createTime");
+    	int recommend = (int)session.getAttribute("recommend");
+    	if(session != null && session.getAttribute("postTitle") != null &&
+    			session.getAttribute("memberNicnkname") != null &&
+    			session.getAttribute("postViews") != null &&
+    			session.getAttribute("createTime") != null &&
+    			session.getAttribute("recommend") != null )
+    	{
+    		request.setAttribute("postTitle", postTitle);
+    		request.setAttribute("memberNickname", memberNickname);
+    		request.setAttribute("postViews", postViews);
+    		request.setAttribute("createTime", createTime);
+    		request.setAttribute("recommend", recommend);
+    		request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+    		
+    	} else {
+    	}
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

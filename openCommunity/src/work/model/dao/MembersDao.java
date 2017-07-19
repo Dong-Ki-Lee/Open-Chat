@@ -171,4 +171,36 @@ public class MembersDao {
 	// 암호찾기 -> 찾앗을경우 임시비밀번호 발송
 	// 
 	// 관리자 : 회원 전체정보 변경
+	//  닉네임찾기
+	public ArrayList<Members> selectNickname() {
+		ArrayList<Members> list = new ArrayList<Members>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		Members members = null;
+		int memberNo = 0;
+		String memberEmail = null;
+		String memberNickname = null;
+		String sql = "select member_no, member_email, member_nickname from members_tb";
+		
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				memberNo = rs.getInt("member_no");
+				memberEmail = rs.getString("member_email");
+				memberNickname = rs.getString("member_nickname");
+				
+				members = new Members(memberNo, memberEmail, memberNickname);
+				list.add(members);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(닉네임찾기) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return list;
+	}
 }
