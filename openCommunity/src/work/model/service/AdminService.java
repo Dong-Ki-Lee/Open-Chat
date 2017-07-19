@@ -32,8 +32,8 @@ public class AdminService {
 	 * 전체 회원 조회 
 	 * @return 회원 객체 배열 
 	 */
-	public ArrayList<MembersInfo> getMember() {
-		return null;
+	public ArrayList<MembersInfo> getMemberList() {
+		return memDao.selectList();
 	}
 	
 	/**

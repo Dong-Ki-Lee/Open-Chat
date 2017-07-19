@@ -37,8 +37,8 @@
 			<nav id="ThemeGnb">
 			<h2 class="screen_out">홈</h2>
 			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="controller?action=adminMemberPage">회원관리</a></li>
-				<li class="gnb_2dli"><a href="controller?action=adminBoardPage">게시판관리</a></li>
+				<li class="gnb_2dli"><a href="controller?action=adminMember">회원관리</a></li>
+				<li class="gnb_2dli"><a href="controller?action=adminBoard">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
 			</nav>
@@ -66,73 +66,7 @@
 			<div id="mArticle">
 				<div id="container">
 					<section id="sbn_idx" class="sbn"> 
-					<strong>신규 가입 회원 목록</strong>
-					<table class="table table-bordered">
-						<th>
-						<td>회원번호</td>
-						<td>닉네임</td>
-						<td>가입일</td>
-						<td>마일리지</td>
-						<td>최종로그인</td>
-						<td>비고</td>
-						</th>
-						<tr>
-							<td>1</td>
-							<td>1111</td>
-							<td>임지나</td>
-							<td>17-06-06</td>
-							<td>3400</td>
-							<td>17-06-06 11:56</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>1345</td>
-							<td>조현우</td>
-							<td>17-01-04</td>
-							<td>10000</td>
-							<td>17-05-06 11:56</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
-						<tr>
-							<td>3</td>
-							<td>3826</td>
-							<td>정영철</td>
-							<td>17-06-30</td>
-							<td>1000</td>
-							<td>17-06-06 10:56</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>2294</td>
-							<td>이동기</td>
-							<td>17-04-20</td>
-							<td>30400</td>
-							<td>17-06-01 03:00</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
-					</table>
-					<div class="jb-center">
-						<ul id="newMemberPag" class="pagination">
-							<li class="disabled"><a href="#"><span
-									class="glyphicon glyphicon-chevron-left"></span></a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li class="active"><a href="#">5</a></li>
-							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">9</a></li>
-							<li><a href="#">10</a></li>
-							<li><a href="#"><span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
-						</ul>
-					</div>
-
-					<strong>전체 회원 목록</strong> 
+					<strong>회원 목록</strong> 
 					
 					<%
 						ArrayList<MembersInfo> list = (ArrayList<MembersInfo>)request.getAttribute("memInfolist");
@@ -140,6 +74,7 @@
 					%>
 					
 					<select class="form-control-4">
+						<option>신규가입회원</option>
 						<option>회원번호순</option>
 						<option>가입일순</option>
 						<option>마일리지순</option>
@@ -155,13 +90,11 @@
 						<th>최종 로그인</th>
 						<th>비고</th>
 						</tr>
-						
 						<% 
 							for (int i=0; i<list.size(); i++) {
 								memInfoDto = list.get(i);
 						%>
 						<tr>
-							<td><%= i %></td>
 							<td><%= memInfoDto.getMemberNo() %></td>
 							<td><%= memInfoDto.getMemberNickname() %></td>
 							<td><%= memInfoDto.getMemberEmail() %></td>

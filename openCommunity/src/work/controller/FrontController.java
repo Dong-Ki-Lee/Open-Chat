@@ -15,291 +15,218 @@ import work.model.dao.MembersDao;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
+import work.model.service.AdminService;
+
 import work.model.dto.Posts;
 import work.model.dto.PostsPreference;
 import work.model.dao.NoticesDao;
-import work.model.service.AdminService;
 
 /**
  * Servlet implementation class FrontController
  */
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private AdminService adminsv = new AdminService();
+	private MembersDao memDao = new MembersDao();
+
 	private MembersDao membersDao = new MembersDao();
 	private NoticesDao noticesDao = new NoticesDao();
-       
+
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. 요청파악 : action=0000 : getParameter("key") : String
 		String action = request.getParameter("action");
 		System.out.println("\n## action : " + action);
-		
+
 		switch(action) {
-			case "selectPost": // 게시글 조회
-				selectPost(request,response);
-			case "selectInternalPost":
-				selectInternalPost(request, response);
-			case "login":	// 1. 로그인 서비스
-				login(request, response);
-				break;
-			case "logout":	// 2. 로그아웃 서비스
-				logout(request, response);
-				break;
-			case "joinSave":	// 3. 회원가입 정보 저장 서비스
-				joinSave(request, response);
-				break;
-			case "myInfo":		// 4. 내 정보 조회 서비스
-				myInfo(request, response);
-				break;
-			case "changePw":	// 5. 비밀번호 변경 서비스
-				changePw(request, response);
-				break;
-			case "changeMyInfo":	// 6. 내 정보 변경 서비스
-				changeMyInfo(request, response);
-				break;
-			case "deletePost":	// 12. 게시글 삭제 서비스
-				deletePost(request, response);
-				break;
-			case "deleteComment":	// 13. 댓글 삭제 서비스
-				deleteComment(request, response);
-				break;
-			case "createBoard":	// 14. 게시판 생성 서비스
-				createBoard(request, response);
-				break;
-			case "createPost":	// 15. 게시글 생성 서비스
-				createPost(request, response);
-				break;
-			case "createComment":	// 16. 댓글 생성 서비스
-				createComment(request, response);
-				break;
-			case "searchBoard":
-				searchBoard(request, response);
-				break;
-			case "adminMemberPage":
-				adminMemberPage(request, response);
-				break;
-			case "adminBoardPage":
-				adminBoardPage(request, response);
-				break;
-			default:	
+		case "login":	// 1. 로그인 서비스
+			login(request, response);
+			break;
+		case "logout":	// 2. 로그아웃 서비스
+			logout(request, response);
+			break;
+		case "joinSave":	// 3. 회원가입 정보 저장 서비스
+			joinSave(request, response);
+			break;
+		case "selectPost": // 게시글 조회
+			selectPost(request,response);
+			break;
+		case "selectInternalPost":
+			selectInternalPost(request, response);
+			break;
+		case "searchBoard":
+			searchBoard(request, response);
+			break;
+		case "adminMember":
+			adminMember(request, response);
+			break;
+		case "adminBoard":
+			adminBoard(request, response);
+			break;
+		default:	
 		}	
-		
+
 	}
-	
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public FrontController() {
-        super();
-    }
-    
-    /**
-   	 * 1. 로그인 서비스 메소드
-   	 */
-   	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-   		String memberEmail = request.getParameter("memberEmail");
-   		String memberPw = request.getParameter("memberPw");
-   		
-   		if (memberEmail.length() > 0 && memberPw.length() > 0) {
-   			int memberNo = adminsv.selectOneLogin(memberEmail, memberPw);
-   	   		
-   	   		if (memberNo != 0) {
-   	   			HttpSession session = request.getSession(true);
-   	   			session.setAttribute("memberEmail", memberEmail);
-   	   			session.setAttribute("memberNo", memberNo);
-   	   			
-   	   			if (memberNo >= 1 && memberNo <= 1000) {
-   	   				ArrayList<MembersInfo> list = membersDao.selectList();
-   	   				request.setAttribute("memInfolist", list);
-   	   				RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
-   	   				dispatcher.forward(request, response);
-   	   			} else {
-   	   				RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPageAfterLogin.jsp");
-   	   				dispatcher.forward(request, response);
-   	   			}
-   	   			
-   	   		} else {
-   	   			request.setAttribute("Message", "아이디, 비밀번호를 다시 확인해주시기 바랍니다.");
-   	   			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-   	   			dispatcher.forward(request, response);
-   	   		}
-   		} else {
-   			request.setAttribute("Message", "로그인 정보를 입력하시기 바랍니다.");
-	   			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-	   			dispatcher.forward(request, response);
-   		}
-   	}
-   	
-    /**
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public FrontController() {
+		super();
+	}
+
+	/**
+	 * 1. 로그인 서비스 메소드
+	 */
+	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String memberEmail = request.getParameter("memberEmail");
+		String memberPw = request.getParameter("memberPw");
+
+		if (memberEmail.length() > 0 && memberPw.length() > 0) {
+			int memberNo = adminsv.selectOneLogin(memberEmail, memberPw);
+
+			if (memberNo != 0) {
+				HttpSession session = request.getSession(true);
+				session.setAttribute("memberEmail", memberEmail);
+				session.setAttribute("memberNo", memberNo);
+
+				if (memberNo >= 1 && memberNo <= 1000) {
+					ArrayList<MembersInfo> list = memDao.selectList();
+					request.setAttribute("memInfolist", list);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
+					dispatcher.forward(request, response);
+				} else {
+					// 회원 로그인 직후 
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPageAfterLogin.jsp");
+					dispatcher.forward(request, response);
+				}
+
+			} else {
+				request.setAttribute("Message", "아이디, 비밀번호를 다시 확인해주시기 바랍니다.");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+				dispatcher.forward(request, response);
+			}
+		} else {
+			request.setAttribute("Message", "로그인 정보를 입력하시기 바랍니다.");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+			dispatcher.forward(request, response);
+		}
+	}
+
+	/**
 	 * 2. 로그아웃 서비스 메소드
 	 */
 	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
-	
-	 /**
+
+	/**
 	 * 3. 회원가입 정보 저장 서비스 메소드
 	 */
 	protected void joinSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
-	
+
 	/**
-	 * 4. 내 정보 조회 서비스 메소드
+	 * 9. 회원 전체 정보 조회 서비스
 	 */
-	protected void myInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void memberList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+
+			if (memberNo >= 1 && memberNo <= 1000) {
+				ArrayList<MembersInfo> list = adminsv.getMemberList();
+				request.setAttribute("memInfolist", list);
+				request.getRequestDispatcher("/adminMember.jsp").forward(request, response);
+			} else {
+				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}	
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
+		}
 	}
-	
-	/**
-	 * 5. 비밀번호 변경 서비스 메소드
-	 */
-	protected void changePw(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	/**
-	 * 6. 내 정보 변경 서비스 메소드
-	 */
-	protected void changeMyInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-//	/**
-//	 * 9. 회원 전체 정보 조회 서비스
-//	 */
-//	protected void memberList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		HttpSession session = request.getSession(false);
-//		
-//		if (session != null && session.getAttribute("memberNo") != null) {
-//			int memberNo = (int)session.getAttribute("memberNo");
-//			
-//			if (memberNo >= 1 && memberNo <= 1000) {
-//				ArrayList<MembersInfo> list = memDao.selectList();
-//				request.setAttribute("memInfolist", list);
-//				request.getRequestDispatcher("/adminMember.jsp").forward(request, response);
-//			} else {
-//				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
-//				request.getRequestDispatcher("/error.jsp").forward(request, response);
-//			}	
-//		} else {
-//			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
-//			request.getRequestDispatcher("/error.jsp").forward(request, response);
-//		}
-//	}
-	
-	/**
-	 * 10. 신규가입 회원 조회 서비스
-	 */
-	protected void newMemberList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-	
-	/**
-	 * 11. 회원 삭제 서비스
-	 */
-	protected void deleteMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	/**
-	 * 12. 게시글 삭제 서비스
-	 */
-	protected void deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	/**
-	 * 13. 댓글 삭제 서비스
-	 */
-	protected void deleteComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	/**
-	 * 14. 게시판 생성 서비스
-	 */
-	protected void createBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	/**
-	 * 15. 게시글 생성 서비스
-	 */
-	protected void createPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
+
 	/**
 	 * 16. 댓글 생성 서비스
 	 */
 	protected void createComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
-	
+
 	private BoardSearchDao boardSearchDao = new BoardSearchDao();
 	protected void searchBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("\n## action : searchBoard()");
 		// 2. 요청 데이터 추출 : join.jsp
 		String searchTag = request.getParameter("searchTag");
-		
+
 		if (searchTag != null && searchTag.length() > 0) {
 			ArrayList<NoticeBoards> boardList = boardSearchDao.searchBoardWithTag(searchTag);
 
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/memberList.jsp").forward(request, response);
 		}
-		
+
 	}
 
-	protected void adminMemberPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
-	protected void adminBoardPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-	
 	// 게시글 전체 보기
-    private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	HttpSession session = request.getSession(false);
-    	if(session != null && session.getAttribute("member_no") != null &&
-    			session.getAttribute("board_no") != null) {
-    		int memberNo = (int) session.getAttribute("member_no");
-    		int boardNo = (int) session.getAttribute("board_no");
-    		
-    		ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
-    		ArrayList<PostsPreference> recommend = noticesDao.selectRecommend(boardNo);
-    		ArrayList<Members> memberNickname = membersDao.selectNickname();
-    		if (posts != null && recommend != null && memberNickname != null) {
-    			request.setAttribute("posts", posts);
-    			request.setAttribute("recommend", recommend);
-    			request.setAttribute("memberNickname", memberNickname);
+		HttpSession session = request.getSession(false);
+		if(session != null && session.getAttribute("member_no") != null &&
+				session.getAttribute("board_no") != null) {
+			int memberNo = (int) session.getAttribute("member_no");
+			int boardNo = (int) session.getAttribute("board_no");
+
+			ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
+			ArrayList<PostsPreference> recommend = noticesDao.selectRecommend(boardNo);
+			ArrayList<Members> memberNickname = membersDao.selectNickname();
+			if (posts != null && recommend != null && memberNickname != null) {
+				request.setAttribute("posts", posts);
+				request.setAttribute("recommend", recommend);
+				request.setAttribute("memberNickname", memberNickname);
 				request.getRequestDispatcher("/postsView.jsp").forward(request, response);
-    		} else {
-//    			response.sendRedirect("result.jsp");
-    		}
-    	}
-    	else {
-    		// 인증되지 않은 사용자 처리
-//    		request.setAttribute("message", "회원전용 서비스 입니다. 로그인 후 사용하시기 바랍니다.");
-//			request.getRequestDispatcher("/error.jsp").forward(request, response);
-    	}
+			} else {
+				//    			response.sendRedirect("result.jsp");
+			}
+		}
+		else {
+			// 인증되지 않은 사용자 처리
+			//    		request.setAttribute("message", "회원전용 서비스 입니다. 로그인 후 사용하시기 바랍니다.");
+			//			request.getRequestDispatcher("/error.jsp").forward(request, response);
+		}
 	}
-    
-    // 게시글 내부 보기
-    private void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	// 게시글 내부 보기
+	private void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	HttpSession session = request.getSession(false);
-    	String postTitle = (String)session.getAttribute("postTitle");
-    	String memberNickname = (String)session.getAttribute("memberNickname");
-    	int postViews = (int)session.getAttribute("postViews");
-    	String createTime = (String)session.getAttribute("createTime");
-    	int recommend = (int)session.getAttribute("recommend");
-    	if(session != null && session.getAttribute("postTitle") != null &&
-    			session.getAttribute("memberNicnkname") != null &&
-    			session.getAttribute("postViews") != null &&
-    			session.getAttribute("createTime") != null &&
-    			session.getAttribute("recommend") != null )
-    	{
-    		request.setAttribute("postTitle", postTitle);
-    		request.setAttribute("memberNickname", memberNickname);
-    		request.setAttribute("postViews", postViews);
-    		request.setAttribute("createTime", createTime);
-    		request.setAttribute("recommend", recommend);
-    		request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
-    		
-    	} else {
-    	}
+		HttpSession session = request.getSession(false);
+		String postTitle = (String)session.getAttribute("postTitle");
+		String memberNickname = (String)session.getAttribute("memberNickname");
+		int postViews = (int)session.getAttribute("postViews");
+		String createTime = (String)session.getAttribute("createTime");
+		int recommend = (int)session.getAttribute("recommend");
+		if(session != null && session.getAttribute("postTitle") != null &&
+				session.getAttribute("memberNicnkname") != null &&
+				session.getAttribute("postViews") != null &&
+				session.getAttribute("createTime") != null &&
+				session.getAttribute("recommend") != null )
+		{
+			request.setAttribute("postTitle", postTitle);
+			request.setAttribute("memberNickname", memberNickname);
+			request.setAttribute("postViews", postViews);
+			request.setAttribute("createTime", createTime);
+			request.setAttribute("recommend", recommend);
+			request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+
+		} else {
+		}
+	}
+
+	protected void adminMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void adminBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 	/**
