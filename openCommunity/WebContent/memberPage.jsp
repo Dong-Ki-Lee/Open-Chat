@@ -70,19 +70,19 @@
 				    				System.out.println("fffffffffff");
 				    			}
 					    		NoticeBoards dto = null;
-								for (int index = 0; index < 3; index++) {
+								for (int index = 0; index < matchBoard.size(); index++) {
 									
-									//dto = matchBoard.get(index);
+									dto = matchBoard.get(index);
 							%>	
 								<div class="col-sm-4 col-lg-4 col-md-4">
 					                <div class="thumbnail">
 					                    <img src="http://placehold.it/320x150" alt=""/>
 					                    <div class="caption">
 					                        <h4 class="pull-right">110</h4>
-					                        <h4><a href="#">first</a>
+					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
 					                        </h4>
 					                        <p></p>
-					                        <p>second</p>
+					                        <p><%=dto.getBoardTag()%></p>
 					                        
 					                    </div>
 					                    <div class="ratings">
@@ -110,26 +110,26 @@
 						
 						<div class='row'>
 				            <%
-								for (int index = 0; index < 3; index++) {
+								for (int index = 0; index < subscribeBoard.size(); index++) {
 
-									//dto = subscribeBoard.get(index);
+									dto = subscribeBoard.get(index);
 							%>	
 								<div class="col-sm-4 col-lg-4 col-md-4">
-				                <div class="thumbnail">
-				                    <img src="http://placehold.it/320x150" alt=""/>
-				                    <div class="caption">
-				                        <h4 class="pull-right">??</h4>
-				                        <h1><a href="#">ffff</a>
-				                        </h1>
-				                        <p>ddd</p>
-				                        <p>가장 최신글 제목을 넣는다거나</p>
-				                        
-				                    </div>
-				                    <div class="ratings">
-				                        <p class="pull-right">새글 3개</p>
-				                    </div>
-				                </div>
-				            </div>
+					                <div class="thumbnail">
+					                    <img src="http://placehold.it/320x150" alt=""/>
+					                    <div class="caption">
+					                        <h4 class="pull-right">110</h4>
+					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
+					                        </h4>
+					                        <p></p>
+					                        <p><%=dto.getBoardTag()%></p>
+					                        
+					                    </div>
+					                    <div class="ratings">
+					                        <p class="pull-right">new post 3</p>
+					                    </div>
+					                </div>
+				           	 	</div>
 							<%
 									if(index == 2) {
 										%>

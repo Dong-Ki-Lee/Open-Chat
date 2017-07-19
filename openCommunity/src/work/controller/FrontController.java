@@ -30,6 +30,7 @@ public class FrontController extends HttpServlet {
 	private AdminService adminsv = new AdminService();
 	private MembersDao memDao = new MembersDao();
 
+	private BoardSearchDao boardSearchDao = new BoardSearchDao();
 	private MembersDao membersDao = new MembersDao();
 	private NoticesDao noticesDao = new NoticesDao();
 
@@ -53,9 +54,6 @@ public class FrontController extends HttpServlet {
 			break;
 		case "selectInternalPost":
 			selectInternalPost(request, response);
-			break;
-		case "searchBoard":
-			searchBoard(request, response);
 			break;
 		case "adminMember":
 			adminMember(request, response);
@@ -167,20 +165,6 @@ public class FrontController extends HttpServlet {
 	protected void createComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
-	private BoardSearchDao boardSearchDao = new BoardSearchDao();
-	protected void searchBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("\n## action : searchBoard()");
-		// 2. 요청 데이터 추출 : join.jsp
-		String searchTag = request.getParameter("searchTag");
-
-		if (searchTag != null && searchTag.length() > 0) {
-			ArrayList<NoticeBoards> boardList = boardSearchDao.searchBoardWithTag(searchTag);
-
-			request.setAttribute("boardList", boardList);
-			request.getRequestDispatcher("/memberList.jsp").forward(request, response);
-		}
-
-	}
 
 	// 게시글 전체 보기
 	private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

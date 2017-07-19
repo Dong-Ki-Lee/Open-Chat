@@ -34,7 +34,7 @@ public class BoardSearchDao {
 		sql.append("(select notice_board_no ");
 		sql.append("from MEMBERS_SUBSCRIBE_TB ");
 		sql.append("where member_no = ?) temp, notice_boards_tb ");
-		sql.append("where temp.notice_board_no = notice_boards_tb.board_no; ");
+		sql.append("where temp.notice_board_no = notice_boards_tb.board_no");
 		
 		try  {
 			conn = getConnection();
@@ -84,7 +84,7 @@ public class BoardSearchDao {
 		sql.append("group by search_word ");
 		sql.append("order by temp ");
 		sql.append("desc) ");
-		sql.append("where temp > 2;");
+		sql.append("where temp > 2");
 		
 		try  {
 			conn = getConnection();
@@ -129,25 +129,28 @@ public class BoardSearchDao {
 		
 		for (int i = 0; i < input.size(); i++) {
 			sql.append("select * from notice_boards_tb ");
-			sql.append("where board_tag like '%?%' ");
+			sql.append("where board_tag like '%");
+			sql.append(input.get(i));
+			sql.append("%' ");
 			if(i != input.size() - 1) {
-				sql.append("union all");
+				sql.append("union all ");
 			}
 		}
-		sql.append(") notice");
+		sql.append(") notice ");
 		sql.append("group by board_no ");
 		sql.append("order by tag_match ");
 		sql.append("desc) search_end, ");
 		sql.append("notice_boards_tb boards ");
-		sql.append("where search_end.board_no = boards.board_no;");
+		sql.append("where search_end.board_no = boards.board_no");
 		System.out.println(sql.toString());
 		try  {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
 			
-			for (int i = 0; i < input.size(); i++) {
+/*			for (int i = 0; i < input.size(); i++) {
 				stmt.setString(i+1, input.get(i));
 			}
+*/
 			rs = stmt.executeQuery();
 
 			int boardNo = 0;
@@ -192,7 +195,7 @@ public class BoardSearchDao {
 		sql.append("group by board_no ");
 		sql.append("order by count(*) ");
 		sql.append("desc) search, notice_boards_tb ");
-		sql.append("where search.board_no = notice_boards_tb.board_no; ");
+		sql.append("where search.board_no = notice_boards_tb.board_no");
 		try  {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
