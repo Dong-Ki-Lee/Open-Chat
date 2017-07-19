@@ -140,7 +140,7 @@ public class BoardSearchDao {
 		sql.append("desc) search_end, ");
 		sql.append("notice_boards_tb boards ");
 		sql.append("where search_end.board_no = boards.board_no;");
-		
+		System.out.println(sql.toString());
 		try  {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
@@ -185,7 +185,7 @@ public class BoardSearchDao {
 		ResultSet rs = null;
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("select tag_match, search_end.board_no, board_title, board_tag ");
+		sql.append("select search.board_no, board_title, board_tag ");
 		sql.append("from ");
 		sql.append("(select board_no ");
 		sql.append("from posts_tb ");

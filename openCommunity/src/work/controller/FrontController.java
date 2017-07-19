@@ -97,7 +97,21 @@ public class FrontController extends HttpServlet {
 					dispatcher.forward(request, response);
 				} else {
 					// 회원 로그인 직후 
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPageAfterLogin.jsp");
+					ArrayList<String> searchHistory = boardSearchDao.getSearchHistory(memberNo);
+					
+					ArrayList<NoticeBoards> matchBoard = null;
+					if(searchHistory == null || searchHistory.size() == 0) {
+						matchBoard = boardSearchDao.getLargeBoard();
+					} else {
+						matchBoard = boardSearchDao.searchBoardWithTag(searchHistory);
+					}
+					
+					ArrayList<NoticeBoards> subscribeBoard = boardSearchDao.getSubscribeBoard(memberNo);
+					
+					request.setAttribute("subscribeBoard", subscribeBoard);
+					request.setAttribute("matchBoard", matchBoard);
+					request.getRequestDispatcher("/memberPageAfterLogin.jsp").forward(request, response);
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPage.jsp");
 					dispatcher.forward(request, response);
 				}
 

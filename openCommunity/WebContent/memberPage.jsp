@@ -63,7 +63,12 @@
 				            <%
 					    		ArrayList<NoticeBoards> subscribeBoard = (ArrayList<NoticeBoards>)request.getAttribute("subscribeBoard");
 				           	 	ArrayList<NoticeBoards> matchBoard = (ArrayList<NoticeBoards>)request.getAttribute("matchBoard");
-				    			
+				    			if(subscribeBoard == null) {
+				    				System.out.println("dddddddddd");
+				    			}
+				    			if(matchBoard == null) {
+				    				System.out.println("fffffffffff");
+				    			}
 					    		NoticeBoards dto = null;
 								for (int index = 0; index < 3; index++) {
 									
