@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import work.model.dto.Members;
+import work.model.dto.MembersInfo;
 
 public class MembersDao {
 	private FactoryDao factory = FactoryDao.getInstance();
@@ -16,30 +17,42 @@ public class MembersDao {
 	}
 	// 전체회원조회 (Read: 읽기) 
 	// + 가입일 최종 로그인, 마일리지
-	public ArrayList<Members> selectList() {
-		ArrayList<Members> list = new ArrayList<Members>();
+	public ArrayList<MembersInfo> selectList() {
+		ArrayList<MembersInfo> list = new ArrayList<MembersInfo>();
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		String sql = "select * from members_tb";
+		
+		StringBuilder sql = new StringBuilder();
+	    sql.append("select * ");
+	    sql.append("from members_tb m, members_info_tb i ");
+	    sql.append("where m.memberno = i.member_no");
 		
 		try {
 			conn = getConnection();
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
+			rs = stmt.executeQuery(sql.toString());
 
 			int memberNo = 0;
+			String memberPw = null;
 			String memberEmail = null;
 			String memberNickname = null;
-			Members dto = null;
+			String joinDate = null;
+			int mileage = 0;
+			String lastLoginDate = null;
+			
+			MembersInfo dto = null;
 			
 			while(rs.next()) {
 				memberNo = rs.getInt("member_no");
 				memberEmail = rs.getString("member_email");
 				memberNickname= rs.getString("member_nickname");
+				memberPw = rs.getString("member_pw");
+				joinDate = rs.getString("join_date");
+				lastLoginDate = rs.getString("last_login_date");
+				mileage = rs.getInt("mileage");
 
-				
-				dto = new Members(memberNo, memberEmail, memberNickname);
+				dto = new MembersInfo(memberNo, memberEmail, memberNickname, memberPw, joinDate, lastLoginDate, mileage);
 				list.add(dto);
 			}
 			
@@ -136,7 +149,7 @@ public class MembersDao {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "select member_no from members where member_email=? and member_pw=?";
+		String sql = "select member_no from members_tb where member_email=? and member_pw=?";
 		
 		try {
 			conn = getConnection();

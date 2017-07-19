@@ -32,13 +32,13 @@
 		<div class="col-lg-3"></div>
 		<div class="col-lg-6">
 			<div class="jumbotron" style="padding-top: 8px;">
-				<form method="post" action="loginAction.jsp">
+				<form method="post" action="controller?action=login">
 					<h3 style="text-align : center;"> 로그인 </h3>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="아이디" name="userId" maxlength="20">			
+						<input type="text" class="form-control" placeholder="이메일" name="memberEmail" maxlength="20">			
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="userPassword" maxlength="20">			
+						<input type="password" class="form-control" placeholder="비밀번호" name="memberPw" maxlength="20">			
 					</div>
 					<input type="submit" class="btn btn-primary form-control" value="로그인">
 					<input type="submit" class="btn btn-primary form-control" value="비밀번호찾기">				 

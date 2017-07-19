@@ -7,6 +7,8 @@ drop table comments_tb CASCADE CONSTRAINTS PURGE;
 drop table posts_preference_tb CASCADE CONSTRAINTS PURGE;
 drop table members_subscribe_tb CASCADE CONSTRAINTS PURGE;
 
+select * from members_tb;
+
 create table members_tb (
 	member_no number,
 	member_email varchar2(30) not null,

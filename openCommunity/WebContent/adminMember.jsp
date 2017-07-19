@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="work.model.dto.Members" %>
+<%@ page import="work.model.dto.MembersInfo" %>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -15,6 +19,16 @@
 </head>
 <body>
 
+<%
+	String memberEmail = (String)session.getAttribute("memberEmail");
+	int memberNo = (int)session.getAttribute("memberNo");
+	if (memberEmail == null || memberNo == 0) {
+		request.setAttribute("Message", "로그인 후 이용하시기 바랍니다.");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+		dispatcher.forward(request, response);
+	}
+%>
+
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
 			<div>
@@ -23,8 +37,8 @@
 			<nav id="ThemeGnb">
 			<h2 class="screen_out">홈</h2>
 			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
-				<li class="gnb_2dli"><a href="adminNotice.jsp">게시판관리</a></li>
+				<li class="gnb_2dli"><a href="controller?action=adminMemberPage">회원관리</a></li>
+				<li class="gnb_2dli"><a href="controller?action=adminBoardPage">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
 			</nav>
@@ -51,8 +65,8 @@
 
 			<div id="mArticle">
 				<div id="container">
-					<section id="sbn_idx" class="sbn"> <strong>신규 가입
-						회원 목록</strong>
+					<section id="sbn_idx" class="sbn"> 
+					<strong>신규 가입 회원 목록</strong>
 					<table class="table table-bordered">
 						<th>
 						<td>회원번호</td>
@@ -118,58 +132,51 @@
 						</ul>
 					</div>
 
-					<strong>전체 회원 목록</strong> <select class="form-control-4">
+					<strong>전체 회원 목록</strong> 
+					
+					<%
+						ArrayList<MembersInfo> list = (ArrayList<MembersInfo>)request.getAttribute("memInfolist");
+						MembersInfo memInfoDto = null;
+					%>
+					
+					<select class="form-control-4">
 						<option>회원번호순</option>
 						<option>가입일순</option>
 						<option>마일리지순</option>
 					</select>
 
 					<table class="table table-bordered">
-						<th>
-						<td>회원번호</td>
-						<td>닉네임</td>
-						<td>이메일</td>
-						<td>가입일</td>
-						<td>마일리지</td>
-						<td>비고</td>
-						</th>
 						<tr>
-							<td>1</td>
-							<td>1111</td>
-							<td>임지나</td>
-							<td>wlsgk0323@icloud.com</td>
-							<td>17-06-06</td>
-							<td>3400</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
+						<th>회원번호</th>
+						<th>닉네임</th>
+						<th>이메일</th>
+						<th>가입일</th>
+						<th>마일리지</th>
+						<th>최종 로그인</th>
+						<th>비고</th>
 						</tr>
+						
+						<% 
+							for (int i=0; i<list.size(); i++) {
+								memInfoDto = list.get(i);
+						%>
 						<tr>
-							<td>2</td>
-							<td>1345</td>
-							<td>조현우</td>
-							<td>chohw@icloud.com</td>
-							<td>17-01-04</td>
-							<td>10000</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
+							<td><%= i %></td>
+							<td><%= memInfoDto.getMemberNo() %></td>
+							<td><%= memInfoDto.getMemberNickname() %></td>
+							<td><%= memInfoDto.getMemberEmail() %></td>
+							<td><%= memInfoDto.getJoinDate() %></td>
+							<td><%= memInfoDto.getMileage() %></td>
+							<td><%= memInfoDto.getLastLoginDate() %></td>
+							<td><a href="controllre?action=deleteMember&memberNo=<%= memInfoDto.getMemberNo() %>">탈퇴</a></td>
 						</tr>
-						<tr>
-							<td>3</td>
-							<td>3826</td>
-							<td>정영철</td>
-							<td>yeongcheol@icloud.com</td>
-							<td>17-06-30</td>
-							<td>1000</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
-						<tr>
-							<td>4</td>
-							<td>2294</td>
-							<td>이동기</td>
-							<td>dongki@icloud.com</td>
-							<td>17-04-20</td>
-							<td>30400</td>
-							<td><button type="button" class="btn btn-primary-xs">탈퇴</button></td>
-						</tr>
+						
+						<%
+							}
+						%>
+						
 					</table>
+					
 					<div class="jb-center">
 						<ul id="memberPag" class="pagination">
 							<li class="disabled"><a href="#"><span

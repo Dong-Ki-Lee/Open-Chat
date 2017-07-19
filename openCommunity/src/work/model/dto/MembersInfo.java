@@ -4,15 +4,13 @@
 package work.model.dto;
 
 import java.io.Serializable;
+import work.model.dto.Members;
 
 /**
  * @author limjinha
  *
  */
-public class MembersInfo implements Serializable {
-	
-	/** 회원 번호 */
-	private int memberNo;
+public class MembersInfo extends Members implements Serializable {
 	
 	/** 회원 가입일 정보 */
 	private String joinDate;
@@ -31,22 +29,17 @@ public class MembersInfo implements Serializable {
 		super();
 	}
 
-
 	/**
-	 * @return the memberNo
+	 * @param joinDate
+	 * @param lastLoginDate
+	 * @param mileage
 	 */
-	public int getMemberNo() {
-		return memberNo;
+	public MembersInfo(int memberNo, String memberEmail, String memberNickname, String memberPw, String joinDate, String lastLoginDate, int mileage) {
+		super(memberNo, memberEmail, memberNickname, memberPw);
+		this.joinDate = joinDate;
+		this.lastLoginDate = lastLoginDate;
+		this.mileage = mileage;
 	}
-
-
-	/**
-	 * @param memberNo the memberNo to set
-	 */
-	public void setMemberNo(int memberNo) {
-		this.memberNo = memberNo;
-	}
-
 
 	/**
 	 * @return the joinDate
@@ -93,16 +86,6 @@ public class MembersInfo implements Serializable {
 	 */
 	public void setMileage(int mileage) {
 		this.mileage = mileage;
-	}
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "MembersInfo [memberNo=" + memberNo + ", joinDate=" + joinDate + ", lastLoginDate=" + lastLoginDate
-				+ ", mileage=" + mileage + "]";
 	}
 
 }
