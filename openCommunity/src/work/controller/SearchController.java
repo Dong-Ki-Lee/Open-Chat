@@ -35,9 +35,6 @@ public class SearchController extends HttpServlet {
 			case "searchBoard":
 				searchBoard(request, response);
 				break;
-			case "showMain":
-				showMain(request, response);
-				break;
 			default:	
 		}	
 		
@@ -63,6 +60,9 @@ public class SearchController extends HttpServlet {
 
 			request.setAttribute("boardList", boardList);
 			request.getRequestDispatcher("/boardViewAfterSearch.jsp").forward(request, response);
+		} else {
+			request.setAttribute("Message", "올바른 검색어를 입력해주세요");
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 		
 	}
@@ -95,14 +95,15 @@ public class SearchController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		process(request,response);
 	}
 
-	
-	
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("euc-kr");
-		doGet(request, response);
+		process(request,response);
 	}
 
 }

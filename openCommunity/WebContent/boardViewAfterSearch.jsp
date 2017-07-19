@@ -18,9 +18,10 @@
 <body>
 
 <%
-	// ȸ����ü ����Ʈ
 	ArrayList<NoticeBoards> list = (ArrayList<NoticeBoards>)request.getAttribute("boardList");
-	// ȸ������
+	if(list == null) {
+		System.out.println("ddddddddd");
+	}
 	NoticeBoards dto = null;
 %>
     <div id="ThemeWrap">
@@ -63,26 +64,32 @@
                     	<div class="row">
                     	
                     		<%
-								for (int index=0; index < 9; index++) {
-									//dto = list.get(index);
+								for (int index=0; index < list.size(); index++) {
+									dto = list.get(index);
 							%>	
-								<div class="col-sm-4 col-lg-4 col-md-4">
-				                <div class="thumbnail">
-				                    <img src="http://placehold.it/320x150" alt="게시판 사진"/>
-				                    <div class="caption">
-				                        <h4 class="pull-right">총 110개의 게시글</h4>
-				                        <h4><a href="#">첫번째 게시판</a>
-				                        </h4>
-				                        <p>태그가 들어가는 부분 #산 #여행 #바다</p>
-				                        <p>가장 최신글 제목을 넣는다거나</p>
-				                        
-				                    </div>
-				                    <div class="ratings">
-				                        <p class="pull-right">새글 3개</p>
-				                    </div>
-				                </div>
-				            </div>
+																<div class="col-sm-4 col-lg-4 col-md-4">
+					                <div class="thumbnail">
+					                    <img src="http://placehold.it/320x150" alt=""/>
+					                    <div class="caption">
+					                        <h4 class="pull-right">110</h4>
+					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
+					                        </h4>
+					                        <p></p>
+					                        <p><%=dto.getBoardTag()%></p>
+					                        
+					                    </div>
+					                    <div class="ratings">
+					                        <p class="pull-right">new post 3</p>
+					                    </div>
+					                </div>
+				           	 	</div>
 							<%
+									if(index == 8) {
+										%>
+										<p>more</p>
+										<%
+										break;
+									}
 								}
 							%>	
                     		

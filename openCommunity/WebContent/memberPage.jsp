@@ -31,7 +31,7 @@
 
         <div id="ThemeContent">
             <div class="site_sch">
-                <form action="controller?action=searchBoard" method="post">
+                <form action="scontroller?action=searchBoard" method="post">
                     <input type="text" class="form-control" name="searchTag" id="sch_stx">
                     <button type="submit" class="btn_search">
                         <i class="fa fa-search"><strong class="screen_out">검색</strong></i>
@@ -63,12 +63,7 @@
 				            <%
 					    		ArrayList<NoticeBoards> subscribeBoard = (ArrayList<NoticeBoards>)request.getAttribute("subscribeBoard");
 				           	 	ArrayList<NoticeBoards> matchBoard = (ArrayList<NoticeBoards>)request.getAttribute("matchBoard");
-				    			if(subscribeBoard == null) {
-				    				System.out.println("dddddddddd");
-				    			}
-				    			if(matchBoard == null) {
-				    				System.out.println("fffffffffff");
-				    			}
+
 					    		NoticeBoards dto = null;
 								for (int index = 0; index < matchBoard.size(); index++) {
 									
