@@ -110,7 +110,6 @@ public class FrontController extends HttpServlet {
 					
 					request.setAttribute("subscribeBoard", subscribeBoard);
 					request.setAttribute("matchBoard", matchBoard);
-					request.getRequestDispatcher("/memberPageAfterLogin.jsp").forward(request, response);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPage.jsp");
 					dispatcher.forward(request, response);
 				}
