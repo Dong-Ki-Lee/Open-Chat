@@ -128,6 +128,7 @@ public class BoardSearchDao {
 		//String[] tagArray = input.split("#");
 		
 		for (int i = 0; i < input.size(); i++) {
+			System.out.println(input.get(i));
 			sql.append("select * from notice_boards_tb ");
 			sql.append("where board_tag like '%");
 			sql.append(input.get(i));
@@ -147,10 +148,6 @@ public class BoardSearchDao {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
 			
-/*			for (int i = 0; i < input.size(); i++) {
-				stmt.setString(i+1, input.get(i));
-			}
-*/
 			rs = stmt.executeQuery();
 
 			int boardNo = 0;
@@ -227,7 +224,33 @@ public class BoardSearchDao {
 		return null;
 	}
 	
-	public int getBoardQuentity(int boardNo) {
+	public int getBoardQuantity(int boardNo) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select count(*) board_quantity ");
+		sql.append("from posts_tb ");
+		sql.append("where board_no = ? ");
+		try  {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setInt(1, boardNo);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("board_quantity");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(게시판 크기 받아오기 실패) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return -1;
+	}
+	
+	public int getRecentPostQuentity(int boardNo) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
@@ -236,6 +259,8 @@ public class BoardSearchDao {
 		sql.append("select count(*) board_quentity ");
 		sql.append("from posts_tb ");
 		sql.append("where board_no = ? ");
+		sql.append("and ");
+		sql.append("create_time > DATE_ADD(now(), INTERVAL -7 day)");
 		try  {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());

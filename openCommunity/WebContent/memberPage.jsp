@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="work.model.dto.NoticeBoards" %>
+<%@ page import="work.model.service.SearchService" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -22,6 +23,8 @@
 		dispatcher.forward(request, response);
 		return;
 	}
+
+	SearchService searchService = new SearchService();
 %>
     <div id="ThemeWrap">
         <div id="ThemeHeader">
@@ -80,7 +83,7 @@
 					                <div class="thumbnail">
 					                    <img src="http://placehold.it/320x150" alt=""/>
 					                    <div class="caption">
-					                        <h4 class="pull-right">110</h4>
+					                        <h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
 					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
 					                        </h4>
 					                        <p></p>

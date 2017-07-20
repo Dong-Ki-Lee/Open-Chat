@@ -49,12 +49,13 @@ public class SearchController extends HttpServlet {
 		if (searchTag != null && searchTag.length() > 0) {
 
 			String[] tagArray = searchTag.split("#");
-			
+			System.out.println(tagArray.length);
 			ArrayList<String> inputList = new ArrayList<String>();
 			
 			for(int index = 0; index < tagArray.length; index++) {
 				inputList.add(tagArray[index]);
 			}
+			System.out.println(inputList.size());
 			
 			ArrayList<NoticeBoards> boardList = boardSearchDao.searchBoardWithTag(inputList);
 
@@ -102,7 +103,7 @@ public class SearchController extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("euc-kr");
+		request.setCharacterEncoding("utf-8");
 		process(request,response);
 	}
 
