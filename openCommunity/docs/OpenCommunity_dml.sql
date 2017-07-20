@@ -9,6 +9,8 @@ insert into members_tb values(1007, 'user07@user.com', 'user07', 'user07');
 insert into members_tb values(1008, 'user08@user.com', 'user08', 'user08');
 insert into members_tb values(1009, 'user09@user.com', 'user09', 'user09');
 
+insert into members_tb values(1010, 'user10@user.com', '임지나', 'user10');
+insert into members_tb values(1011, 'user11@user.com', 'user11', 'user11');
 
 insert into search_history_tb values(1001, '여행');
 insert into search_history_tb values(1001, '산');
@@ -127,6 +129,9 @@ insert into members_info_tb values(1006, null, sysdate, null);
 insert into members_info_tb values(1007, null, sysdate, null);
 insert into members_info_tb values(1008, null, sysdate, null);
 insert into members_info_tb values(1009, null, sysdate, null);
+insert into members_info_tb values(1010, null, sysdate, null);
+insert into members_info_tb values(1011, null, sysdate, null);
+
 
 
 insert into notice_boards_tb values(10001, '산을 좋아하는 사람들', '#여행#산#휴가');
@@ -155,6 +160,16 @@ insert into posts_tb values(1001, 10001, 3, '산은 산이요 물은 물이로다', '제곧내
 insert into posts_tb values(1001, 10001, 4, '산은 산이요 물은 물이로다', '제곧내', null, null);
 insert into posts_tb values(1001, 10001, 5, '산은 산이요 물은 물이로다', '제곧내', null, null);
 
+insert into posts_tb values(1002, 10002, 1, '산물이로다', '제곧내', null, null);
+insert into posts_tb values(1002, 10002, 2, '산은 물이로다', '제곧내', null, null);
+
+insert into posts_tb values(1003, 10003, 2, '산은 물이로다', '제곧내', null, null);
+insert into posts_tb values(1004, 10004, 2, '산은 물이로다', '제곧내', null, null);
+insert into posts_tb values(1005, 10005, 2, '산은 물이로다', '제곧내', null, null);
+insert into posts_tb values(1006, 10006, 2, '산은 물이로다', '제곧내', null, null);
+insert into posts_tb values(1007, 10007, 2, '산은 물이로다', '제곧내', null, null);
+insert into posts_tb values(1008, 10008, 2, '산은 물이로다', '제곧내', null, null);
+
 
 insert into comments_tb values(1002, 10001, 1, 1, '이게 뭡니까', null);
 insert into comments_tb values(1002, 10001, 2, 1, '이게 뭡니까', null);
@@ -170,3 +185,7 @@ insert into posts_preference_tb values(1006, 10001, 1, 1);
 insert into posts_preference_tb values(1007, 10001, 1, 1);
 insert into posts_preference_tb values(1008, 10001, 1, 1);
 insert into posts_preference_tb values(1009, 10001, 1, 1);
+
+insert into posts_preference_tb values(1003, 10002, 1, 0);
+insert into posts_preference_tb values(1004, 10002, 1, 0);
+insert into posts_preference_tb values(1005, 10002, 1, 0);

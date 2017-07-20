@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="work.model.dto.BoardsInfo" %>
+<%@ page import="work.model.dto.Posts" %>
+<%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -15,6 +18,16 @@
 </head>
 <body>
 
+<%
+	String memberEmail = (String)session.getAttribute("memberEmail");
+	int memberNo = (int)session.getAttribute("memberNo");
+	if (memberEmail == null || memberNo == 0) {
+		request.setAttribute("Message", "로그인 후 이용하시기 바랍니다.");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+		dispatcher.forward(request, response);
+	}
+%>
+
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
 			<div>
@@ -23,7 +36,7 @@
 			<nav id="ThemeGnb">
 			<h2 class="screen_out">홈</h2>
 			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
+				<li class="gnb_2dli"><a href="controller?action=adminMember">회원관리</a></li>
 				<li class="gnb_2dli"><a href="adminNotice.jsp">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
@@ -51,37 +64,39 @@
 
 			<div id="mArticle">
 				<div id="container">
-					<section id="sbn_idx" class="sbn"> <strong>전체
-						게시판 목록</strong> <select class="form-control-4">
+					<section id="sbn_idx" class="sbn">
+					<strong>전체 게시판 목록</strong>
+					
+					<%
+						ArrayList<BoardsInfo> list = (ArrayList<BoardsInfo>)request.getAttribute("boardsInfolist");
+						BoardsInfo boardInfoDto = null;
+					%>
+					<select class="form-control-4">
 						<option>최신순</option>
 						<option>구독순</option>
 						<option>게시순</option>
 					</select>
 
 					<table class="table table-bordered">
-						<th>
-						<td>게시판명</td>
-						<td>총 게시글 수</td>
-						<td>사용자 구독 수</td>
-						</th>
 						<tr>
-							<td>1</td>
-							<td>해외여행</td>
-							<td>129</td>
-							<td>34</td>
+						<th>No.</th>
+						<th>게시판명</th>
+						<th>총 게시글 수</th>
+						<th>사용자 구독 수</th>
 						</tr>
+						<% 
+							for (int i=1; i<=list.size(); i++) {
+								boardInfoDto = list.get(i-1);
+						%>
 						<tr>
-							<td>2</td>
-							<td>바다</td>
-							<td>521</td>
-							<td>55</td>
+							<td><%= i %></td>
+							<td><%= boardInfoDto.getBoardTitle() %></td>
+							<td><%= boardInfoDto.getPostsCnt() %></td>
+							<td><%= boardInfoDto.getSubscribeCnt() %></td>
 						</tr>
-						<tr>
-							<td>3</td>
-							<td>오버워치</td>
-							<td>894</td>
-							<td>101</td>
-						</tr>
+						<%
+							}
+						%>
 					</table>
 					<div class="jb-center">
 						<ul id="noticePag" class="pagination">
@@ -102,35 +117,42 @@
 						</ul>
 					</div>
 
-					<strong>전체 규제글 목록</strong> <select class="form-control-4">
+					<strong>전체 규제글 목록</strong> 
+					<%
+						ArrayList<Posts> dislist = (ArrayList<Posts>)request.getAttribute("disPostsInfolist");
+						Posts postInfoDto = null;
+					%>
+					<select class="form-control-4">
 						<option>오래된순</option>
 						<option>신고순</option>
 					</select>
 
 					<table class="table table-bordered">
-						<th>
-						<td>게시판명</td>
-						<td>게시글 제목</td>
-						<td>신고 수</td>
-						</th>
 						<tr>
-							<td>1</td>
-							<td>해외여행</td>
-							<td>129</td>
-							<td>34</td>
+						<th>No.</th>
+						<th>게시판명</th>
+						<th>게시글 제목</th>
+						<th>작성일시</th>
+						<th>신고 수</th>
+						<th>비고</th>
 						</tr>
+						
+						<% 
+							for (int i=1; i<=dislist.size(); i++) {
+								postInfoDto = dislist.get(i-1);
+						%>
 						<tr>
-							<td>2</td>
-							<td>바다</td>
-							<td>521</td>
-							<td>55</td>
+							<td><%= i %></td>
+							<td><%= postInfoDto.getBoardTitle() %></td>
+							<td><%= postInfoDto.getPostTitle() %></td>
+							<td><%= postInfoDto.getCreateTime() %></td>
+							<td><%= postInfoDto.getDisBoardCnt() %></td>
+							<td><a href="">탈퇴</a></td>
 						</tr>
-						<tr>
-							<td>3</td>
-							<td>오버워치</td>
-							<td>894</td>
-							<td>101</td>
-						</tr>
+						<%
+							}
+						%>
+						
 					</table>
 					<div class="jb-center">
 						<ul id="disNoticePag" class="pagination">

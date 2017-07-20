@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import work.model.dao.BoardSearchDao;
 import work.model.dao.MembersDao;
+import work.model.dto.BoardsInfo;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
@@ -30,7 +31,6 @@ public class FrontController extends HttpServlet {
 	private AdminService adminsv = new AdminService();
 	private MembersDao memDao = new MembersDao();
 
-	private BoardSearchDao boardSearchDao = new BoardSearchDao();
 	private MembersDao membersDao = new MembersDao();
 	private NoticesDao noticesDao = new NoticesDao();
 
@@ -40,14 +40,8 @@ public class FrontController extends HttpServlet {
 		System.out.println("\n## action : " + action);
 
 		switch(action) {
-		case "login":	// 1. 로그인 서비스
+		case "login":	// 로그인 서비스
 			login(request, response);
-			break;
-		case "logout":	// 2. 로그아웃 서비스
-			logout(request, response);
-			break;
-		case "joinSave":	// 3. 회원가입 정보 저장 서비스
-			joinSave(request, response);
 			break;
 		case "selectPost": // 게시글 조회
 			selectPost(request,response);
@@ -77,94 +71,52 @@ public class FrontController extends HttpServlet {
 	 * 1. 로그인 서비스 메소드
 	 */
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String memberEmail = request.getParameter("memberEmail");
-		String memberPw = request.getParameter("memberPw");
-
-		if (memberEmail.length() > 0 && memberPw.length() > 0) {
-			int memberNo = adminsv.selectOneLogin(memberEmail, memberPw);
-
-			if (memberNo != 0) {
-				HttpSession session = request.getSession(true);
-				session.setAttribute("memberEmail", memberEmail);
-				session.setAttribute("memberNo", memberNo);
-
-				if (memberNo >= 1 && memberNo <= 1000) {
-					ArrayList<MembersInfo> list = memDao.selectList();
-					request.setAttribute("memInfolist", list);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
-					dispatcher.forward(request, response);
-				} else {
-					// 회원 로그인 직후 
-					ArrayList<String> searchHistory = boardSearchDao.getSearchHistory(memberNo);
-					
-					ArrayList<NoticeBoards> matchBoard = null;
-					if(searchHistory == null || searchHistory.size() == 0) {
-						matchBoard = boardSearchDao.getLargeBoard();
-					} else {
-						matchBoard = boardSearchDao.searchBoardWithTag(searchHistory);
-					}
-					
-					ArrayList<NoticeBoards> subscribeBoard = boardSearchDao.getSubscribeBoard(memberNo);
-					
-					request.setAttribute("subscribeBoard", subscribeBoard);
-					request.setAttribute("matchBoard", matchBoard);
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPage.jsp");
-					dispatcher.forward(request, response);
-				}
-
-			} else {
-				request.setAttribute("Message", "아이디, 비밀번호를 다시 확인해주시기 바랍니다.");
-				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-				dispatcher.forward(request, response);
-			}
-		} else {
-			request.setAttribute("Message", "로그인 정보를 입력하시기 바랍니다.");
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-			dispatcher.forward(request, response);
-		}
-	}
-
-	/**
-	 * 2. 로그아웃 서비스 메소드
-	 */
-	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
-	/**
-	 * 3. 회원가입 정보 저장 서비스 메소드
-	 */
-	protected void joinSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
-	/**
-	 * 9. 회원 전체 정보 조회 서비스
-	 */
-	protected void memberList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession(false);
-
-		if (session != null && session.getAttribute("memberNo") != null) {
-			int memberNo = (int)session.getAttribute("memberNo");
-
-			if (memberNo >= 1 && memberNo <= 1000) {
-				ArrayList<MembersInfo> list = adminsv.getMemberList();
-				request.setAttribute("memInfolist", list);
-				request.getRequestDispatcher("/adminMember.jsp").forward(request, response);
-			} else {
-				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
-				request.getRequestDispatcher("/error.jsp").forward(request, response);
-			}	
-		} else {
-			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
-			request.getRequestDispatcher("/error.jsp").forward(request, response);
-		}
-	}
-
-	/**
-	 * 16. 댓글 생성 서비스
-	 */
-	protected void createComment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
-
+ 		String memberEmail = request.getParameter("memberEmail");
+ 		String memberPw = request.getParameter("memberPw");
+ 
+ 		if (memberEmail.length() > 0 && memberPw.length() > 0) {
+ 			int memberNo = adminsv.selectOneLogin(memberEmail, memberPw);
+ 
+ 			if (memberNo != 0) {
+ 				HttpSession session = request.getSession(true);
+ 				session.setAttribute("memberEmail", memberEmail);
+ 				session.setAttribute("memberNo", memberNo);
+ 
+ 				if (memberNo >= 1 && memberNo <= 1000) {
+ 					ArrayList<MembersInfo> list = memDao.selectList();
+ 					request.setAttribute("memInfolist", list);
+ 					RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
+ 					dispatcher.forward(request, response);
+ 				} else {
+ 					// 회원 로그인 직후 
+ 					ArrayList<String> searchHistory = boardSearchDao.getSearchHistory(memberNo);
+ 					
+ 					ArrayList<NoticeBoards> matchBoard = null;
+ 					if(searchHistory == null || searchHistory.size() == 0) {
+ 						matchBoard = boardSearchDao.getLargeBoard();
+ 					} else {
+ 						matchBoard = boardSearchDao.searchBoardWithTag(searchHistory);
+ 					}
+ 					
+ 					ArrayList<NoticeBoards> subscribeBoard = boardSearchDao.getSubscribeBoard(memberNo);
+ 					
+ 					request.setAttribute("subscribeBoard", subscribeBoard);
+ 					request.setAttribute("matchBoard", matchBoard);
+ 					RequestDispatcher dispatcher = request.getRequestDispatcher("/memberPage.jsp");
+ 					dispatcher.forward(request, response);
+ 				}
+ 
+ 			} else {
+ 				request.setAttribute("Message", "아이디, 비밀번호를 다시 확인해주시기 바랍니다.");
+ 				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+ 				dispatcher.forward(request, response);
+ 			}
+ 		} else {
+ 			request.setAttribute("Message", "로그인 정보를 입력하시기 바랍니다.");
+ 			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+ 			dispatcher.forward(request, response);
+ 		}
+ 	}
 
 	// 게시글 전체 보기
 	private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -221,9 +173,45 @@ public class FrontController extends HttpServlet {
 	}
 
 	protected void adminMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			
+			if (memberNo >= 1 && memberNo <= 1000) {
+				ArrayList<MembersInfo> list = adminsv.getMemberList();
+				request.setAttribute("membersInfolist", list);
+				request.getRequestDispatcher("/adminMember.jsp").forward(request, response);
+			} else {
+				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}	
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
+		}
 	}
 
 	protected void adminBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			
+			if (memberNo >= 1 && memberNo <= 1000) {
+				ArrayList<BoardsInfo> list = adminsv.getBoardList();
+				ArrayList<Posts> list2 = adminsv.getDisPostsList();
+				request.setAttribute("boardsInfolist", list);
+				request.setAttribute("disPostsInfolist", list2);
+				request.getRequestDispatcher("/adminNotice.jsp").forward(request, response);
+			} else {
+				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}	
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/error.jsp").forward(request, response);
+		}
 	}
 
 	/**

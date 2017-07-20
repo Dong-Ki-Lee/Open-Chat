@@ -2,10 +2,14 @@ package work.model.service;
 
 import java.util.ArrayList;
 
+import work.model.dao.AdminDao;
 import work.model.dao.MembersDao;
 import work.model.dao.MembersDao;
+import work.model.dto.BoardsInfo;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
+import work.model.dto.NoticeBoards;
+import work.model.dto.Posts;
 
 /**
  * @author limjinha
@@ -13,6 +17,7 @@ import work.model.dto.MembersInfo;
  */
 public class AdminService {
 	private MembersDao memDao = new MembersDao();
+	private AdminDao admDao = new AdminDao();
 	
 	/** 등록 회원수 조회 메서드 */
 	public int getCount() {
@@ -35,6 +40,57 @@ public class AdminService {
 	public ArrayList<MembersInfo> getMemberList() {
 		return memDao.selectList();
 	}
+	
+	/**
+	 * 게시판 전체 조회
+	 * @return
+	 */
+	public ArrayList<BoardsInfo> getBoardList() {
+		ArrayList<BoardsInfo> list = new ArrayList<BoardsInfo>();
+		ArrayList<NoticeBoards> boardList = admDao.selectBoardList();
+		ArrayList<Integer> postsCntList = admDao.selectPostsCnt();
+		ArrayList<Integer> subCntList = admDao.selectSubscribeCnt();
+		BoardsInfo dto = null;
+		
+		for (int i = 0; i < boardList.size(); i++) {
+			int boardNo = boardList.get(i).getBoardNo();
+			String boardTitle = boardList.get(i).getBoardTitle();
+			int postsCnt = postsCntList.get(i);
+			int subCnt = subCntList.get(i);
+			
+			dto = new BoardsInfo(boardNo, boardTitle, postsCnt, subCnt);
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	/**
+	 *  신고글 조회
+	 * @return
+	 */
+	public ArrayList<Posts> getDisPostsList() {
+		ArrayList<Posts> list = new ArrayList<Posts>();
+		ArrayList<Posts> postsList = admDao.selectPostsList();
+		ArrayList<Integer> disPostsCntList = admDao.selectDisPostsCnt();
+		Posts dto = null;
+		
+		for (int i = 0; i < disPostsCntList.size(); i++) {
+			
+			int boardNo = postsList.get(i).getBoardNo();
+			String boardTitle = postsList.get(i).getBoardTitle();
+			String postTitle = postsList.get(i).getPostTitle();
+			String postContent = postsList.get(i).getPostContent();
+			String createTime = postsList.get(i).getCreateTime();
+			int disPostCnt = disPostsCntList.get(i);
+			
+			dto = new Posts(boardNo, boardTitle, postTitle, postContent, createTime, disPostCnt);
+			list.add(dto);
+		}
+		return list;
+	}
+	
+	
+	
 	
 	/**
 	 * 로그인

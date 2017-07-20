@@ -11,6 +11,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import work.model.dto.BoardsInfo;
+import work.model.dto.MembersInfo;
+import work.model.dto.NoticeBoards;
+import work.model.dto.Posts;
+
 
 /**
  * ## DAO Pattern
@@ -26,43 +31,167 @@ public class AdminDao {
 		return factory.getConnection();
 	}
 	
-	public String selectNoticeList() {
+	/** 게시판 테이블 조회 */
+	public ArrayList<NoticeBoards> selectBoardList() {
+		ArrayList<NoticeBoards> list = new ArrayList<NoticeBoards>();
 		Connection conn = null;
-		ResultSet rs = null;
 		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from notice_boards_tb order by board_no";
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			int boardNo = 0;
+			String boardTitle = null;
+			String boardTag = null;
+			
+			while(rs.next()) {
+				boardNo = rs.getInt("board_no");
+				boardTitle = rs.getString("board_title");
+				boardTag = rs.getString("board_Tag");
+				
+				NoticeBoards dto = null;
+				dto = new NoticeBoards(boardNo, boardTitle, boardTag);
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(게시판 테이블 조회 오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
+	/** 게시판당 게시글 수 조회 */
+	public ArrayList<Integer> selectPostsCnt() {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select count(post_no) from posts_tb group by board_no order by board_no";
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				list.add(rs.getInt("count(post_no)"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(게시글 수 조회 오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
+	/** 게시판 당 구독 수 조회 */
+	public ArrayList<Integer> selectSubscribeCnt() {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select count(member_no) from members_subscribe_tb group by notice_board_no order by notice_board_no";
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
+				list.add(rs.getInt("count(member_no)"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(게시글 수 조회 오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
+	/** 게시글 정보 조회 */
+	public ArrayList<Posts> selectPostsList() {
+		ArrayList<Posts> list = new ArrayList<Posts>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String sql = "select * from posts_tb order by post_no";
+		
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			
+			int memberNo = 0;
+			int boardNo = 0;
+			int postNo = 0;
+			String postTitle = null;
+			String postContent = null;
+			String createTime = null;
+			int postViews = 0;
+			
+			Posts posts = null;
+			
+			while(rs.next()) {
+				memberNo = rs.getInt("member_no");
+				boardNo = rs.getInt("board_no");
+				postNo = rs.getInt("post_no");
+				postTitle = rs.getString("post_title");
+				postContent = rs.getString("post_content");
+				createTime = rs.getString("create_time");
+				postViews = rs.getInt("post_views");
+				
+				posts = new Posts(memberNo, boardNo, postNo, postTitle, postContent, createTime, postViews);
+				list.add(posts);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error (전체 게시글 정보 조회) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
+	/** 게시글 당 신고수 조회 */
+	public ArrayList<Integer> selectDisPostsCnt() {
+		ArrayList<Integer> list = new ArrayList<Integer>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
 		
 		StringBuilder sql = new StringBuilder();
-	    sql.append("select c.board_no, c.board_title, d.count(b.post_no), count(d.member_no) ");
-	    sql.append("from ");
-	    sql.append("(select a.board_no, a.board_title, count(b.post_no) ");
-	    sql.append("from notice_boards_tb a, posts_tb b ");
-	    sql.append("where a.board_no = b.board_no ");
-	    sql.append("group by board_no) c, members_subscribe_tb d ");
-	    sql.append("where c.board_no = d.board_no ");
-	    sql.append("group by board_no");
+	    sql.append("select count(member_no) ");
+	    sql.append("from (select * from posts_preference_tb where recommend = 0) ");
+	    sql.append("group by board_no, post_no");
 		
 		try {
 			conn = getConnection();
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery(sql.toString());
 			
-			int boardNo = rs.getInt(1);
-			String boardName = rs.getString(2);
-			int countPosts = rs.getInt(3);
-			int countSubscribe = rs.getInt(4);
+			while(rs.next()) {
+				list.add(rs.getInt("count(member_no)"));
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("ERROR(게시판 목록 조회 오류) : " + e.getMessage());
+			System.out.println("Error(신고글 수 조회 오류) : " + e.getMessage());
 		} finally {
 			factory.close(rs, stmt, conn);
 		}
-		return null;
+		return list;
 	}
 	
-	public String selectDisagreeNoticeByDate() {
-		return null;
-	}
 	
 	public int insertQnAComments(int memberNo, int postNo, int commentNo, String content, String createTime) {
 		Connection conn = null;

@@ -37,7 +37,7 @@
 			<nav id="ThemeGnb">
 			<h2 class="screen_out">홈</h2>
 			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="controller?action=adminMember">회원관리</a></li>
+				<li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
 				<li class="gnb_2dli"><a href="controller?action=adminBoard">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
@@ -69,8 +69,8 @@
 					<strong>회원 목록</strong> 
 					
 					<%
-						ArrayList<MembersInfo> list = (ArrayList<MembersInfo>)request.getAttribute("memInfolist");
-						MembersInfo memInfoDto = null;
+						ArrayList<MembersInfo> list = (ArrayList<MembersInfo>)request.getAttribute("membersInfolist");
+						MembersInfo memberInfoDto = null;
 					%>
 					
 					<select class="form-control-4">
@@ -82,6 +82,7 @@
 
 					<table class="table table-bordered">
 						<tr>
+						<th>No.</th>
 						<th>회원번호</th>
 						<th>닉네임</th>
 						<th>이메일</th>
@@ -91,17 +92,18 @@
 						<th>비고</th>
 						</tr>
 						<% 
-							for (int i=0; i<list.size(); i++) {
-								memInfoDto = list.get(i);
+							for (int i=1; i<=list.size(); i++) {
+								memberInfoDto = list.get(i-1);
 						%>
 						<tr>
-							<td><%= memInfoDto.getMemberNo() %></td>
-							<td><%= memInfoDto.getMemberNickname() %></td>
-							<td><%= memInfoDto.getMemberEmail() %></td>
-							<td><%= memInfoDto.getJoinDate() %></td>
-							<td><%= memInfoDto.getMileage() %></td>
-							<td><%= memInfoDto.getLastLoginDate() %></td>
-							<td><a href="controllre?action=deleteMember&memberNo=<%= memInfoDto.getMemberNo() %>">탈퇴</a></td>
+							<td><%= i %></td>
+							<td><%= memberInfoDto.getMemberNo() %></td>
+							<td><%= memberInfoDto.getMemberNickname() %></td>
+							<td><%= memberInfoDto.getMemberEmail() %></td>
+							<td><%= memberInfoDto.getJoinDate() %></td>
+							<td><%= memberInfoDto.getMileage() %></td>
+							<td><%= memberInfoDto.getLastLoginDate() %></td>
+							<td><a href="controllre?action=deleteMember&memberNo=<%= memberInfoDto.getMemberNo() %>">탈퇴</a></td>
 						</tr>
 						
 						<%

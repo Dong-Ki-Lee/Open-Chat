@@ -2,7 +2,7 @@ package work.model.dto;
 
 import java.io.Serializable;
 
-public class Posts implements Serializable{
+public class Posts extends NoticeBoards implements Serializable {
 	private int memberNo;
 	private int boardNo;
 	private int postNo;
@@ -11,7 +11,12 @@ public class Posts implements Serializable{
 	private String createTime;
 	private int postViews;
 	
-	public Posts() {}
+	private int disBoardCnt;
+	
+	public Posts() {
+	}
+	
+	
 	
 	// not null
 	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String createTime, int postViews) {
@@ -23,6 +28,7 @@ public class Posts implements Serializable{
 		this.createTime = createTime;
 		this.postViews = postViews;
 	}
+	
 	
 	/**
 	 * 게시물 조회 데이터 생성자
@@ -52,6 +58,22 @@ public class Posts implements Serializable{
 		this.postContent = postContent;
 		this.createTime = createTime;
 		this.postViews = postViews;
+	}
+	
+	
+
+	/**
+	 * 신고글 데이터
+	 * @param boardNo
+	 * @param boardTitle
+	 * @param boardTag
+	 */
+	public Posts(int boardNo, String boardTitle, String postTitle, String postContent, String createTime, int disBoardCnt) {
+		super(boardNo, boardTitle, null);
+		this.postTitle = postTitle;
+		this.postContent = postContent;
+		this.createTime = createTime;
+		this.disBoardCnt = disBoardCnt;
 	}
 
 	public int getMemberNo() {
@@ -109,6 +131,26 @@ public class Posts implements Serializable{
 	public void setPostViews(int postViews) {
 		this.postViews = postViews;
 	}
+
+
+
+	/**
+	 * @return the disBoardCnt
+	 */
+	public int getDisBoardCnt() {
+		return disBoardCnt;
+	}
+
+
+
+	/**
+	 * @param disBoardCnt the disBoardCnt to set
+	 */
+	public void setDisBoardCnt(int disBoardCnt) {
+		this.disBoardCnt = disBoardCnt;
+	}
+	
+	
 	
 	
 }

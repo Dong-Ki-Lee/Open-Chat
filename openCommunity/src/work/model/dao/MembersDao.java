@@ -26,7 +26,7 @@ public class MembersDao {
 		StringBuilder sql = new StringBuilder();
 	    sql.append("select * ");
 	    sql.append("from members_tb m, members_info_tb i ");
-	    sql.append("where m.memberno = i.member_no");
+	    sql.append("where m.member_no = i.member_no");
 		
 		try {
 			conn = getConnection();

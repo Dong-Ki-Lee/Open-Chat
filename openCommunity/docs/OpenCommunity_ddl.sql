@@ -119,3 +119,7 @@ references members_tb(member_no);
 alter table members_subscribe_tb
 add constraint fk_members_subs_tb_boardno foreign key(notice_board_no)
 references notice_boards_tb(board_no);
+
+select * from notice_boards_tb order by board_no;
+select count(post_no) from posts_tb group by board_no order by board_no;
+select count(member_no) from members_subscribe_tb group by notice_board_no order by notice_board_no
