@@ -25,6 +25,11 @@
 	}
 	SearchService searchService = new SearchService();
 %>
+
+<%
+  	ArrayList<NoticeBoards> subscribeBoard = (ArrayList<NoticeBoards>)request.getAttribute("subscribeBoard");
+    ArrayList<NoticeBoards> matchBoard = (ArrayList<NoticeBoards>)request.getAttribute("matchBoard");
+%>
     <div id="ThemeWrap">
         <div id="ThemeHeader">
             <div><img src="img/main_logo.png"></div>
@@ -61,90 +66,102 @@
                 <div id="container">
 
                     <section id="sbn_idx" class="sbn">
-                    
-                    	<div class="row">
-                    		<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
-                    			<input type="button" class="btn btn-primary" value="추천 게시판">
-                    		</form>
-                    		<br></br>
-                    	</div>
-				        <div class="row">
-				            <%
-					    		ArrayList<NoticeBoards> subscribeBoard = (ArrayList<NoticeBoards>)request.getAttribute("subscribeBoard");
-				           	 	ArrayList<NoticeBoards> matchBoard = (ArrayList<NoticeBoards>)request.getAttribute("matchBoard");
 
-					    		NoticeBoards dto = null;
-								for (int index = 0; index < matchBoard.size(); index++) {
-									
-									dto = matchBoard.get(index);
-							%>	
-								<div class="col-sm-4 col-lg-4 col-md-4">
-					                <div class="thumbnail">
-					                    <img src="http://placehold.it/320x150" alt=""/>
-					                    <div class="caption">
-					                        <h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
-					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
-					                        </h4>
-					                        <p></p>
-					                        <p><%=dto.getBoardTag()%></p>
-					                        
-					                    </div>
-					                    <div class="ratings">
-					                        <p class="pull-right">new post 3</p>
-					                    </div>
-					                </div>
-				           	 	</div>
-							<%
-									if(index == 2) {
-										%>
-										<p>more</p>
-										<%
-										break;
-									}
-								}
-							%>	
+					    <div class="row">
+					    <%
+						if(matchBoard.size() > 3) {
+						%>
+							<form action="scontroller?action=recommendExtend" method="get" class="col-sm-2 col-lg-2 col-md-2">
+						        <input type="button" class="btn btn-primary" value="추천 게시판">
+						    </form>
+						    <br></br>
+					        <%
+								} else {
+							%>
+							<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
+					        <input type="button" class="btn btn-primary" value="추천 게시판">
+					        </form>
+					        <br></br>
+				        <%
+							}
+						%>
 						</div>
 						
 						<div class="row">
-                    		<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
-                    			<input type="button" class="btn btn-primary" value="구독 게시판">
-                    		</form>
-                    		<br></br>
-                    	</div>
-						
-						<div class='row'>
-				            <%
-								for (int index = 0; index < subscribeBoard.size(); index++) {
-
-									dto = subscribeBoard.get(index);
-							%>	
-								<div class="col-sm-4 col-lg-4 col-md-4">
-					                <div class="thumbnail">
-					                    <img src="http://placehold.it/320x150" alt=""/>
-					                    <div class="caption">
-					                        <h4 class="pull-right">110</h4>
-					                        <h4><a href="#"><%=dto.getBoardTitle()%></a>
-					                        </h4>
-					                        <p></p>
-					                        <p><%=dto.getBoardTag()%></p>
-					                        
-					                    </div>
-					                    <div class="ratings">
-					                        <p class="pull-right">new post 3</p>
-					                    </div>
-					                </div>
-				           	 	</div>
-							<%
-									if(index == 2) {
-										%>
-										<p>더보기 같은거</p>
-										<%
-										break;
-									}
-								}
-							%>	
-				            
-				        </div>
+					    <%
+					   	 	NoticeBoards dto = null;
+							for (int index = 0; index < matchBoard.size(); index++) {
+					
+					    		dto = matchBoard.get(index);
+						%>
+						<div class="col-sm-4 col-lg-4 col-md-4">
+					        <div class="thumbnail">
+					        	<img src="http://placehold.it/320x150" alt=""/>
+						        <div class="caption">
+						        	<h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
+						        	<h4><a href="#"><%=dto.getBoardTitle()%></a>
+						    		</h4>
+							    	<p></p>
+						    		<p><%=dto.getBoardTag()%></p>
+					
+					        	</div>
+						        <div class="ratings">
+						        <p class="pull-right">new post 3</p>
+						    	</div>
+					    	</div>
+					    </div>
+					    <%
+						}
+						%>
+					
+						</div>
+					
+						<div class="row">
+					    <%
+							if(matchBoard.size() > 3) {
+						%>
+							<form action="scontroller?action=subscribeExtend" method="get" class="col-sm-2 col-lg-2 col-md-2">
+					        <input type="button" class="btn btn-primary" value="구독 게시판">
+					        </form>
+					        <br></br>
+					        </div>
+				        <%
+							} else {
+						%>
+						<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
+					        <input type="button" class="btn btn-primary" value="구독 게시판">
+					        </form>
+					        <br></br>
+					        </div>
+				        <%
+							}
+						%>
+					
+						<div class="row">
+					    <%
+							for (int index = 0; index < subscribeBoard.size(); index++) {
+					
+					    		dto = subscribeBoard.get(index);
+						%>
+						<div class="col-sm-4 col-lg-4 col-md-4">
+					        <div class="thumbnail">
+					        <img src="http://placehold.it/320x150" alt=""/>
+					        <div class="caption">
+						        <h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
+						        <h4><a href="#"><%=dto.getBoardTitle()%></a>
+							    </h4>
+							    <p></p>
+							    <p><%=dto.getBoardTag()%></p>
+							
+					        </div>
+					        <div class="ratings">
+					        	<p class="pull-right">new post 3</p>
+					    	</div>
+					    	</div>
+					    </div>
+					    <%
+					}
+					%>
                     </section>
 
                     <div class="main_contents"></div>
@@ -165,3 +182,4 @@
     <script src="js/bootstrap.min.js"></script>
 
 </body>
+
