@@ -14,8 +14,7 @@ public class Posts extends Members implements Serializable{
 	public Posts() {}
 	
 	
-	
-	//
+
 	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String postContent) {
 		super();
 		this.memberNo = memberNo;

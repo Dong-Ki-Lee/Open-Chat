@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import work.model.dto.BoardsInfo;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
+import work.model.dto.PostInfo;
 import work.model.dto.Posts;
 
 
@@ -119,8 +120,8 @@ public class AdminDao {
 	}
 	
 	/** 게시글 정보 조회 */
-	public ArrayList<Posts> selectPostsList() {
-		ArrayList<Posts> list = new ArrayList<Posts>();
+	public ArrayList<PostInfo> selectPostsList() {
+		ArrayList<PostInfo> list = new ArrayList<PostInfo>();
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -139,7 +140,7 @@ public class AdminDao {
 			String createTime = null;
 			int postViews = 0;
 			
-			Posts posts = null;
+			PostInfo postInfo = null;
 			
 			while(rs.next()) {
 				memberNo = rs.getInt("member_no");
@@ -150,8 +151,8 @@ public class AdminDao {
 				createTime = rs.getString("create_time");
 				postViews = rs.getInt("post_views");
 				
-				posts = new Posts(memberNo, boardNo, postNo, postTitle, postContent, createTime, postViews);
-				list.add(posts);
+				postInfo = new PostInfo(memberNo, boardNo, postNo, postTitle, postContent, createTime, postViews);
+				list.add(postInfo);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -35,7 +35,7 @@
 				<img src="img/main_logo.png">
 			</div>
 			<nav id="ThemeGnb">
-			<h2 class="screen_out">홈</h2>
+			<h2 class="screen_out"><a href="adminMember.jsp">홈</a></h2>
 			<ul id="gnb_1dul">
 				<li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
 				<li class="gnb_2dli"><a href="controller?action=adminBoard">게시판관리</a></li>
@@ -103,7 +103,7 @@
 							<td><%= memberInfoDto.getJoinDate() %></td>
 							<td><%= memberInfoDto.getMileage() %></td>
 							<td><%= memberInfoDto.getLastLoginDate() %></td>
-							<td><a href="controllre?action=deleteMember&memberNo=<%= memberInfoDto.getMemberNo() %>">탈퇴</a></td>
+							<td><a href="controller?action=deleteMember&memberNo=<%= memberInfoDto.getMemberNo() %>">탈퇴</a></td>
 						</tr>
 						
 						<%
@@ -111,21 +111,18 @@
 						%>
 						
 					</table>
-					
+
 					<div class="jb-center">
 						<ul id="memberPag" class="pagination">
 							<li class="disabled"><a href="#"><span
 									class="glyphicon glyphicon-chevron-left"></span></a></li>
 							<li><a href="#">1</a></li>
 							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
+							<li class="active"><a href="#">3</a></li>
 							<li><a href="#">4</a></li>
-							<li class="active"><a href="#">5</a></li>
+							<li><a href="#">5</a></li>
 							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">9</a></li>
-							<li><a href="#">10</a></li>
+
 							<li><a href="#"><span
 									class="glyphicon glyphicon-chevron-right"></span></a></li>
 						</ul>

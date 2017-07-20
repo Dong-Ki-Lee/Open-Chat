@@ -9,6 +9,7 @@ import work.model.dto.BoardsInfo;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
+import work.model.dto.PostInfo;
 import work.model.dto.Posts;
 
 /**
@@ -68,11 +69,11 @@ public class AdminService {
 	 *  신고글 조회
 	 * @return
 	 */
-	public ArrayList<Posts> getDisPostsList() {
-		ArrayList<Posts> list = new ArrayList<Posts>();
-		ArrayList<Posts> postsList = admDao.selectPostsList();
+	public ArrayList<PostInfo> getDisPostsList() {
+		ArrayList<PostInfo> list = new ArrayList<PostInfo>();
+		ArrayList<PostInfo> postsList = admDao.selectPostsList();
 		ArrayList<Integer> disPostsCntList = admDao.selectDisPostsCnt();
-		Posts dto = null;
+		PostInfo dto = null;
 		
 		for (int i = 0; i < disPostsCntList.size(); i++) {
 			
@@ -83,7 +84,7 @@ public class AdminService {
 			String createTime = postsList.get(i).getCreateTime();
 			int disPostCnt = disPostsCntList.get(i);
 			
-			dto = new Posts(boardNo, boardTitle, postTitle, postContent, createTime, disPostCnt);
+			dto = new PostInfo(boardNo, boardTitle, postTitle, postContent, createTime, disPostCnt);
 			list.add(dto);
 		}
 		return list;

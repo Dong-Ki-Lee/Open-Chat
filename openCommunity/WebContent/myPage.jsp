@@ -16,9 +16,9 @@
 
     <div id="ThemeWrap">
         <div id="ThemeHeader">
-            <div><img src="img/main_logo.png"></div>
+            <div><a href="memberPage.jsp"><img src="img/main_logo.png"></a></div>
             <nav id="ThemeGnb">
-                <h2 class="screen_out">홈</h2>
+                <h2 class="screen_out"><a href="memberPage.jsp">홈</a></h2>
                 <ul id="gnb_1dul">
                     <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
                     <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>

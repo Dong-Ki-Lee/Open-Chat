@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page import="work.model.dto.BoardsInfo" %>
-<%@ page import="work.model.dto.Posts" %>
+<%@ page import="work.model.dto.PostInfo" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
@@ -34,7 +34,7 @@
 				<img src="img/main_logo.png">
 			</div>
 			<nav id="ThemeGnb">
-			<h2 class="screen_out">홈</h2>
+			<h2 class="screen_out"><a href="adminMember.jsp">홈</a></h2>
 			<ul id="gnb_1dul">
 				<li class="gnb_2dli"><a href="controller?action=adminMember">회원관리</a></li>
 				<li class="gnb_2dli"><a href="adminNotice.jsp">게시판관리</a></li>
@@ -119,8 +119,8 @@
 
 					<strong>전체 규제글 목록</strong> 
 					<%
-						ArrayList<Posts> dislist = (ArrayList<Posts>)request.getAttribute("disPostsInfolist");
-						Posts postInfoDto = null;
+						ArrayList<PostInfo> dislist = (ArrayList<PostInfo>)request.getAttribute("disPostsInfolist");
+						PostInfo postInfoDto = null;
 					%>
 					<select class="form-control-4">
 						<option>오래된순</option>
@@ -147,7 +147,7 @@
 							<td><%= postInfoDto.getPostTitle() %></td>
 							<td><%= postInfoDto.getCreateTime() %></td>
 							<td><%= postInfoDto.getDisBoardCnt() %></td>
-							<td><a href="">탈퇴</a></td>
+							<td><a href="">삭제</a></td>
 						</tr>
 						<%
 							}

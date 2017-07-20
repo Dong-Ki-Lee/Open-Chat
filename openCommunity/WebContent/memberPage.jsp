@@ -23,7 +23,6 @@
 		dispatcher.forward(request, response);
 		return;
 	}
-
 	SearchService searchService = new SearchService();
 %>
     <div id="ThemeWrap">

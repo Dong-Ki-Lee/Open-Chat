@@ -13,9 +13,11 @@ import javax.servlet.http.HttpSession;
 import work.model.dao.BoardSearchDao;
 import work.model.dao.MembersDao;
 import work.model.dto.BoardsInfo;
+import work.model.dto.Comments;
 import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
+import work.model.dto.PostInfo;
 import work.model.service.AdminService;
 
 import work.model.dto.Posts;
@@ -199,7 +201,7 @@ public class FrontController extends HttpServlet {
 			
 			if (memberNo >= 1 && memberNo <= 1000) {
 				ArrayList<BoardsInfo> list = adminsv.getBoardList();
-				ArrayList<Posts> list2 = adminsv.getDisPostsList();
+				ArrayList<PostInfo> list2 = adminsv.getDisPostsList();
 				request.setAttribute("boardsInfolist", list);
 				request.setAttribute("disPostsInfolist", list2);
 				request.getRequestDispatcher("/adminNotice.jsp").forward(request, response);
