@@ -15,7 +15,14 @@
 <link rel="stylesheet" type="text/css" href="css/template.css">
 </head>
 <body>
-
+<%
+	if ((String)session.getAttribute("memberEmail") == null || session.getAttribute("memberNo") == null) {
+		request.setAttribute("Message", "로그인 후 이용하시기 바랍니다.");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+		dispatcher.forward(request, response);
+		return;
+	}
+%>
     <div id="ThemeWrap">
         <div id="ThemeHeader">
             <div><img src="img/main_logo.png"></div>

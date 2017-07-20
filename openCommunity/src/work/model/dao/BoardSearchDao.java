@@ -226,5 +226,31 @@ public class BoardSearchDao {
 		}
 		return null;
 	}
+	
+	public int getBoardQuentity(int boardNo) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("select count(*) board_quentity ");
+		sql.append("from posts_tb ");
+		sql.append("where board_no = ? ");
+		try  {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setInt(1, boardNo);
+			rs = stmt.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("board_quentity");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(게시판 크기 받아오기 실패) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return -1;
+	}
 
 }
