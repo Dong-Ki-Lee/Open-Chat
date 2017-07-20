@@ -85,8 +85,8 @@ public class FrontController extends HttpServlet {
  				session.setAttribute("memberNo", memberNo);
  
  				if (memberNo >= 1 && memberNo <= 1000) {
- 					ArrayList<MembersInfo> list = memDao.selectList();
- 					request.setAttribute("memInfolist", list);
+ 					ArrayList<MembersInfo> list = adminsv.getMemberList();
+ 					request.setAttribute("membersInfolist", list);
  					RequestDispatcher dispatcher = request.getRequestDispatcher("/adminMember.jsp");
  					dispatcher.forward(request, response);
  				} else {
