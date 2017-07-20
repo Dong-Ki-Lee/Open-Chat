@@ -33,6 +33,8 @@ public class FrontController extends HttpServlet {
 
 	private MembersDao membersDao = new MembersDao();
 	private NoticesDao noticesDao = new NoticesDao();
+	
+	private BoardSearchDao boardSearchDao = new BoardSearchDao();
 
 	protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1. ¿äÃ»ÆÄ¾Ç : action=0000 : getParameter("key") : String
