@@ -52,7 +52,7 @@ public class SearchController extends HttpServlet {
 	        ArrayList<NoticeBoards> subscribeBoard = boardSearchDao.getSubscribeBoard(memberNo);
 	
 	        request.setAttribute("boardList", subscribeBoard);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/extendMemberPage.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/boardViewAfterSearch.jsp");
 	        dispatcher.forward(request, response);
 	    } else {
 	        request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
@@ -75,12 +75,8 @@ public class SearchController extends HttpServlet {
 	        } else {
 	            matchBoard = boardSearchDao.searchBoardWithTag(searchHistory);
 	        }
-	
-	        /*ArrayList<NoticeBoards> subscribeBoard = boardSearchDao.getSubscribeBoard(memberNo);
-	
-	         request.setAttribute("subscribeBoard", subscribeBoard);*/
 	        request.setAttribute("boardList", matchBoard);
-	        RequestDispatcher dispatcher = request.getRequestDispatcher("/extendMemberPage.jsp");
+	        RequestDispatcher dispatcher = request.getRequestDispatcher("/boardViewAfterSearch.jsp");
 	        dispatcher.forward(request, response);
 	    } else {
 	        request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");

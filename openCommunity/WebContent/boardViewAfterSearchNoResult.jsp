@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+<%@ page import="work.model.service.SearchService" %>
 <%@ page import="work.model.dto.NoticeBoards" %>
 <%@ page import="java.util.ArrayList" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -16,6 +17,16 @@
 <link rel="stylesheet" type="text/css" href="css/template.css">
 </head>
 <body>
+
+<%
+	if ((String)session.getAttribute("memberEmail") == null || session.getAttribute("memberNo") == null) {
+		request.setAttribute("Message", "로그인 후 이용하시기 바랍니다.");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+		dispatcher.forward(request, response);
+		return;
+	}
+	SearchService searchService = new SearchService();
+%>
 
 <%
 	ArrayList<NoticeBoards> list = (ArrayList<NoticeBoards>)request.getAttribute("boardList");
@@ -72,22 +83,22 @@
 
 									//dto = list.get(index);
 							%>	
-								<div class="col-sm-4 col-lg-4 col-md-4">
-				                <div class="thumbnail">
-				                    <img src="http://placehold.it/320x150" alt="게시판 사진"/>
-				                    <div class="caption">
-				                        <h4 class="pull-right">총 110개의 게시글</h4>
-				                        <h4><a href="#">첫번째 게시판</a>
-				                        </h4>
-				                        <p>태그가 들어가는 부분 #산 #여행 #바다</p>
-				                        <p>가장 최신글 제목을 넣는다거나</p>
-				                        
-				                    </div>
-				                    <div class="ratings">
-				                        <p class="pull-right">새글 3개</p>
-				                    </div>
-				                </div>
-				            </div>
+							<div class="col-sm-4 col-lg-4 col-md-4">
+						        <div class="thumbnail">
+						        	<img src="http://placehold.it/320x150" alt=""/>
+							        <div class="caption">
+							        	<h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
+							        	<h4><a href="controller?action=selectPost&boardNo=<%=dto.getBoardNo()%>"><%=dto.getBoardTitle()%></a>
+							    		</h4>
+								    	<p></p>
+							    		<p><%=dto.getBoardTag()%></p>
+						
+						        	</div>
+							        <div class="ratings">
+							        <p class="pull-right">new post 3</p>
+							    	</div>
+						    	</div>
+					    	</div>
 							<%
 								}
 							%>	

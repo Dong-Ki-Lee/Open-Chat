@@ -68,15 +68,20 @@
                     <section id="sbn_idx" class="sbn">
 
 					    <div class="row">
-					    <%
-						if(matchBoard.size() > 3) {
-						%>
-							<form action="scontroller?action=recommendExtend" method="get" class="col-sm-2 col-lg-2 col-md-2">
-						        <input type="button" class="btn btn-primary" value="추천 게시판">
+						    <%
+							    System.out.println(matchBoard.size());
+								if(matchBoard.size() > 3) {
+
+								    System.out.println("ddddddd");
+							%>
+							<form action="scontroller?action=recommandExtend" method="post" class="col-sm-2 col-lg-2 col-md-2">
+						        <input type="submit" class="btn btn-primary" value="추천 게시판">
 						    </form>
 						    <br></br>
 					        <%
 								} else {
+
+								    System.out.println("fffffff");
 							%>
 							<form action="" method="get" class="col-sm-2 col-lg-2 col-md-2">
 					        <input type="button" class="btn btn-primary" value="추천 게시판">
@@ -99,7 +104,7 @@
 					        	<img src="http://placehold.it/320x150" alt=""/>
 						        <div class="caption">
 						        	<h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
-						        	<h4><a href="#"><%=dto.getBoardTitle()%></a>
+						        	<h4><a href="controller?action=selectPost&boardNo=<%=dto.getBoardNo()%>"><%=dto.getBoardTitle()%></a>
 						    		</h4>
 							    	<p></p>
 						    		<p><%=dto.getBoardTag()%></p>
@@ -111,7 +116,10 @@
 					    	</div>
 					    </div>
 					    <%
-						}
+					    		if(index == 2) {
+					    			break;
+					    		}
+							}
 						%>
 					
 						</div>
@@ -121,7 +129,7 @@
 							if(matchBoard.size() > 3) {
 						%>
 							<form action="scontroller?action=subscribeExtend" method="get" class="col-sm-2 col-lg-2 col-md-2">
-					        <input type="button" class="btn btn-primary" value="구독 게시판">
+					        <input type="submit" class="btn btn-primary" value="구독 게시판">
 					        </form>
 					        <br></br>
 					        </div>
@@ -148,7 +156,7 @@
 					        <img src="http://placehold.it/320x150" alt=""/>
 					        <div class="caption">
 						        <h4 class="pull-right"><%=searchService.getBoardQuantity(dto.getBoardNo()) %></h4>
-						        <h4><a href="#"><%=dto.getBoardTitle()%></a>
+						        <h4><a href="controller?action=selectPost&boardNo=<%=dto.getBoardNo()%>"><%=dto.getBoardTitle()%></a>
 							    </h4>
 							    <p></p>
 							    <p><%=dto.getBoardTag()%></p>
@@ -160,8 +168,11 @@
 					    	</div>
 					    </div>
 					    <%
-					}
-					%>
+						    	if(index == 2) {
+						    		break;
+						    	}
+							}
+						%>
                     </section>
 
                     <div class="main_contents"></div>
