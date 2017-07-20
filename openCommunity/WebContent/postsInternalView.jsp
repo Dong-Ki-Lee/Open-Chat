@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!-- !!! -->
+<%@ page import="work.model.dto.Posts" %>
+<%@ page import="work.model.dto.Comments" %>
+<%@ page import="java.util.ArrayList" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -12,11 +17,10 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="css/template.css">
 <style type="text/css">
-<!--
-댓글 수정 이프문 -->.btnUpdate {
+.btnUpdate {
 	visibility: visible;
 }
-/*.btnUpdate{visibility:hidden;}*/
+/*.btnUpdateh{visibility:hidden;}*/
 .posts-heading {
 	font-size: 15pt;
 	color: #0064b7;
@@ -40,12 +44,10 @@ font.list-group-item-text {
 </style>
 </head>
 <body>
-<%
-	String postTitle = (String)request.getAttribute("postTitle");
+<%	// !!!
+	ArrayList<Comments> comments = (ArrayList<Comments>)request.getAttribute("comments");
+	Posts posts = (Posts)request.getAttribute("posts");
 	String memberNickname = (String)request.getAttribute("memberNickname");
-	int postViews = (int)request.getAttribute("postViews");
-	String createTime = (String)request.getAttribute("createTime");
-	int recommend = (int)request.getAttribute("recommend");
 %>
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
@@ -106,23 +108,23 @@ font.list-group-item-text {
 								<table>
 									<tr>
 										<td width="850px">
-											<h4 class="posts-heading"><%= postTitle %></h4>
+											<h4 class="posts-heading"><%= posts.getPostTitle() %></h4>
 										</td>
 										<td width="150px" align="right""><img src="img/good.jpg"
 											class="img-circle"></td>
 										<td width="150px" colspan="2" align="left">
-											<h4 class="posts-heading"><%= recommend %></h4>
+											<h4 class="posts-heading"><%=  %></h4>
 										</td>
 									</tr>
 									<tr>
 										<td width="850px">
-											<p class="list-group-item-text"><%= memberNickname %></p>
+											<p class="list-group-item-text"><%= posts.getMemberNickname() %></p>
 										</td>
 										<td width="150px" align="right">
-											<p class="list-group-item-text"><%= createTime %></p>
+											<p class="list-group-item-text"><%= posts.getCreateTime() %></p>
 										</td>
 										<td width="150px" align="right">
-											<p class="list-group-item-text"><%= postViews %></p>
+											<p class="list-group-item-text"><%= posts.getPostViews() %></p>
 										</td>
 									</tr>
 								</table>
@@ -131,18 +133,22 @@ font.list-group-item-text {
 						</tr>
 						<tr>
 							<td colspan="2" class="list-group-item-text">
-								<p>글내용</p>
+								<p><%= posts.getPostContent() %></p>
 							</td>
 							<td></td>
 						</tr>
 						<tr>
 							<td colspan="2" class="threebtn" align="center"><a href="#"
-								class="btn btn-default"><img src="img/like.png" /> 추천수
+								class="btn btn-default"><img src="img/like.png" /> 추천
 									&nbsp;</a> <a href="#" class="btn btn-default"><img
-									src="img/dislike.png" /> 반대수</a></td>
+									src="img/dislike.png" /> 반대</a></td>
 							<td></td>
 						</tr>
-						<!-- for문 댓글계수만큼 -->
+						<!-- for문 댓글계수만큼 !!! -->
+						<%
+							for (int index = 0; index < comments.size(); index++ ) {
+								
+						%>
 						<tr>
 							<td>
 								<table>
@@ -150,23 +156,35 @@ font.list-group-item-text {
 										<td width="100px" rowspan="2"><img src="img/user.jpg"
 											class="img-circle"></td>
 										<td width="100%">
-											<h4 class="posts-heading">사용자이름</h4>
+											<!-- 사용자이름 -->
+											<h4 class="posts-heading"><%= comments.get(index).getMemberNickname() %></h4>
 										</td>
 									</tr>
 									<tr>
 										<td width="100%">
-											<p class="list-group-item-text">내용</p>
+										<!-- 댓글내용 -->
+											<p class="list-group-item-text"><%= comments.get(index).getContent() %></p>
 										</td>
 									</tr>
+									
 								</table>
 							</td>
 							<td>
-								<!-- 본인거일경우 수정버튼 삭제버튼 추가 --> <a href="#"
-								class="btn btn-default btnUpdate">수정</a>
-
+								<!-- 본인거일경우 수정버튼 삭제버튼 추가 --> 
+								<%
+									if (comments.get(index).getMemberNickname() == memberNickname)
+									{
+								%>
+										<a href="#"	class="btn btn-default btnUpdate">수정</a>
+								<%
+									}
+								%>
 							</td>
 
 						</tr>
+						<%
+						}
+						%>
 						<tr>
 							<td>
 								<table >
@@ -174,7 +192,7 @@ font.list-group-item-text {
 										<td width="100px" rowspan="2"><img src="img/user.jpg"
 											class="img-circle"></td>
 										<td width="100%">
-											<h4 class="posts-heading">사용자이름</h4>
+											<h4 class="posts-heading"><%= memberNickname %></h4>
 										</td>
 									</tr>
 									<tr>

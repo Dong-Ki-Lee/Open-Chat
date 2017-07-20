@@ -2,7 +2,7 @@ package work.model.dto;
 
 import java.io.Serializable;
 
-public class PostsPreference implements Serializable{
+public class PostsPreference extends Posts implements Serializable{
 	
 	/** 회원 번호 */
 	private int memberNo;
@@ -17,6 +17,25 @@ public class PostsPreference implements Serializable{
 	
 	public PostsPreference () {}
 	
+	public PostsPreference(int memberNo, String postTitle, String createTime, int postViews, int recommend) {
+		super(memberNo,postTitle, createTime, postViews);
+		// TODO Auto-generated constructor stub
+		this.recommend = recommend;
+	}
+
+	public PostsPreference(int memberNo, int boardNo, int postNo, String postTitle, String postContent,
+			String createTime, int postViews) {
+		super(memberNo, boardNo, postNo, postTitle, postContent, createTime, postViews);
+		// TODO Auto-generated constructor stub
+	}
+	// 상속 전체 생성자
+	public PostsPreference(int memberNo, int boardNo, int postNo, String postTitle, String postContent,
+			String createTime, int postViews, int recommend) {
+		super(memberNo, boardNo, postNo, postTitle, postContent, createTime, postViews);
+		this.recommend = recommend;
+		// TODO Auto-generated constructor stub
+	}
+
 	// 전체 생성자
 	public PostsPreference(int memberNo, int boardNo, int postNo, int recommend) {
 		super();

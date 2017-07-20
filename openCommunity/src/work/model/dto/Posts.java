@@ -2,7 +2,7 @@ package work.model.dto;
 
 import java.io.Serializable;
 
-public class Posts extends NoticeBoards implements Serializable {
+public class Posts extends Members implements Serializable{
 	private int memberNo;
 	private int boardNo;
 	private int postNo;
@@ -11,13 +11,46 @@ public class Posts extends NoticeBoards implements Serializable {
 	private String createTime;
 	private int postViews;
 	
-	private int disBoardCnt;
+	public Posts() {}
 	
-	public Posts() {
+	
+	
+	//
+	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String postContent) {
+		super();
+		this.memberNo = memberNo;
+		this.boardNo = boardNo;
+		this.postNo = postNo;
+		this.postTitle = postTitle;
+		this.postContent = postContent;
 	}
+
 	
-	
-	
+
+
+	public Posts(int memberNo, String memberEmail, String memberNickname, String memberPw,
+			int boardNo, int postNo, String postTitle, String postContent, String createTime, int postViews) {
+		super(memberNo, memberEmail, memberNickname, memberPw);
+		// TODO Auto-generated constructor stub
+		this.boardNo=boardNo;
+		this.postNo=postNo;
+		this.postTitle=postTitle;
+		this.postContent=postContent;
+		this.createTime=createTime;
+		this.postViews=postViews;
+	}
+
+
+
+	public Posts(int memberNo,String postTitle, String createTime, int postViews) {
+		super();
+		this.memberNo = memberNo;
+		this.postTitle = postTitle;
+		this.createTime = createTime;
+		this.postViews = postViews;
+	}
+
+
 	// not null
 	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String createTime, int postViews) {
 		super();
@@ -28,7 +61,6 @@ public class Posts extends NoticeBoards implements Serializable {
 		this.createTime = createTime;
 		this.postViews = postViews;
 	}
-	
 	
 	/**
 	 * 게시물 조회 데이터 생성자
@@ -58,22 +90,6 @@ public class Posts extends NoticeBoards implements Serializable {
 		this.postContent = postContent;
 		this.createTime = createTime;
 		this.postViews = postViews;
-	}
-	
-	
-
-	/**
-	 * 신고글 데이터
-	 * @param boardNo
-	 * @param boardTitle
-	 * @param boardTag
-	 */
-	public Posts(int boardNo, String boardTitle, String postTitle, String postContent, String createTime, int disBoardCnt) {
-		super(boardNo, boardTitle, null);
-		this.postTitle = postTitle;
-		this.postContent = postContent;
-		this.createTime = createTime;
-		this.disBoardCnt = disBoardCnt;
 	}
 
 	public int getMemberNo() {
@@ -131,26 +147,6 @@ public class Posts extends NoticeBoards implements Serializable {
 	public void setPostViews(int postViews) {
 		this.postViews = postViews;
 	}
-
-
-
-	/**
-	 * @return the disBoardCnt
-	 */
-	public int getDisBoardCnt() {
-		return disBoardCnt;
-	}
-
-
-
-	/**
-	 * @param disBoardCnt the disBoardCnt to set
-	 */
-	public void setDisBoardCnt(int disBoardCnt) {
-		this.disBoardCnt = disBoardCnt;
-	}
-	
-	
 	
 	
 }

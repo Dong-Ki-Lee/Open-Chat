@@ -45,10 +45,10 @@ public class FrontController extends HttpServlet {
 		case "login":	// 로그인 서비스
 			login(request, response);
 			break;
-		case "selectPost": // 게시글 조회
+		case "selectPost": // 게시글 전체 조회
 			selectPost(request,response);
 			break;
-		case "selectInternalPost":
+		case "selectInternalPost": // 게시글조회
 			selectInternalPost(request, response);
 			break;
 		case "adminMember":
@@ -121,21 +121,16 @@ public class FrontController extends HttpServlet {
  	}
 
 	// 게시글 전체 보기
-	private void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
-		if(session != null && session.getAttribute("member_no") != null &&
-				session.getAttribute("board_no") != null) {
-			int memberNo = (int) session.getAttribute("member_no");
-			int boardNo = (int) session.getAttribute("board_no");
-
+		if(session != null && session.getAttribute("memberNo") != null ) {
+			int memberNo = (int) session.getAttribute("memberNo");
+			int boardNo = (int) request.getAttribute("boardNo");
+			
 			ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
-			ArrayList<PostsPreference> recommend = noticesDao.selectRecommend(boardNo);
-			ArrayList<Members> memberNickname = membersDao.selectNickname();
-			if (posts != null && recommend != null && memberNickname != null) {
+			if (posts != null)  {
 				request.setAttribute("posts", posts);
-				request.setAttribute("recommend", recommend);
-				request.setAttribute("memberNickname", memberNickname);
 				request.getRequestDispatcher("/postsView.jsp").forward(request, response);
 			} else {
 				//    			response.sendRedirect("result.jsp");
@@ -152,23 +147,25 @@ public class FrontController extends HttpServlet {
 	private void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
-		String postTitle = (String)session.getAttribute("postTitle");
-		String memberNickname = (String)session.getAttribute("memberNickname");
-		int postViews = (int)session.getAttribute("postViews");
-		String createTime = (String)session.getAttribute("createTime");
-		int recommend = (int)session.getAttribute("recommend");
-		if(session != null && session.getAttribute("postTitle") != null &&
-				session.getAttribute("memberNicnkname") != null &&
-				session.getAttribute("postViews") != null &&
-				session.getAttribute("createTime") != null &&
-				session.getAttribute("recommend") != null )
+		
+		Posts posts = (Posts)request.getAttribute("posts");
+		
+		if(session != null && session.getAttribute("memberNo") != null && request.getAttribute("posts") != null)
 		{
-			request.setAttribute("postTitle", postTitle);
-			request.setAttribute("memberNickname", memberNickname);
-			request.setAttribute("postViews", postViews);
-			request.setAttribute("createTime", createTime);
-			request.setAttribute("recommend", recommend);
-			request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+			int memberNo = (int) session.getAttribute("memberNo");
+			String memberNickname = noticesDao.selectNickname(memberNo);
+			ArrayList<Comments> comments = noticesDao.selectComments(posts.getBoardNo(), posts.getBoardNo());
+			
+			if (posts != null && comments != null) {
+				request.setAttribute("postContent", posts.getPostContent());
+				request.setAttribute("posts", posts);
+				request.setAttribute("memberNickname", memberNickname);
+				request.setAttribute("comments", comments);
+				
+				request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+			} else {
+				
+			}
 
 		} else {
 		}

@@ -34,7 +34,10 @@
 </style>
 </head>
 <body>
-
+<%
+	// 게시글 조회 정보 가져오기
+	String memberNickname = (String)request.getAttribute("memberNickname");
+%>
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
 			<div>
@@ -73,7 +76,7 @@
 				<div id="container">
 
 					<section id="sbn_idx" class="sbn"> <!--  -->
-					<form action="controller?action=postCreate" method="post">
+					<form action="controller?action=postCreateSave" method="post">
 						<table border="1" class="internalFirst" width="1000px">
 							<tr>
 								<td class="posts-heading" align="center" width="300px"><label
@@ -85,7 +88,7 @@
 								<td class="posts-heading" align="center" width="300px"><font
 									class="posts-heading">작성자</font></td>
 								<!-- 작성자 받아오기 -->
-								<td><font name="memberName" class="list-group-item-text">작성자</font></td>
+								<td><font name="memberName" class="list-group-item-text"><%= memberNickname %></font></td>
 							</tr>
 							<tr>
 								<td colspan="2">
@@ -102,11 +105,13 @@
 							</tr>
 
 							<tr align="center">
-								<td colspan="2"><a href="postsView.jsp"
+								<td colspan="2">
+							<input type="submit" class="btn btn-default" value="등록">
+								<!-- 
+								<a href="postsView.jsp"
 									class="btn btn-default">등록</a> <a href="postsView.jsp"
-									class="btn btn-default">취소</a> <!-- 
-								<input type="submit"
-									class="btn btn-default" value="등록"> <a
+									class="btn btn-default">취소</a> --> <!-- 
+								<input type="submit" class="btn btn-default" value="등록"> <a
 									href="postsView.jsp" class="btn btn-default">취소</a> 
 							<a href="postsView.jsp"><input type="reset" class="btn btn-default" value="취소"></a>
 							--></td>

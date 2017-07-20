@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import="work.model.dto.Posts" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="work.model.dto.PostsPreference" %>
-<%@ page import="work.model.dto.Members"%>
+<%@ page import="work.model.dto.Posts" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ko">
 <head>
@@ -43,9 +41,8 @@
 <body>
 <%
 	// 게시글 조회 정보 가져오기
+	// 등록된 게시판의 게시글 목록 다 가져옴..
 	ArrayList<Posts> posts = (ArrayList<Posts>)request.getAttribute("posts");
-	ArrayList<PostsPreference> recommend = (ArrayList<PostsPreference>)request.getAttribute("recommend");
-	ArrayList<Members> memberNickname = (ArrayList<Members>)request.getAttribute("memberNickname");
 %>
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
@@ -103,7 +100,7 @@
 										<li><a href="#">추천순</a></li>
 										
 									</ul> 
-									--> <a href="postsCreate.jsp" class="btn btn-default">게시글
+									--> <a href="controller?action=createPost" class="btn btn-default">게시글
 										생성</a> <!--<button type="button" class="btn btn-default">Left</button>-->
 								</td>
 							</tr>
@@ -117,31 +114,18 @@
 										for (int index = 0; index < posts.size(); index++) {
 											
 									%>
-									<!--  <a href="postsInternalView.jsp" class="list-group-item"> -->
-									<form action="controller?action=selectInternalPost" method="post">
-									<a href="postsInternalView.jsp" class="list-group-item">
-									
+									<a href="controller?action=selectInternalPost&posts=<%= posts.get(index) %>" class="list-group-item">
 										<table>
 										<tr>
 											<td width="850px">
 												<!-- 글제목 -->
-												<h4 class="posts-heading" name="postTitle"><%= posts.get(index).getPostTitle() %></h4>
+												<h4 class="posts-heading" ><%= posts.get(index).getPostTitle() %></h4>
 											</td>
 											<td width="150px" align="right""><img src="img/good.jpg"
 												class="img-circle"></td>
 											<td width="150px" align="left">
 												<!-- 추천수 -->
-												<% for (int rindex = 0; rindex < recommend.size(); rindex++){
-													if (posts.get(index).getPostNo() == recommend.get(rindex).getPostNo()) {
-														
-														
-												%>
-												<h4 class="posts-heading" name="recommend"><%= recommend.get(rindex).getRecommend() %></h4>
-												<%
-														break;
-													}
-												} 
-												%>
+												<h4 class="posts-heading" ><%=  %></h4>
 												
 											</td>
 										</tr>
@@ -149,32 +133,19 @@
 										<tr>
 											<td width="850px">
 												<!-- 작성자 -->
-												<%
-													for (int nindex = 0; nindex < memberNickname.size(); nindex++) {
-														if ( posts.get(index).getMemberNo() == memberNickname.get(nindex).getMemberNo()) {
-																	
-								
-												%>
-												<p class="list-group-item-text" name="memberNickname"><%= memberNickname.get(nindex).getMemberNickname() %></p>
-												<%
-														break;
-														}
-													}
-												%>
+												<p class="list-group-item-text" ><%= posts.get(index).getMemberNickname() %></p>
 											</td>
 											<td width="150px" align="right">
 												<!-- 작성일자 -->
-												<p class="list-group-item-text" name="createTime"><%= posts.get(index).getCreateTime() %></p>
+												<p class="list-group-item-text"><%= posts.get(index).getCreateTime() %></p>
 											</td>
 											<td width="150px" align="right">
 												<!-- 조회수 -->
-												<p class="list-group-item-text" name="postViews"><%= posts.get(index).getPostViews() %></p>
+												<p class="list-group-item-text" ><%= posts.get(index).getPostViews() %></p>
 											</td>
 										</tr>
 										</div>
 									</table>
-									</a>
-									</form>
 									<%
 										}
 									%>

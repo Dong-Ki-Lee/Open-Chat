@@ -9,7 +9,7 @@ import java.io.Serializable;
  * @author limjinha
  *
  */
-public class Comments implements Serializable{
+public class Comments extends Members implements Serializable{
 
 	/** 회원 번호 */
 	private int memberNo;
@@ -37,12 +37,36 @@ public class Comments implements Serializable{
 		super();
 	}
 
-	/** 댓글 조회시 필요한 생성자  */
-	public Comments(int commentNo, String content, String createTime) {  
-		this.commentNo = commentNo;  
-		this.content = content;  
-		this.createTime = createTime;  
-	} 
+	
+
+	
+	
+
+	public Comments(int memberNo, String memberEmail, String memberNickname, String memberPw,
+			int boardNo, int postNo, String content, String createTime) {
+		super(memberNo, memberEmail, memberNickname, memberPw);
+		this.boardNo = boardNo;
+		this.postNo = postNo;
+		this.content = content;
+		this.createTime = createTime;
+		// TODO Auto-generated constructor stub
+	}
+
+
+
+
+
+
+	public Comments(int memberNo, int boardNo, int postNo, String content, String createTime) {
+		super();
+		this.memberNo = memberNo;
+		this.boardNo = boardNo;
+		this.postNo = postNo;
+		this.content = content;
+		this.createTime = createTime;
+	}
+
+
 
 	/**
 	 * 전체 댓글 데이터 생성자
