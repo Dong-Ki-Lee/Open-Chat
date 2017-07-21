@@ -187,15 +187,17 @@ public class FrontController extends HttpServlet {
 
 	// 게시글 전체 보기
 	protected void selectPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
 		if(session != null && session.getAttribute("memberNo") != null ) {
 			int memberNo = (int) session.getAttribute("memberNo");
-			int boardNo = (int) request.getAttribute("boardNo");
 			
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.valueOf(boardNoString);
+			System.out.println("boardNo : " + boardNo);
 			ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
 			if (posts != null)  {
 				request.setAttribute("posts", posts);
+				request.setAttribute("boardNo", boardNo);
 				request.getRequestDispatcher("/postsView.jsp").forward(request, response);
 			} else {
 				//    			response.sendRedirect("result.jsp");
@@ -209,31 +211,51 @@ public class FrontController extends HttpServlet {
 	}
 
 	// 게시글 내부 보기
-	private void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void selectInternalPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
-		Posts posts = (Posts)request.getAttribute("posts");
-		
-		if(session != null && session.getAttribute("memberNo") != null && request.getAttribute("posts") != null)
-		{
+		if(session != null && session.getAttribute("memberNo") != null) {
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.parseInt(boardNoString);
+			String postNoString = request.getParameter("postNo");
+			int postNo = Integer.parseInt(postNoString);
+			System.out.println("board : " + boardNoString + " postNo :" + postNoString);
 			int memberNo = (int) session.getAttribute("memberNo");
 			String memberNickname = noticesDao.selectNickname(memberNo);
-			ArrayList<Comments> comments = noticesDao.selectComments(posts.getBoardNo(), posts.getBoardNo());
+			Posts posts = noticesDao.selectPosts(boardNo, postNo);
+			ArrayList<Comments> comments = noticesDao.selectComments(posts.getBoardNo(), posts.getPostNo());
 			
-			if (posts != null && comments != null) {
-				request.setAttribute("postContent", posts.getPostContent());
+			if( posts != null && comments != null && memberNickname != null) {
 				request.setAttribute("posts", posts);
-				request.setAttribute("memberNickname", memberNickname);
 				request.setAttribute("comments", comments);
+				request.setAttribute("memberNickname", memberNickname);
 				
 				request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
-			} else {
-				
 			}
-
+			
 		} else {
+			// 로그인 후 사용
 		}
+		
+//		if(session != null && session.getAttribute("memberNo") != null && request.getAttribute("posts") != null)
+//		{
+//			int memberNo = (int) session.getAttribute("memberNo");
+//			String memberNickname = noticesDao.selectNickname(memberNo);
+//			ArrayList<Comments> comments = noticesDao.selectComments(posts.getBoardNo(), posts.getBoardNo());
+//			
+//			if (posts != null && comments != null) {
+//				request.setAttribute("postContent", posts.getPostContent());
+//				request.setAttribute("posts", posts);
+//				request.setAttribute("memberNickname", memberNickname);
+//				request.setAttribute("comments", comments);
+//				
+//				request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+//			} else {
+//				
+//			}
+//
+//		} else {
+//		}
 	}
 
 	/** 회원 관리 페이지 (관리자 권한) */
