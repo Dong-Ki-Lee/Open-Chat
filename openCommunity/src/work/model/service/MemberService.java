@@ -17,15 +17,35 @@ import work.model.dto.Posts;
  * @author limjinha
  *
  */
-public class AdminService {
+public class MemberService {
 	private MembersDao memDao = new MembersDao();
 	private AdminDao admDao = new AdminDao();
 	private NoticesDao ntcDao = new NoticesDao();
 	
-	/** 등록 회원수 조회 메서드 */
-	public int getCount() {
-		return 0;
+	/** 회원 닉네임 조회 */
+	public String getMemberNickname(int memberNo) {
+		return memDao.selectMyNickname(memberNo);
 	}
+	
+	/** 마일리지 조회 */
+	public int getMileage(int memberNo) {
+		return memDao.selectMileage(memberNo);
+	}
+	
+	/** 내가 쓴 게시글 수 */
+	public int getMyPostCnt(int memberNo) {
+		return ntcDao.selectPostCnt(memberNo);
+	}
+	
+	/** 내가 쓴 댓글 수  */
+	public int getMyCommentCnt(int memberNo) {
+		return memDao.selectCommentCnt(memberNo);
+	}
+	
+	/** 내 방문 수  */
+	
+	
+	
 	
 	/**
 	 * 회원 탈퇴  
@@ -36,13 +56,6 @@ public class AdminService {
 		return memDao.delete(memberNo);
 	}
 	
-	/**
-	 * 전체 회원 조회 
-	 * @return 회원 객체 배열 
-	 */
-	public ArrayList<MembersInfo> getMemberList() {
-		return memDao.selectList();
-	}
 	
 	/**
 	 * 게시판 전체 조회
@@ -67,30 +80,6 @@ public class AdminService {
 		return list;
 	}
 	
-	/**
-	 *  신고글 조회
-	 * @return
-	 */
-	public ArrayList<PostInfo> getDisPostsList() {
-		ArrayList<PostInfo> list = new ArrayList<PostInfo>();
-		ArrayList<PostInfo> postsList = admDao.selectPostsList();
-		ArrayList<Integer> disPostsCntList = admDao.selectDisPostsCnt();
-		PostInfo dto = null;
-		
-		for (int i = 0; i < disPostsCntList.size(); i++) {
-			
-			int boardNo = postsList.get(i).getBoardNo();
-			String boardTitle = postsList.get(i).getBoardTitle();
-			String postTitle = postsList.get(i).getPostTitle();
-			String postContent = postsList.get(i).getPostContent();
-			String createTime = postsList.get(i).getCreateTime();
-			int disPostCnt = disPostsCntList.get(i);
-			
-			dto = new PostInfo(boardNo, boardTitle, postTitle, postContent, createTime, disPostCnt);
-			list.add(dto);
-		}
-		return list;
-	}
 	
 	/** 신고글 삭제 */
 	public int deleteDisPost(int postNo, int boardNo) {
@@ -100,15 +89,6 @@ public class AdminService {
 	
 	
 	
-	/**
-	 * 로그인
-	 */
-	public int selectOneLogin(String memberEmail, String memberPw) {
-		if (memDao.loginCheck(memberEmail, memberPw) != 0) {
-			return memDao.loginCheck(memberEmail, memberPw);
-		}
-		return 0;
-	}
 	
 
 }

@@ -14,14 +14,12 @@ import work.model.dao.BoardSearchDao;
 import work.model.dao.MembersDao;
 import work.model.dto.BoardsInfo;
 import work.model.dto.Comments;
-import work.model.dto.Members;
 import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
 import work.model.dto.PostInfo;
 import work.model.service.AdminService;
-
+import work.model.service.MemberService;
 import work.model.dto.Posts;
-import work.model.dto.PostsPreference;
 import work.model.dao.NoticesDao;
 
 /**
@@ -31,8 +29,9 @@ public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private AdminService adminsv = new AdminService();
+	private MemberService membersv = new MemberService();
+	
 	private MembersDao memDao = new MembersDao();
-
 	private MembersDao membersDao = new MembersDao();
 	private NoticesDao noticesDao = new NoticesDao();
 	
@@ -47,11 +46,29 @@ public class FrontController extends HttpServlet {
 		case "login":	// 로그인 서비스
 			login(request, response);
 			break;
+		case "logout":	// 로그아웃 서비스
+			logout(request, response);
+			break;
 		case "selectPost": // 게시글 전체 조회
 			selectPost(request,response);
 			break;
 		case "selectInternalPost": // 게시글조회
 			selectInternalPost(request, response);
+			break;
+		case "adminMember":
+			adminMember(request, response);
+			break;
+		case "adminBoard":
+			adminBoard(request, response);
+			break;
+		case "deleteMember":
+			deleteMember(request, response);
+			break;
+		case "deleteDisPost":
+			deleteDisPost(request, response);
+			break;
+		case "myInfoPage":
+			myInfoPage(request, response);
 			break;
 		case "createPost":
 			createPost(request, response);
@@ -65,15 +82,12 @@ public class FrontController extends HttpServlet {
 		case "createComments":
 			createComments(request, response);
 			break;
-		case "adminMember":
-			adminMember(request, response);
-			break;
-		case "adminBoard":
-			adminBoard(request, response);
-			break;
+			
+			
+			
+			
 		default:	
 		}	
-
 	}
 
 	/**
@@ -83,9 +97,7 @@ public class FrontController extends HttpServlet {
 		super();
 	}
 
-	/**
-	 * 1. 로그인 서비스 메소드
-	 */
+	/** 로그인 (관리자, 회원 구분) */
 	protected void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  		String memberEmail = request.getParameter("memberEmail");
  		String memberPw = request.getParameter("memberPw");
@@ -124,14 +136,53 @@ public class FrontController extends HttpServlet {
  
  			} else {
  				request.setAttribute("Message", "아이디, 비밀번호를 다시 확인해주시기 바랍니다.");
- 				RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+ 				RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
  				dispatcher.forward(request, response);
  			}
  		} else {
  			request.setAttribute("Message", "로그인 정보를 입력하시기 바랍니다.");
- 			RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+ 			RequestDispatcher dispatcher = request.getRequestDispatcher("/login.jsp");
  			dispatcher.forward(request, response);
  		}
+ 	}
+	
+	/** 로그아웃  */
+	protected void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if(session != null && session.getAttribute("memberNo") != null ) {
+			session.removeAttribute("memberEmail");
+			session.removeAttribute("memberNo");
+			session.invalidate();
+			response.sendRedirect("login.jsp");
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
+	}
+	
+	/** 마이페이지 (회원 전용 ) */
+	protected void myInfoPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if(session != null && session.getAttribute("memberNo") != null ) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			
+			String memberNickname = membersv.getMemberNickname(memberNo);
+			int mileage = membersv.getMileage(memberNo);
+			int myPostCnt = membersv.getMyPostCnt(memberNo);
+			int myCommentCnt = membersv.getMyCommentCnt(memberNo);
+			
+			request.setAttribute("memberNickname", memberNickname);
+			request.setAttribute("mileage", mileage);
+			request.setAttribute("myPostCnt", myPostCnt);
+			request.setAttribute("myCommentCnt", myCommentCnt);
+			
+			request.getRequestDispatcher("/myPage.jsp").forward(request, response);
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
  	}
 
 	// 게시글 전체 보기
@@ -185,6 +236,7 @@ public class FrontController extends HttpServlet {
 		}
 	}
 
+	/** 회원 관리 페이지 (관리자 권한) */
 	protected void adminMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
@@ -201,10 +253,32 @@ public class FrontController extends HttpServlet {
 			}	
 		} else {
 			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
-			request.getRequestDispatcher("/error.jsp").forward(request, response);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}
 	}
 
+	/** 회원 강제 탈퇴 (관리자 권한) */
+	protected void deleteMember(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			
+			if (memberNo >= 1 && memberNo <= 1000) {
+				int deleteMemberNo = Integer.parseInt(request.getParameter("memberNo"));
+				adminsv.deleteMember(deleteMemberNo);
+				adminMember(request, response);
+			} else {
+				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}	
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
+	}
+	
+	/** 게시판 관리 페이지 (관리자 권한) */
 	protected void adminBoard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
@@ -223,10 +297,33 @@ public class FrontController extends HttpServlet {
 			}	
 		} else {
 			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
-			request.getRequestDispatcher("/error.jsp").forward(request, response);
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
 		}
 	}
-		protected void createPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	/** 신고 게시글 삭제 (관리자 권한) */
+	protected void deleteDisPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			
+			if (memberNo >= 1 && memberNo <= 1000) {
+				int deletePostNo = Integer.parseInt(request.getParameter("postNo"));
+				int deleteBoardNo = Integer.parseInt(request.getParameter("boardNo"));
+				adminsv.deleteDisPost(deletePostNo, deleteBoardNo);
+				adminBoard(request, response);
+			} else {
+				request.setAttribute("Message", "해당 서비스에 대한 권한이 필요합니다.");
+				request.getRequestDispatcher("/error.jsp").forward(request, response);
+			}	
+		} else {
+			request.setAttribute("Message", "로그인 후 사용하시기 바랍니다.");
+			request.getRequestDispatcher("/login.jsp").forward(request, response);
+		}
+	}
+
+protected void createPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(false);
 		
@@ -325,6 +422,8 @@ public class FrontController extends HttpServlet {
 			// 로그인후 사용
 		}
 	}
+	
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

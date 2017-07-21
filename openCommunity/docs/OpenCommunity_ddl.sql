@@ -24,7 +24,8 @@ create table search_history_tb (
   
 alter table search_history_tb
 add constraint fk_search_history_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
  
 create table members_info_tb (
 	member_no number,
@@ -35,7 +36,8 @@ create table members_info_tb (
   
 alter table members_info_tb
 add constraint fk_members_info_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
   
 create table notice_boards_tb (
 	board_no number,
@@ -59,11 +61,13 @@ create table posts_tb (
   
 alter table posts_tb
 add constraint fk_posts_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
   
 alter table posts_tb
 add constraint fk_posts_tb_boardno foreign key(board_no)
-references notice_boards_tb(board_no);
+references notice_boards_tb(board_no)
+ON DELETE CASCADE;
   
 alter table posts_tb
 add constraint pk_posts_tb_boardno_postno primary key (board_no, post_no);
@@ -79,7 +83,8 @@ create table comments_tb (
   
 alter table comments_tb
 add constraint fk_comments_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
   
 alter table comments_tb
 add constraint fk_comments_tb_boardno foreign key(board_no, post_no)
@@ -99,11 +104,13 @@ create table posts_preference_tb (
   
 alter table posts_preference_tb
 add constraint fk_posts_pref_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
   
 alter table posts_preference_tb
 add constraint fk_posts_pref_tb_boardno foreign key(board_no, post_no)
-references posts_tb(board_no, post_no);
+references posts_tb(board_no, post_no)
+ON DELETE CASCADE;
 
 create table members_subscribe_tb (
 	member_no number,
@@ -112,9 +119,11 @@ create table members_subscribe_tb (
 
 alter table members_subscribe_tb
 add constraint fk_members_subs_tb_memberno foreign key(member_no)
-references members_tb(member_no);
+references members_tb(member_no)
+ON DELETE CASCADE;
 
 alter table members_subscribe_tb
 add constraint fk_members_subs_tb_boardno foreign key(notice_board_no)
-references notice_boards_tb(board_no);
+references notice_boards_tb(board_no)
+ON DELETE CASCADE;
 
