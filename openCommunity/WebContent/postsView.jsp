@@ -43,6 +43,11 @@
 	// 게시글 조회 정보 가져오기
 	// 등록된 게시판의 게시글 목록 다 가져옴..
 	ArrayList<Posts> posts = (ArrayList<Posts>)request.getAttribute("posts");
+	int boardNo = (int)request.getAttribute("boardNo");
+	//System.out.println("\n## postsView.jsp posts.size() :" + posts.size());
+	//for (Posts dto : posts) {
+	//	System.out.println(dto);
+	//}
 %>
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
@@ -100,8 +105,8 @@
 										<li><a href="#">추천순</a></li>
 										
 									</ul> 
-									--> <a href="controller?action=createPost" class="btn btn-default">게시글
-										생성</a> <!--<button type="button" class="btn btn-default">Left</button>-->
+									--> <a href="controller?action=createPost&boardNo=<%= boardNo %>" class="btn btn-default">게시글
+										생성</a> 
 								</td>
 							</tr>
 						</table>
@@ -111,22 +116,22 @@
 						<tr>
 							<td width="1000px">
 									<%
+										//String[]  postsArray = new String[10];
 										for (int index = 0; index < posts.size(); index++) {
+									
+											
 											
 									%>
-									<a href="controller?action=selectInternalPost&posts=<%= posts.get(index) %>" class="list-group-item">
+									<a href="controller?action=selectInternalPost&boardNo=<%= posts.get(index).getBoardNo() %>&postNo=<%= posts.get(index).getPostNo() %>" class="list-group-item">
 										<table>
 										<tr>
 											<td width="850px">
 												<!-- 글제목 -->
 												<h4 class="posts-heading" ><%= posts.get(index).getPostTitle() %></h4>
 											</td>
-											<td width="150px" align="right""><img src="img/good.jpg"
-												class="img-circle"></td>
-											<td width="150px" align="left">
-												<!-- 추천수 -->
-												<h4 class="posts-heading" ><%=  %></h4>
-												
+											<td width="300px" align="right">
+												<!-- 작성일자 -->
+												<p class="list-group-item-text"><%= posts.get(index).getCreateTime() %></p>
 											</td>
 										</tr>
 										<div class="postsFont">
@@ -135,17 +140,14 @@
 												<!-- 작성자 -->
 												<p class="list-group-item-text" ><%= posts.get(index).getMemberNickname() %></p>
 											</td>
-											<td width="150px" align="right">
-												<!-- 작성일자 -->
-												<p class="list-group-item-text"><%= posts.get(index).getCreateTime() %></p>
-											</td>
-											<td width="150px" align="right">
+											<td width="300px" align="right">
 												<!-- 조회수 -->
 												<p class="list-group-item-text" ><%= posts.get(index).getPostViews() %></p>
 											</td>
 										</tr>
 										</div>
 									</table>
+									</a>
 									<%
 										}
 									%>
@@ -153,22 +155,7 @@
 
 						</tr>
 
-
-						<tr align="center">
-
-							<td>
-
-								<ul class="pagination pagination-centered">
-									<li class="disabled"><a href="#">&laquo;</a></li>
-									<li class="active"><a href="#">1</a></li>
-									<li><a href="#">2</a></li>
-									<li><a href="#">3</a></li>
-									<li><a href="#">4</a></li>
-									<li><a href="#">5</a></li>
-									<li><a href="#">&raquo;</a></li>
-								</ul>
-							</td>
-						</tr>
+						</table>
 						</section>
 
 						<div class="main_contents"></div>

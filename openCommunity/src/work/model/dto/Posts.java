@@ -14,7 +14,8 @@ public class Posts extends Members implements Serializable{
 	public Posts() {}
 	
 	
-
+	
+	//
 	public Posts(int memberNo, int boardNo, int postNo, String postTitle, String postContent) {
 		super();
 		this.memberNo = memberNo;
@@ -146,6 +147,28 @@ public class Posts extends Members implements Serializable{
 	public void setPostViews(int postViews) {
 		this.postViews = postViews;
 	}
+
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(memberNo);
+		builder.append(", ");
+		builder.append(boardNo);
+		builder.append(", ");
+		builder.append(postNo);
+		builder.append(", ");
+		builder.append(postTitle);
+		builder.append(", ");
+		builder.append(postContent);
+		builder.append(", ");
+		builder.append(createTime);
+		builder.append(", ");
+		builder.append(postViews);
+		return builder.toString();
+	}
+	
 	
 	
 }

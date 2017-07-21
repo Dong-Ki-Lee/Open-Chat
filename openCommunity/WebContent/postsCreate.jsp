@@ -35,8 +35,8 @@
 </head>
 <body>
 <%
-	// 게시글 조회 정보 가져오기
 	String memberNickname = (String)request.getAttribute("memberNickname");
+	int boardNo = (int)request.getAttribute("boardNo");
 %>
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
@@ -76,7 +76,7 @@
 				<div id="container">
 
 					<section id="sbn_idx" class="sbn"> <!--  -->
-					<form action="controller?action=postCreateSave" method="post">
+					<form action="controller?action=createPostSave&boardNo=<%= boardNo %>" method="post">
 						<table border="1" class="internalFirst" width="1000px">
 							<tr>
 								<td class="posts-heading" align="center" width="300px"><label

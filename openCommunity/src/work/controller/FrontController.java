@@ -53,6 +53,18 @@ public class FrontController extends HttpServlet {
 		case "selectInternalPost": // 게시글조회
 			selectInternalPost(request, response);
 			break;
+		case "createPost":
+			createPost(request, response);
+			break;
+		case "createPostSave":
+			createPostSave(request, response);
+			break;
+		case "deletePost":
+			deletePost(request, response);
+			break;
+		case "createComments":
+			createComments(request, response);
+			break;
 		case "adminMember":
 			adminMember(request, response);
 			break;
@@ -214,7 +226,105 @@ public class FrontController extends HttpServlet {
 			request.getRequestDispatcher("/error.jsp").forward(request, response);
 		}
 	}
-
+		protected void createPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		
+		if(session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.valueOf(boardNoString);
+			String memberNickname = noticesDao.selectNickname(memberNo);
+			if(memberNickname != null) {
+				request.setAttribute("memberNo", memberNo);
+				request.setAttribute("boardNo", boardNo);
+				request.setAttribute("memberNickname", memberNickname);
+				request.getRequestDispatcher("/postsCreate.jsp").forward(request, response);
+			}
+			
+		} else {
+			// 로그인 후 사용
+		}
+	}
+	
+	protected void createPostSave(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		
+		if(session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.valueOf(boardNoString);
+			String postTitle = request.getParameter("postTitle");
+			String postContent = request.getParameter("postContent");
+			System.out.println("#"+memberNo + ", " + boardNo +", " + postTitle +", " + postContent);
+			//  !!!create_time, post_Views, postNo 디폴트
+			int createPostCount = noticesDao.createPost(memberNo, boardNo, postTitle, postContent);
+			System.out.println("#");
+			if (createPostCount != 0 ) { // 정상 생성 db 완료
+				System.out.println("!");
+				selectPost(request,response);
+//				ArrayList<Posts> posts = noticesDao.selectPosts(boardNo);
+//				request.setAttribute("posts", posts);
+//				request.setAttribute("boardNo", boardNo);
+//				response.sendRedirect("postsView.jsp");
+//				request.getRequestDispatcher("/postsView.jsp").forward(request, response);
+			}
+			
+			
+		} else {
+			// 로그인 후 사용
+		}
+	}
+	
+	// 게시글 삭제
+	protected void deletePost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		// boardNo, postNo
+		HttpSession session = request.getSession(false);
+		if (session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.valueOf(boardNoString);
+			String postNoString = request.getParameter("postNo");
+			int postNo = Integer.valueOf(postNoString);
+			
+			// 작성자 회원번호
+			System.out.println(request.getParameter("memberNo"));
+			String createMemberNoString = request.getParameter("memberNo");
+			int createMemberNo = Integer.valueOf(createMemberNoString);
+			System.out.println("del " +memberNo + ", " + createMemberNo + ", " + boardNo + "," + postNo);
+			int deletePostCount = noticesDao.deletePost(memberNo, createMemberNo, boardNo, postNo);
+			if (deletePostCount != 0) {
+				System.out.println("1");
+				selectInternalPost(request,response);
+				System.out.println("2");
+			}
+		} else {
+			// 로그인 후 사용
+		}
+	}
+	
+	protected void createComments(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		if(session != null && session.getAttribute("memberNo") != null) {
+			int memberNo = (int)session.getAttribute("memberNo");
+			String boardNoString = request.getParameter("boardNo");
+			int boardNo = Integer.valueOf(boardNoString);
+			String postNoString = request.getParameter("postNo");
+			int postNo = Integer.valueOf(postNoString);
+			String content = request.getParameter("content");
+			
+			int createCommentsCount = noticesDao.createComments(memberNo, boardNo, postNo, content);
+			if (createCommentsCount != 0) {
+				// 확인 필요!!!!!!!!!!!!!!!!!!!!
+				request.getRequestDispatcher("/postsInternalView.jsp").forward(request, response);
+			}
+		} else {
+			// 로그인후 사용
+		}
+	}
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */

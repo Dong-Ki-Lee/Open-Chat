@@ -96,9 +96,9 @@ font.list-group-item-text {
 								<a href="postsUpdate.jsp" class="btn btn-default">
 									수정
 								</a> 
-								
+								<% System.out.println(posts.getMemberNo()); %>
 								<!-- 삭제버튼 클릭시 되묻고 삭제 -->
-								<a href="postsView.jsp" class="btn btn-default">삭제</a> <a
+								<a href="controller?action=deletePost&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>&memberNo=<%= posts.getMemberNo() %>" class="btn btn-default">삭제</a> <a
 								href="postsView.jsp" class="btn btn-default">목록</a>
 							</td>
 
@@ -110,20 +110,16 @@ font.list-group-item-text {
 										<td width="850px">
 											<h4 class="posts-heading"><%= posts.getPostTitle() %></h4>
 										</td>
-										<td width="150px" align="right""><img src="img/good.jpg"
-											class="img-circle"></td>
-										<td width="150px" colspan="2" align="left">
-											<h4 class="posts-heading"><%=  %></h4>
+										<td width="300px" colspan="2" align="right">
+											<p class="list-group-item-text"><%= posts.getCreateTime() %></p>
 										</td>
 									</tr>
 									<tr>
 										<td width="850px">
 											<p class="list-group-item-text"><%= posts.getMemberNickname() %></p>
 										</td>
-										<td width="150px" align="right">
-											<p class="list-group-item-text"><%= posts.getCreateTime() %></p>
-										</td>
-										<td width="150px" align="right">
+										
+										<td width="300px" colspan="2" align="right">
 											<p class="list-group-item-text"><%= posts.getPostViews() %></p>
 										</td>
 									</tr>
@@ -187,21 +183,27 @@ font.list-group-item-text {
 						%>
 						<tr>
 							<td>
+								<form action="controller?action=createComments&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>" 
+									method="post">
+									<!-- 댓글 내용 + board_no 와 post_no 로 등록 -->
 								<table >
 									<tr>
 										<td width="100px" rowspan="2"><img src="img/user.jpg"
 											class="img-circle"></td>
 										<td width="100%">
-											<h4 class="posts-heading"><%= memberNickname %></h4>
+											<h4 class="posts-heading" ><%= memberNickname %></h4>
 										</td>
 									</tr>
 									<tr>
-										<td width="100%"><input type="text" class="form-control"
+										<td width="100%"><input type="text" class="form-control" name=content
 											id="content"></td>
 									</tr>
 								</table>
+								</form>
 							</td>
-							<td><a href="#" class="btn btn-default">등록</a></td>
+							<td><!-- <a href="controller?action=createComments&" class="btn btn-default">등록</a> -->
+								<input type="submit" class="btn btn-default" value="등록">
+							</td>
 						</tr>
 
 					</table>
