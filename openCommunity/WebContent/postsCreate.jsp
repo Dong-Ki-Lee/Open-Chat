@@ -39,34 +39,39 @@
 	int boardNo = (int)request.getAttribute("boardNo");
 %>
 	<div id="ThemeWrap">
-		<div id="ThemeHeader">
-			<div>
-				<img src="img/main_logo.png">
-			</div>
-			<nav id="ThemeGnb">
-			<h2 class="screen_out">홈</h2>
-			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="noticeBoard.html">공지사항</a></li>
-				<li class="gnb_2dli"><a href="postBoard.html">게시판</a></li>
-				<li class="gnb_2dli"><a href="faqBoard.html">FAQ</a></li>
-			</ul>
-			</nav>
-		</div>
+        <div id="ThemeHeader">
+            <div><a href="mcontroller?action=home"><img src="img/main_logo.png"></a></div>
+            <nav id="ThemeGnb">
+                <h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
+                <ul id="gnb_1dul">
+                    <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
+                    <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>
+                    <li class="gnb_2dli"><a href="faqBoard.jsp">FAQ</a></li>
+                </ul>
+            </nav>
+            
+            <div id="aaa">
+            <form method="post" action="mcontroller?action=logout">
+            	<input type="button" class="btn btn-success" value="Login" disabled="disabled">
+            	<input type="submit" class="btn btn-success" value="Logout">
+            	</form>
+            </div>
+        </div>
 
-		<div id="ThemeContent">
-			<div class="site_sch">
-				<form>
-					<input type="text" class="form-control" name="stx" id="sch_stx">
-					<button type="submit" class="btn_search">
-						<i class="fa fa-search"><strong class="screen_out">검색</strong></i>
-					</button>
-				</form>
-			</div>
+        <div id="ThemeContent">
+            <div class="site_sch">
+                <form action="scontroller?action=searchBoard" method="post">
+                    <input type="text" class="form-control" name="searchTag" id="sch_stx">
+                    <button type="submit" class="btn_search">
+                        <i class="fa fa-search"><strong class="screen_out">검색</strong></i>
+                    </button>
+                </form>
+            </div>
 
 			<div class="inner_topcontent">
 				<div class="info_utility">
 					<ul id="tnb">
-						<li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+						<li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
 						<li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
 					</ul>
 				</div>
@@ -76,7 +81,7 @@
 				<div id="container">
 
 					<section id="sbn_idx" class="sbn"> <!--  -->
-					<form action="controller?action=createPostSave&boardNo=<%= boardNo %>" method="post">
+					<form action="bcontroller?action=createPostSave&boardNo=<%= boardNo %>" method="post">
 						<table border="1" class="internalFirst" width="1000px">
 							<tr>
 								<td class="posts-heading" align="center" width="300px"><label

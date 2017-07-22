@@ -50,34 +50,39 @@ font.list-group-item-text {
 	String memberNickname = (String)request.getAttribute("memberNickname");
 %>
 	<div id="ThemeWrap">
-		<div id="ThemeHeader">
-			<div>
-				<img src="img/main_logo.png">
-			</div>
-			<nav id="ThemeGnb">
-			<h2 class="screen_out">홈</h2>
-			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="noticeBoard.html">공지사항</a></li>
-				<li class="gnb_2dli"><a href="postBoard.html">게시판</a></li>
-				<li class="gnb_2dli"><a href="faqBoard.html">FAQ</a></li>
-			</ul>
-			</nav>
-		</div>
+        <div id="ThemeHeader">
+            <div><a href="mcontroller?action=home"><img src="img/main_logo.png"></a></div>
+            <nav id="ThemeGnb">
+                <h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
+                <ul id="gnb_1dul">
+                    <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
+                    <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>
+                    <li class="gnb_2dli"><a href="faqBoard.jsp">FAQ</a></li>
+                </ul>
+            </nav>
+            
+            <div id="aaa">
+            <form method="post" action="mcontroller?action=logout">
+            	<input type="button" class="btn btn-success" value="Login" disabled="disabled">
+            	<input type="submit" class="btn btn-success" value="Logout">
+            	</form>
+            </div>
+        </div>
 
-		<div id="ThemeContent">
-			<div class="site_sch">
-				<form>
-					<input type="text" class="form-control" name="stx" id="sch_stx">
-					<button type="submit" class="btn_search">
-						<i class="fa fa-search"><strong class="screen_out">검색</strong></i>
-					</button>
-				</form>
-			</div>
+        <div id="ThemeContent">
+            <div class="site_sch">
+                <form action="scontroller?action=searchBoard" method="post">
+                    <input type="text" class="form-control" name="searchTag" id="sch_stx">
+                    <button type="submit" class="btn_search">
+                        <i class="fa fa-search"><strong class="screen_out">검색</strong></i>
+                    </button>
+                </form>
+            </div>
 
 			<div class="inner_topcontent">
 				<div class="info_utility">
 					<ul id="tnb">
-						<li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+						<li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
 						<li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
 					</ul>
 				</div>
@@ -98,7 +103,7 @@ font.list-group-item-text {
 								</a> 
 								<% System.out.println(posts.getMemberNo()); %>
 								<!-- 삭제버튼 클릭시 되묻고 삭제 -->
-								<a href="controller?action=deletePost&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>&memberNo=<%= posts.getMemberNo() %>" class="btn btn-default">삭제</a> <a
+								<a href="bcontroller?action=deletePost&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>&memberNo=<%= posts.getMemberNo() %>" class="btn btn-default">삭제</a> <a
 								href="postsView.jsp" class="btn btn-default">목록</a>
 							</td>
 
@@ -183,7 +188,7 @@ font.list-group-item-text {
 						%>
 						<tr>
 							<td>
-								<form action="controller?action=createComments&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>" 
+								<form action="bcontroller?action=createComments&boardNo=<%= posts.getBoardNo() %>&postNo=<%= posts.getPostNo() %>" 
 									method="post">
 									<!-- 댓글 내용 + board_no 와 post_no 로 등록 -->
 								<table >

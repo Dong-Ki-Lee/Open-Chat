@@ -154,7 +154,6 @@ insert into members_subscribe_tb values(1006, 10007);
 insert into members_subscribe_tb values(1007, 10008);
 
 
-insert into posts_tb values(1001, 10001, 1, '산은 산이요 물은 물이로다', '제곧내', null, null);
 insert into posts_tb values(1001, 10001, 2, '산은 산이요 물은 물이로다', '제곧내', null, null);
 insert into posts_tb values(1001, 10001, 3, '산은 산이요 물은 물이로다', '제곧내', null, null);
 insert into posts_tb values(1001, 10001, 4, '산은 산이요 물은 물이로다', '제곧내', null, null);
@@ -171,8 +170,7 @@ insert into posts_tb values(1007, 10007, 2, '산은 물이로다', '제곧내', null, nul
 insert into posts_tb values(1008, 10008, 2, '산은 물이로다', '제곧내', null, null);
 
 
-insert into comments_tb values(1002, 10001, 1, 1, '이게 뭡니까', null);
-insert into comments_tb values(1002, 10001, 2, 1, '이게 뭡니까', null);
+
 insert into comments_tb values(1002, 10001, 3, 1, '이게 뭡니까', null);
 insert into comments_tb values(1002, 10001, 4, 1, '이게 뭡니까', null);
 insert into comments_tb values(1002, 10001, 5, 1, '이게 뭡니까', null);
@@ -189,3 +187,7 @@ insert into posts_preference_tb values(1009, 10001, 1, 1);
 insert into posts_preference_tb values(1003, 10002, 1, 0);
 insert into posts_preference_tb values(1004, 10002, 1, 0);
 insert into posts_preference_tb values(1005, 10002, 1, 0);
+
+insert into comments_tb values(1002, 10001, 1, 1, '요게 뭡니까', null);
+insert into comments_tb values(1002, 10001, 2, 1, '이이게 뭡니까', null);
+insert into posts_tb values(1001, 10001, 1, '말은 산이요 물은 물이로다', '제곧내', null, null);

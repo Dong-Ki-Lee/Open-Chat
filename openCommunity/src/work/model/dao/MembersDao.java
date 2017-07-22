@@ -11,62 +11,12 @@ import work.model.dto.MembersInfo;
 
 public class MembersDao {
 	private FactoryDao factory = FactoryDao.getInstance();
-	
+
 	public Connection getConnection() {
 		return factory.getConnection();
 	}
-	// 전체회원조회 (Read: 읽기) 
-	// + 가입일 최종 로그인, 마일리지
-	public ArrayList<MembersInfo> selectList() {
-		ArrayList<MembersInfo> list = new ArrayList<MembersInfo>();
-		Connection conn = null;
-		Statement stmt = null;
-		ResultSet rs = null;
-		
-		StringBuilder sql = new StringBuilder();
-	    sql.append("select * ");
-	    sql.append("from members_tb m, members_info_tb i ");
-	    sql.append("where m.member_no = i.member_no");
-		
-		try {
-			conn = getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql.toString());
 
-			int memberNo = 0;
-			String memberPw = null;
-			String memberEmail = null;
-			String memberNickname = null;
-			String joinDate = null;
-			int mileage = 0;
-			String lastLoginDate = null;
-			
-			MembersInfo dto = null;
-			
-			while(rs.next()) {
-				memberNo = rs.getInt("member_no");
-				memberEmail = rs.getString("member_email");
-				memberNickname= rs.getString("member_nickname");
-				memberPw = rs.getString("member_pw");
-				joinDate = rs.getString("join_date");
-				lastLoginDate = rs.getString("last_login_date");
-				mileage = rs.getInt("mileage");
-
-				dto = new MembersInfo(memberNo, memberEmail, memberNickname, memberPw, joinDate, lastLoginDate, mileage);
-				list.add(dto);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error(전체회원조회오류) : " + e.getMessage());
-		} finally {
-			factory.close(rs, stmt, conn);
-		}
-		
-		return list;
-	}
-	
-    // 회원삭제
+	/** 회원 삭제 */
 	public int delete(int memberNo) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -88,15 +38,14 @@ public class MembersDao {
 		}
 		return 0;
 	}
-	
-	
-	// 회원등록 생성 (Create:등록)
+
+	/** 회원 정보 등록 */
 	public int insert(Members dto) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String sql = "insert into members_tb values(?, ?, ?, ?)";
-		
+
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -104,9 +53,9 @@ public class MembersDao {
 			stmt.setString(2, dto.getMemberEmail());
 			stmt.setString(3, dto.getMemberNickname());
 			stmt.setString(4, dto.getMemberPw());
-			
+
 			return stmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error(회원등록 오류) : " + e.getMessage());
@@ -115,7 +64,8 @@ public class MembersDao {
 		}
 		return 0;
 	}		
-	// 회원정보변경 (Update: 갱신)
+	
+	/** 회원정보 변경 */
 	public int update(Members dto) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -124,8 +74,7 @@ public class MembersDao {
 		sql.append("update members_tb set");
 		sql.append("member_no=?, member_email=?, member_nickname=?, member_pw=?");
 		sql.append("where member_no=?");
-		//String SQL = "insert into members values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		
+
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
@@ -133,9 +82,9 @@ public class MembersDao {
 			stmt.setString(2, dto.getMemberEmail());
 			stmt.setString(3, dto.getMemberNickname());
 			stmt.setString(4, dto.getMemberPw());
-			
+
 			return stmt.executeUpdate();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error(회원 내정보 변경 오류) : " + e.getMessage());
@@ -144,14 +93,14 @@ public class MembersDao {
 		}
 		return 0;
 	}	
-	
-	// 로그인
+
+	/** 로그인 확인 */
 	public int loginCheck(String memberEmail, String memberPw) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		String sql = "select member_no from members_tb where member_email=? and member_pw=?";
-		
+
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql);
@@ -169,43 +118,10 @@ public class MembersDao {
 		}
 		return 0;
 	}
-	// 암호찾기 -> 찾앗을경우 임시비밀번호 발송
-	// 
-	// 관리자 : 회원 전체정보 변경
-	//  닉네임찾기
-	public ArrayList<Members> selectNickname() {
-		ArrayList<Members> list = new ArrayList<Members>();
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		ResultSet rs = null;
-		Members members = null;
-		int memberNo = 0;
-		String memberEmail = null;
-		String memberNickname = null;
-		String sql = "select member_no, member_email, member_nickname from members_tb";
-		
-		try {
-			conn = getConnection();
-			stmt = conn.prepareStatement(sql);
-			rs = stmt.executeQuery();
-			if(rs.next()) {
-				memberNo = rs.getInt("member_no");
-				memberEmail = rs.getString("member_email");
-				memberNickname = rs.getString("member_nickname");
-				
-				members = new Members(memberNo, memberEmail, memberNickname);
-				list.add(members);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("Error(닉네임찾기) : " + e.getMessage());
-		} finally {
-			factory.close(rs, stmt, conn);
-		}
-		return list;
-	}
 	
-	/** 회원 닉네임 조회  */
+	
+
+	/** 해당 회원 닉네임 조회  */
 	public String selectMyNickname(int memberNo) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -214,18 +130,18 @@ public class MembersDao {
 		sql.append("select member_nickname ");
 		sql.append("from members_tb ");
 		sql.append("where member_no=?");
-		
+
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
 			stmt.setInt(1, memberNo);			
 			rs = stmt.executeQuery();
-			
+
 			while(rs.next()) {
-				
+
 				return rs.getString("member_nickname");
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error(회원 닉네임 조회오류) : " + e.getMessage());
@@ -234,10 +150,8 @@ public class MembersDao {
 		}
 		return null;
 	}
-	
-	
-	
-	/** 마일리지 조회  */
+
+	/** 해당 회원의 마일리지 조회  */
 	public int selectMileage(int memberNo) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -246,18 +160,17 @@ public class MembersDao {
 		sql.append("select mileage ");
 		sql.append("from members_info_tb ");
 		sql.append("where member_no=?");
-		
+
 		try {
 			conn = getConnection();
 			stmt = conn.prepareStatement(sql.toString());
 			stmt.setInt(1, memberNo);			
 			rs = stmt.executeQuery();
-while(rs.next()) {
-				
-	return rs.getInt("mileage");
+			while(rs.next()) {
+
+				return rs.getInt("mileage");
 			}
-			
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error(마일리지 조회오류) : " + e.getMessage());
@@ -267,34 +180,59 @@ while(rs.next()) {
 		return 0;
 	}
 	
-	
-	
-	
-			public int selectCommentCnt(int memberNo) {
-				Connection conn = null;
-				PreparedStatement stmt = null;
-				ResultSet rs = null;
-				StringBuilder sql = new StringBuilder();
-				sql.append("select count(comment_no) ");
-				sql.append("from comments_tb ");
-				sql.append("where member_no=?");
-				
-				try {
-					conn = getConnection();
-					stmt = conn.prepareStatement(sql.toString());
-					stmt.setInt(1, memberNo);			
-					rs = stmt.executeQuery();
-					while(rs.next()){
-						return rs.getInt("count(comment_no)");
-					}
-					
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-					System.out.println("Error(등록 댓글 수 조회오류) : " + e.getMessage());
-				} finally {
-					factory.close(rs, stmt, conn);
-				}
-				return 0;
-			}	
+	/** 해당 회원의 게시글 수 조회 */
+	public int selectPostCnt(int memberNo) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(post_no) ");
+		sql.append("from posts_no ");
+		sql.append("where member_no=?");
+
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setInt(1, memberNo);			
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				return rs.getInt("count(post_no)");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(등록 게시글 수 조회오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return 0;
+	}
+
+	/** 해당 회원의 댓글 수 조회 */
+	public int selectCommentCnt(int memberNo) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		StringBuilder sql = new StringBuilder();
+		sql.append("select count(comment_no) ");
+		sql.append("from comments_tb ");
+		sql.append("where member_no=?");
+
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(sql.toString());
+			stmt.setInt(1, memberNo);			
+			rs = stmt.executeQuery();
+			while(rs.next()){
+				return rs.getInt("count(comment_no)");
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(등록 댓글 수 조회오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+		return 0;
+	}	
 }

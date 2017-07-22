@@ -7,6 +7,15 @@ drop table comments_tb CASCADE CONSTRAINTS PURGE;
 drop table posts_preference_tb CASCADE CONSTRAINTS PURGE;
 drop table members_subscribe_tb CASCADE CONSTRAINTS PURGE;
 
+create sequence
+member_no
+start with 1011
+increment by 1
+maxvalue 5000
+minvalue 0
+nocycle
+;
+
 create table members_tb (
 	member_no number,
 	member_email varchar2(30) not null,

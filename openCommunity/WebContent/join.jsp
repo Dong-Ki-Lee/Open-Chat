@@ -13,9 +13,6 @@
 
 <!-- 로그인전 메뉴 -->
 	<nav class="navbar navbar-default">
-		<div class="navbor-header">
-			<a class="nabar-brand" href="index.jsp">Open Community Web Site</a>
-  		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse=1">
 			<ul class="nav navbar-nav navbar-right">
 				<li class="dropdown">
@@ -34,7 +31,7 @@
 		<div class="col-lg-3"></div>
 		<div class="col-lg-6">
 			<div class="jumbotron" style="padding-top: 8px;">
-				<form method="post" action="joinAction.jsp">
+				<form method="post" action="mcontroller?action=joinSave">
 					<h3 style="text-align : center;"> 회원가입 </h3>
 					<div class="form-group">
 						<input type="text" class="form-control" placeholder="이메일" name="memberEmail" maxlength="50">

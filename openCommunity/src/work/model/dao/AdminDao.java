@@ -32,6 +32,56 @@ public class AdminDao {
 		return factory.getConnection();
 	}
 	
+	/** 전체 회원 정보 조회 */
+	public ArrayList<MembersInfo> selectList() {
+		ArrayList<MembersInfo> list = new ArrayList<MembersInfo>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		StringBuilder sql = new StringBuilder();
+		sql.append("select * ");
+		sql.append("from members_tb m, members_info_tb i ");
+		sql.append("where m.member_no = i.member_no");
+
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql.toString());
+
+			int memberNo = 0;
+			String memberPw = null;
+			String memberEmail = null;
+			String memberNickname = null;
+			String joinDate = null;
+			int mileage = 0;
+			String lastLoginDate = null;
+
+			MembersInfo dto = null;
+
+			while(rs.next()) {
+				memberNo = rs.getInt("member_no");
+				memberEmail = rs.getString("member_email");
+				memberNickname= rs.getString("member_nickname");
+				memberPw = rs.getString("member_pw");
+				joinDate = rs.getString("join_date");
+				lastLoginDate = rs.getString("last_login_date");
+				mileage = rs.getInt("mileage");
+
+				dto = new MembersInfo(memberNo, memberEmail, memberNickname, memberPw, joinDate, lastLoginDate, mileage);
+				list.add(dto);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Error(전체회원조회오류) : " + e.getMessage());
+		} finally {
+			factory.close(rs, stmt, conn);
+		}
+
+		return list;
+	}
+	
 	/** 게시판 테이블 조회 */
 	public ArrayList<NoticeBoards> selectBoardList() {
 		ArrayList<NoticeBoards> list = new ArrayList<NoticeBoards>();
@@ -141,7 +191,6 @@ public class AdminDao {
 			int postViews = 0;
 			
 			PostInfo postInfo = null;
-			
 			while(rs.next()) {
 				memberNo = rs.getInt("member_no");
 				boardNo = rs.getInt("board_no");
@@ -193,7 +242,7 @@ public class AdminDao {
 		return list;
 	}
 	
-	
+	/** QnA 댓글 생성 */
 	public int insertQnAComments(int memberNo, int postNo, int commentNo, String content, String createTime) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -220,6 +269,7 @@ public class AdminDao {
 		return 0;
 	}
 	
+	/** 신규가입 회원 수 조회 */
 	public int NewMemberCount(String date) {
 		Connection conn = null;
 		ResultSet rs = null;
@@ -246,22 +296,5 @@ public class AdminDao {
 		}
 		return 0;
 	}
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 }

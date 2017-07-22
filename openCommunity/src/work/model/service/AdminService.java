@@ -22,26 +22,12 @@ public class AdminService {
 	private AdminDao admDao = new AdminDao();
 	private NoticesDao ntcDao = new NoticesDao();
 	
-	/** 등록 회원수 조회 메서드 */
-	public int getCount() {
-		return 0;
-	}
-	
-	/**
-	 * 회원 탈퇴  
-	 * @param memberId
-	 * @return 탈퇴적용 행수 반환 
-	 */
-	public int deleteMember(int memberNo) {
-		return memDao.delete(memberNo);
-	}
-	
 	/**
 	 * 전체 회원 조회 
 	 * @return 회원 객체 배열 
 	 */
 	public ArrayList<MembersInfo> getMemberList() {
-		return memDao.selectList();
+		return admDao.selectList();
 	}
 	
 	/**
@@ -78,7 +64,6 @@ public class AdminService {
 		PostInfo dto = null;
 		
 		for (int i = 0; i < disPostsCntList.size(); i++) {
-			
 			int boardNo = postsList.get(i).getBoardNo();
 			String boardTitle = postsList.get(i).getBoardTitle();
 			String postTitle = postsList.get(i).getPostTitle();
@@ -97,12 +82,7 @@ public class AdminService {
 		return ntcDao.deletePost(postNo, boardNo);
 	}
 	
-	
-	
-	
-	/**
-	 * 로그인
-	 */
+	/** 로그인 */
 	public int selectOneLogin(String memberEmail, String memberPw) {
 		if (memDao.loginCheck(memberEmail, memberPw) != 0) {
 			return memDao.loginCheck(memberEmail, memberPw);
@@ -110,7 +90,6 @@ public class AdminService {
 		return 0;
 	}
 	
-
 }
 
 

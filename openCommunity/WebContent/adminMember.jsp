@@ -32,13 +32,13 @@
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
 			<div>
-				<img src="img/main_logo.png">
+				<a href="mcontroller?action=home"><img src="img/main_logo.png"></a>
 			</div>
 			<nav id="ThemeGnb">
-			<h2 class="screen_out"><a href="adminMember.jsp">홈</a></h2>
+			<h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
 			<ul id="gnb_1dul">
 				<li class="gnb_2dli"><a href="adminMember.jsp">회원관리</a></li>
-				<li class="gnb_2dli"><a href="controller?action=adminBoard">게시판관리</a></li>
+				<li class="gnb_2dli"><a href="acontroller?action=adminBoard">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
 			</nav>
@@ -57,7 +57,7 @@
 			<div class="inner_topcontent">
 				<div class="info_utility">
 					<ul id="tnb">
-						<li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+						<li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
 						<li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
 					</ul>
 				</div>
@@ -67,7 +67,6 @@
 				<div id="container">
 					<section id="sbn_idx" class="sbn"> 
 					<strong>회원 목록</strong> 
-					
 					<%
 						ArrayList<MembersInfo> list = (ArrayList<MembersInfo>)request.getAttribute("membersInfolist");
 						MembersInfo memberInfoDto = null;
@@ -103,7 +102,7 @@
 							<td><%= memberInfoDto.getJoinDate() %></td>
 							<td><%= memberInfoDto.getMileage() %></td>
 							<td><%= memberInfoDto.getLastLoginDate() %></td>
-							<td><a href="controller?action=deleteMember&memberNo=<%= memberInfoDto.getMemberNo() %>">탈퇴</a></td>
+							<td><a href="acontroller?action=deleteMember&memberNo=<%= memberInfoDto.getMemberNo() %>">탈퇴</a></td>
 						</tr>
 						
 						<%

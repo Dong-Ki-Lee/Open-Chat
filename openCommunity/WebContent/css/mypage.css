@@ -1,0 +1,28 @@
+@CHARSET "EUC-KR";
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+
+#myinfotable div {
+	text-align:center;
+}
+
+#myinfo td {
+	text-align:center;
+	font-size:20px;
+	font-family : 'Hanna';
+}
+
+#myname td {
+	color:red;
+	font-family : 'Hanna';
+	font-size:20px;
+}
+
+#myphoto td {
+	align:center;
+}
+
+#my td {
+	text-align:center;
+	font-family : 'Hanna';
+}

@@ -14,6 +14,7 @@ label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-family:dotum;font-size:1em}
 button {cursor:pointer}
 
+#aaa {margin-top:400px;margin-left:17px;}
 textarea, select {font-family:dotum;font-size:1em}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}

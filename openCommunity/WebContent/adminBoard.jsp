@@ -31,13 +31,13 @@
 	<div id="ThemeWrap">
 		<div id="ThemeHeader">
 			<div>
-				<img src="img/main_logo.png">
+				<a href="mcontroller?action=home"><img src="img/main_logo.png"></a>
 			</div>
 			<nav id="ThemeGnb">
-			<h2 class="screen_out"><a href="adminMember.jsp">홈</a></h2>
+			<h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
 			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="controller?action=adminMember">회원관리</a></li>
-				<li class="gnb_2dli"><a href="adminNotice.jsp">게시판관리</a></li>
+				<li class="gnb_2dli"><a href="acontroller?action=adminMember">회원관리</a></li>
+				<li class="gnb_2dli"><a href="adminBoard.jsp">게시판관리</a></li>
 				<li class="gnb_2dli"><a href="adminChart.jsp">통계</a></li>
 			</ul>
 			</nav>
@@ -56,7 +56,7 @@
 			<div class="inner_topcontent">
 				<div class="info_utility">
 					<ul id="tnb">
-						<li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+						<li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
 						<li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
 					</ul>
 				</div>
@@ -66,7 +66,6 @@
 				<div id="container">
 					<section id="sbn_idx" class="sbn">
 					<strong>전체 게시판 목록</strong>
-					
 					<%
 						ArrayList<BoardsInfo> list = (ArrayList<BoardsInfo>)request.getAttribute("boardsInfolist");
 						BoardsInfo boardInfoDto = null;
@@ -98,24 +97,21 @@
 							}
 						%>
 					</table>
-					<div class="jb-center">
-						<ul id="noticePag" class="pagination">
-							<li class="disabled"><a href="#"><span
-									class="glyphicon glyphicon-chevron-left"></span></a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li class="active"><a href="#">5</a></li>
-							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">9</a></li>
-							<li><a href="#">10</a></li>
-							<li><a href="#"><span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
-						</ul>
-					</div>
+
+					<nav>
+					<ul class="pagination">
+						<li><a href="#" aria-label="Previous"> <span
+								aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#" aria-label="Next"> <span
+								aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+					</nav>
 
 					<strong>전체 규제글 목록</strong> 
 					<%
@@ -147,31 +143,27 @@
 							<td><%= postInfoDto.getPostTitle() %></td>
 							<td><%= postInfoDto.getCreateTime() %></td>
 							<td><%= postInfoDto.getDisBoardCnt() %></td>
-							<td><a href="">삭제</a></td>
+							<td><a href="acontroller?action=deleteDisPost&postNo=<%= postInfoDto.getPostNo() %>">삭제</a></td>
 						</tr>
 						<%
 							}
 						%>
 						
 					</table>
-					<div class="jb-center">
-						<ul id="disNoticePag" class="pagination">
-							<li class="disabled"><a href="#"><span
-									class="glyphicon glyphicon-chevron-left"></span></a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li class="active"><a href="#">5</a></li>
-							<li><a href="#">6</a></li>
-							<li><a href="#">7</a></li>
-							<li><a href="#">8</a></li>
-							<li><a href="#">9</a></li>
-							<li><a href="#">10</a></li>
-							<li><a href="#"><span
-									class="glyphicon glyphicon-chevron-right"></span></a></li>
-						</ul>
-					</div>
+					<nav>
+					<ul class="pagination" style="align:center;">
+						<li><a href="#" aria-label="Previous"> <span
+								aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#" aria-label="Next"> <span
+								aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+					</nav>
 
 					</section>
 					<div class="main_contents"></div>

@@ -50,34 +50,39 @@
 	//}
 %>
 	<div id="ThemeWrap">
-		<div id="ThemeHeader">
-			<div>
-				<img src="img/main_logo.png">
-			</div>
-			<nav id="ThemeGnb">
-			<h2 class="screen_out">홈</h2>
-			<ul id="gnb_1dul">
-				<li class="gnb_2dli"><a href="noticeBoard.html">공지사항</a></li>
-				<li class="gnb_2dli"><a href="postBoard.html">게시판</a></li>
-				<li class="gnb_2dli"><a href="faqBoard.html">FAQ</a></li>
-			</ul>
-			</nav>
-		</div>
+        <div id="ThemeHeader">
+            <div><a href="mcontroller?action=home"><img src="img/main_logo.png"></a></div>
+            <nav id="ThemeGnb">
+                <h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
+                <ul id="gnb_1dul">
+                    <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
+                    <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>
+                    <li class="gnb_2dli"><a href="faqBoard.jsp">FAQ</a></li>
+                </ul>
+            </nav>
+            
+            <div id="aaa">
+            <form method="post" action="mcontroller?action=logout">
+            	<input type="button" class="btn btn-success" value="Login" disabled="disabled">
+            	<input type="submit" class="btn btn-success" value="Logout">
+            	</form>
+            </div>
+        </div>
 
-		<div id="ThemeContent">
-			<div class="site_sch">
-				<form>
-					<input type="text" class="form-control" name="stx" id="sch_stx">
-					<button type="submit" class="btn_search">
-						<i class="fa fa-search"><strong class="screen_out">검색</strong></i>
-					</button>
-				</form>
-			</div>
+        <div id="ThemeContent">
+            <div class="site_sch">
+                <form action="scontroller?action=searchBoard" method="post">
+                    <input type="text" class="form-control" name="searchTag" id="sch_stx">
+                    <button type="submit" class="btn_search">
+                        <i class="fa fa-search"><strong class="screen_out">검색</strong></i>
+                    </button>
+                </form>
+            </div>
 
 			<div class="inner_topcontent">
 				<div class="info_utility">
 					<ul id="tnb">
-						<li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+						<li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
 						<li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
 					</ul>
 				</div>
@@ -97,15 +102,7 @@
 
 								</select></td>
 								<td align="right" width="200px">
-									<!-- <a href="#" class="btn btn-default">정렬</a>
-									<a href="#" class="btn btn-default dropdown-toggle"
-									data-toggle="dropdown"><span class="caret"></span></a>
-									<ul class="dropdown-menu">
-										<li><a href="#">최신순</a></li>
-										<li><a href="#">추천순</a></li>
-										
-									</ul> 
-									--> <a href="controller?action=createPost&boardNo=<%= boardNo %>" class="btn btn-default">게시글
+									<a href="bcontroller?action=createPost&boardNo=<%= boardNo %>" class="btn btn-default">게시글
 										생성</a> 
 								</td>
 							</tr>
@@ -116,13 +113,9 @@
 						<tr>
 							<td width="1000px">
 									<%
-										//String[]  postsArray = new String[10];
 										for (int index = 0; index < posts.size(); index++) {
-									
-											
-											
 									%>
-									<a href="controller?action=selectInternalPost&boardNo=<%= posts.get(index).getBoardNo() %>&postNo=<%= posts.get(index).getPostNo() %>" class="list-group-item">
+									<a href="bcontroller?action=selectInternalPost&boardNo=<%= posts.get(index).getBoardNo() %>&postNo=<%= posts.get(index).getPostNo() %>" class="list-group-item">
 										<table>
 										<tr>
 											<td width="850px">
@@ -156,6 +149,21 @@
 						</tr>
 
 						</table>
+						
+						<nav>
+					<ul class="pagination" style="align:center;">
+						<li><a href="#" aria-label="Previous"> <span
+								aria-hidden="true">&laquo;</span>
+						</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#" aria-label="Next"> <span
+								aria-hidden="true">&raquo;</span>
+						</a></li>
+					</ul>
+					</nav>
 						</section>
 
 						<div class="main_contents"></div>

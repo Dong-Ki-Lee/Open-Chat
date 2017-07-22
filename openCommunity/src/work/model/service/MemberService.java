@@ -34,18 +34,13 @@ public class MemberService {
 	
 	/** 내가 쓴 게시글 수 */
 	public int getMyPostCnt(int memberNo) {
-		return ntcDao.selectPostCnt(memberNo);
+		return memDao.selectPostCnt(memberNo);
 	}
 	
 	/** 내가 쓴 댓글 수  */
 	public int getMyCommentCnt(int memberNo) {
 		return memDao.selectCommentCnt(memberNo);
 	}
-	
-	/** 내 방문 수  */
-	
-	
-	
 	
 	/**
 	 * 회원 탈퇴  
@@ -55,7 +50,6 @@ public class MemberService {
 	public int deleteMember(int memberNo) {
 		return memDao.delete(memberNo);
 	}
-	
 	
 	/**
 	 * 게시판 전체 조회
@@ -79,17 +73,6 @@ public class MemberService {
 		}
 		return list;
 	}
-	
-	
-	/** 신고글 삭제 */
-	public int deleteDisPost(int postNo, int boardNo) {
-		return ntcDao.deletePost(postNo, boardNo);
-	}
-	
-	
-	
-	
-	
 
 }
 

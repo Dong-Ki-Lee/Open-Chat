@@ -16,15 +16,22 @@
 
     <div id="ThemeWrap">
         <div id="ThemeHeader">
-            <div><img src="img/main_logo.png"></div>
+            <div><a href="mcontroller?action=home"><img src="img/main_logo.png"></a></div>
             <nav id="ThemeGnb">
-                <h2 class="screen_out"><a href="memberPageAfterLogin.jsp">홈</a></h2>
+                <h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
                 <ul id="gnb_1dul">
                     <li class="gnb_2dli"><a href="noticeBoard.jsp">공지사항</a></li>
                     <li class="gnb_2dli"><a href="postBoard.jsp">게시판</a></li>
                     <li class="gnb_2dli"><a href="faqBoard.jsp">FAQ</a></li>
                 </ul>
             </nav>
+            
+            <div id="aaa">
+            <form method="post" action="mcontroller?action=logout">
+            	<input type="button" class="btn btn-success" value="Login" disabled="disabled">
+            	<input type="submit" class="btn btn-success" value="Logout">
+            	</form>
+            </div>
         </div>
 
         <div id="ThemeContent">
@@ -40,7 +47,7 @@
             <div class="inner_topcontent">
                 <div class="info_utility">
                     <ul id="tnb">
-                        <li><a href="myInfo.html"><img src="img/user_btn.png"></a></li>
+                        <li><a href="mcontroller?action=myInfoPage"><img src="img/user_btn.png"></a></li>
                         <li><a href="alarm.html"><img src="img/alarm_btn.png"></a></li>
                     </ul>
                 </div>

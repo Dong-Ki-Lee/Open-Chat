@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import work.model.dao.BoardSearchDao;
-import work.model.dto.MembersInfo;
 import work.model.dto.NoticeBoards;
 
 
@@ -20,11 +19,9 @@ public class SearchController extends HttpServlet {
        
     public SearchController() {
         super();
-        // TODO Auto-generated constructor stub
     }
     protected void process(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    String action = request.getParameter("action");
-	    System.out.println("\n## action : " + action);
 	
 	    switch(action) {
 	    case "searchBoard":

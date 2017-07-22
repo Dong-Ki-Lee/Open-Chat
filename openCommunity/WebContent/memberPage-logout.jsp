@@ -17,12 +17,7 @@
 </head>
 <body>
 <%
-	if ((String)session.getAttribute("memberEmail") == null || session.getAttribute("memberNo") == null) {
-		request.setAttribute("Message", "로그인 후 이용하시기 바랍니다.");
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
-		dispatcher.forward(request, response);
-		return;
-	}
+	
 	SearchService searchService = new SearchService();
 %>
 
@@ -30,9 +25,9 @@
   	ArrayList<NoticeBoards> subscribeBoard = (ArrayList<NoticeBoards>)request.getAttribute("subscribeBoard");
     ArrayList<NoticeBoards> matchBoard = (ArrayList<NoticeBoards>)request.getAttribute("matchBoard");
 %>
-    <div id="ThemeWrap">
+   <div id="ThemeWrap">
         <div id="ThemeHeader">
-            <div><a href="mcontroller?action=home"><img src="img/main_logo.png"></a></div>
+            <div><a href="controller?action=home"><img src="img/main_logo.png"></a></div>
             <nav id="ThemeGnb">
                 <h2 class="screen_out"><a href="mcontroller?action=home">홈</a></h2>
                 <ul id="gnb_1dul">
@@ -43,9 +38,9 @@
             </nav>
             
             <div id="aaa">
-            <form method="post" action="mcontroller?action=logout">
-            	<input type="button" class="btn btn-success" value="Login" disabled="disabled">
-            	<input type="submit" class="btn btn-success" value="Logout">
+            <form method="post" action="login.jsp">
+            	<input type="submit" class="btn btn-success" value="Login" >
+            	<input type="button" class="btn btn-success" value="Logout" disabled="disabled">
             	</form>
             </div>
         </div>
